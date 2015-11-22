@@ -441,17 +441,6 @@ public final class PermissionsManager
             }
         }
 
-        // add in colorMe color
-
-        /*
-        Plugin colorMe = plugin.getServer().getPluginManager().getPlugin("ColorMe");
-
-        if (colorMe != null)
-        {
-            out += ((ColorMe) colorMe).getColor(p.getName());
-        }
-        */
-
         return out;
     }
 
@@ -459,7 +448,7 @@ public final class PermissionsManager
      * @param p
      * @return
      */
-    @SuppressWarnings({"deprecation", "deprecation"})
+    @SuppressWarnings({"deprecation"})
     public String getSuffix(Player p)
     {
         try

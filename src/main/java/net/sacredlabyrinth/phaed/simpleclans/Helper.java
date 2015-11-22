@@ -1,6 +1,5 @@
 package net.sacredlabyrinth.phaed.simpleclans;
 
-import net.sacredlabyrinth.phaed.simpleclans.storage.DBCore;
 import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 
 /**

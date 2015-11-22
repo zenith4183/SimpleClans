@@ -485,7 +485,6 @@ public final class ClanManager
         if (plugin.getSettingsManager().isChatTags())
         {
             String prefix = plugin.getPermissionsManager().getPrefix(player);
-            String suffix = plugin.getPermissionsManager().getSuffix(player);
             String lastColor = plugin.getSettingsManager().isUseColorCodeFromPrefix() ? Helper.getLastColorCode(prefix) : ChatColor.WHITE + "";
             String fullName = player.getName();
 

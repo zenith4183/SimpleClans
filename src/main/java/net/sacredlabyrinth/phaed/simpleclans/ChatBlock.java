@@ -3,7 +3,6 @@ package net.sacredlabyrinth.phaed.simpleclans;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
