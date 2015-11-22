@@ -307,14 +307,7 @@ public class SCPlayerListener implements Listener
         cp.setName(player.getName());
         SimpleClans.getInstance().getClanManager().updateLastSeen(player);
         SimpleClans.getInstance().getClanManager().updateDisplayName(player);
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            SimpleClans.getInstance().getSpoutPluginManager().processPlayer(cp.getUniqueId());
-        }
-        else
-        {
-            SimpleClans.getInstance().getSpoutPluginManager().processPlayer(cp.getName());
-        }
+
         SimpleClans.getInstance().getPermissionsManager().addPlayerPermissions(cp);
 
         if (plugin.getSettingsManager().isBbShowOnLogin())
@@ -413,15 +406,6 @@ public class SCPlayerListener implements Listener
             return;
         }
 
-        plugin.getSpoutPluginManager().processPlayer(event.getPlayer());
     }
 
-    /**
-     * @param event
-     */
-    @EventHandler
-    public void onPlayerToggleSneak(PlayerToggleSneakEvent event)
-    {
-        plugin.getSpoutPluginManager().processPlayer(event.getPlayer());
-    }
 }
