@@ -81,7 +81,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_clans");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_clans` ( `id` bigint(20) NOT NULL auto_increment, `verified` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `color_tag` varchar(25) NOT NULL, `name` varchar(100) NOT NULL, `friendly_fire` tinyint(1) default '0', `founded` bigint NOT NULL, `last_used` bigint NOT NULL, `packed_allies` text NOT NULL, `packed_rivals` text NOT NULL, `packed_bb` mediumtext NOT NULL, `flags` text NOT NULL, `balance` double(64,2), PRIMARY KEY  (`id`), UNIQUE KEY `uq_simpleclans_1` (`tag`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_clans` ( `id` bigint(20) NOT NULL auto_increment, `verified` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `color_tag` varchar(25) NOT NULL, `name` varchar(100) NOT NULL, `friendly_fire` tinyint(1) default '0', `founded` bigint NOT NULL, `last_used` bigint NOT NULL, `packed_allies` text NOT NULL, `packed_rivals` text NOT NULL, `packed_bb` mediumtext NOT NULL, `flags` text NOT NULL, PRIMARY KEY  (`id`), UNIQUE KEY `uq_simpleclans_1` (`tag`));";
                     core.execute(query);
                 }
 
@@ -118,7 +118,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_clans");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_clans` ( `id` bigint(20), `verified` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `color_tag` varchar(25) NOT NULL, `name` varchar(100) NOT NULL, `friendly_fire` tinyint(1) default '0', `founded` bigint NOT NULL, `last_used` bigint NOT NULL, `packed_allies` text NOT NULL, `packed_rivals` text NOT NULL, `packed_bb` mediumtext NOT NULL, `flags` text NOT NULL, `balance` double(64,2) default 0.0,  PRIMARY KEY  (`id`), UNIQUE (`tag`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_clans` ( `id` bigint(20), `verified` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `color_tag` varchar(25) NOT NULL, `name` varchar(100) NOT NULL, `friendly_fire` tinyint(1) default '0', `founded` bigint NOT NULL, `last_used` bigint NOT NULL, `packed_allies` text NOT NULL, `packed_rivals` text NOT NULL, `packed_bb` mediumtext NOT NULL, `flags` text NOT NULL, PRIMARY KEY  (`id`), UNIQUE (`tag`));";
                     core.execute(query);
                 }
 
@@ -308,7 +308,6 @@ public final class StorageManager
                         String flags = res.getString("flags");
                         long founded = res.getLong("founded");
                         long last_used = res.getLong("last_used");
-                        double balance = res.getDouble("balance");
 
                         if (founded == 0)
                         {
@@ -332,7 +331,6 @@ public final class StorageManager
                         clan.setPackedBb(packed_bb);
                         clan.setFounded(founded);
                         clan.setLastUsed(last_used);
-                        clan.setBalance(balance);
 
                         out.add(clan);
                     }
@@ -388,7 +386,6 @@ public final class StorageManager
                         String flags = res.getString("flags");
                         long founded = res.getLong("founded");
                         long last_used = res.getLong("last_used");
-                        double balance = res.getDouble("balance");
 
                         if (founded == 0)
                         {
@@ -412,7 +409,6 @@ public final class StorageManager
                         clan.setPackedBb(packed_bb);
                         clan.setFounded(founded);
                         clan.setLastUsed(last_used);
-                        clan.setBalance(balance);
 
                         out = clan;
                     }
@@ -614,7 +610,6 @@ public final class StorageManager
                                 clanReSync.setCapeUrl(clanDB.getCapeUrl());
                                 clanReSync.setFounded(clanDB.getFounded());
                                 clanReSync.setLastUsed(clanDB.getLastUsed());
-                                clanReSync.setBalance(clanDB.getBalance());
                                 cp.setClan(clanReSync);
                             }
                             else
@@ -654,8 +649,8 @@ public final class StorageManager
      */
     public void insertClan(Clan clan)
     {
-        String query = "INSERT INTO `sc_clans` (  `verified`, `tag`, `color_tag`, `name`, `friendly_fire`, `founded`, `last_used`, `packed_allies`, `packed_rivals`, `packed_bb`, `flags`, `balance`) ";
-        String values = "VALUES ( " + (clan.isVerified() ? 1 : 0) + ",'" + Helper.escapeQuotes(clan.getTag()) + "','" + Helper.escapeQuotes(clan.getColorTag()) + "','" + Helper.escapeQuotes(clan.getName()) + "'," + (clan.isFriendlyFire() ? 1 : 0) + ",'" + clan.getFounded() + "','" + clan.getLastUsed() + "','" + Helper.escapeQuotes(clan.getPackedAllies()) + "','" + Helper.escapeQuotes(clan.getPackedRivals()) + "','" + Helper.escapeQuotes(clan.getPackedBb()) + "','" + Helper.escapeQuotes(clan.getCapeUrl()) + "','" + Helper.escapeQuotes(clan.getFlags()) + "','" + Helper.escapeQuotes(String.valueOf(clan.getBalance())) + "');";
+        String query = "INSERT INTO `sc_clans` (  `verified`, `tag`, `color_tag`, `name`, `friendly_fire`, `founded`, `last_used`, `packed_allies`, `packed_rivals`, `packed_bb`, `flags`) ";
+        String values = "VALUES ( " + (clan.isVerified() ? 1 : 0) + ",'" + Helper.escapeQuotes(clan.getTag()) + "','" + Helper.escapeQuotes(clan.getColorTag()) + "','" + Helper.escapeQuotes(clan.getName()) + "'," + (clan.isFriendlyFire() ? 1 : 0) + ",'" + clan.getFounded() + "','" + clan.getLastUsed() + "','" + Helper.escapeQuotes(clan.getPackedAllies()) + "','" + Helper.escapeQuotes(clan.getPackedRivals()) + "','" + Helper.escapeQuotes(clan.getPackedBb()) + "','" + Helper.escapeQuotes(clan.getCapeUrl()) + "','" + Helper.escapeQuotes(clan.getFlags()) + "','" + "');";
         core.insert(query + values);
     }
 
@@ -684,7 +679,7 @@ public final class StorageManager
     public void updateClan(Clan clan)
     {
         clan.updateLastUsed();
-        String query = "UPDATE `sc_clans` SET verified = " + (clan.isVerified() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(clan.getTag()) + "', color_tag = '" + Helper.escapeQuotes(clan.getColorTag()) + "', name = '" + Helper.escapeQuotes(clan.getName()) + "', friendly_fire = " + (clan.isFriendlyFire() ? 1 : 0) + ", founded = '" + clan.getFounded() + "', last_used = '" + clan.getLastUsed() + "', packed_allies = '" + Helper.escapeQuotes(clan.getPackedAllies()) + "', packed_rivals = '" + Helper.escapeQuotes(clan.getPackedRivals()) + "', packed_bb = '" + Helper.escapeQuotes(clan.getPackedBb()) + "', flags = '" + "', balance = '" + clan.getBalance() + "', flags = '" + Helper.escapeQuotes(clan.getFlags()) + "' WHERE tag = '" + Helper.escapeQuotes(clan.getTag()) + "';";
+        String query = "UPDATE `sc_clans` SET verified = " + (clan.isVerified() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(clan.getTag()) + "', color_tag = '" + Helper.escapeQuotes(clan.getColorTag()) + "', name = '" + Helper.escapeQuotes(clan.getName()) + "', friendly_fire = " + (clan.isFriendlyFire() ? 1 : 0) + ", founded = '" + clan.getFounded() + "', last_used = '" + clan.getLastUsed() + "', packed_allies = '" + Helper.escapeQuotes(clan.getPackedAllies()) + "', packed_rivals = '" + Helper.escapeQuotes(clan.getPackedRivals()) + "', packed_bb = '" + Helper.escapeQuotes(clan.getPackedBb()) + "', flags = '" + "', flags = '" + Helper.escapeQuotes(clan.getFlags()) + "' WHERE tag = '" + Helper.escapeQuotes(clan.getTag()) + "';";
         core.update(query);
     }
 
@@ -886,15 +881,6 @@ public final class StorageManager
     private void updateDatabase()
     {
         String query = null;
-
-        /**
-         * From 2.2.6.3 to 2.3
-         */
-        if (!core.existsColumn("sc_clans", "balance"))
-        {
-            query = "ALTER TABLE sc_clans ADD COLUMN `balance` double(64,2);";
-            core.execute(query);
-        }
 
         /**
          * Bukkit 1.7.5+ UUID Migration

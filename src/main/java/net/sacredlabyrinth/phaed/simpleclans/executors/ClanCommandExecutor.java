@@ -53,7 +53,6 @@ public final class ClanCommandExecutor implements CommandExecutor
     private KillsCommand killsCommand;
     private MostKilledCommand mostKilledCommand;
     private SetRankCommand setRankCommand;
-    private BankCommand bankCommand;
     private PlaceCommand placeCommand;
     private ResetKDRCommand resetKDRCommand;
 
@@ -100,7 +99,6 @@ public final class ClanCommandExecutor implements CommandExecutor
         killsCommand = new KillsCommand();
         mostKilledCommand = new MostKilledCommand();
         setRankCommand = new SetRankCommand();
-        bankCommand = new BankCommand();
         placeCommand = new PlaceCommand();
         resetKDRCommand = new ResetKDRCommand();
     }
@@ -141,10 +139,6 @@ public final class ClanCommandExecutor implements CommandExecutor
                     else if (subcommand.equalsIgnoreCase(plugin.getLang("list.command")))
                     {
                         listCommand.execute(player, subargs);
-                    }
-                    else if (subcommand.equalsIgnoreCase(plugin.getLang("bank.command")))
-                    {
-                        bankCommand.execute(player, subargs);
                     }
                     else if (subcommand.equalsIgnoreCase(plugin.getLang("profile.command")))
                     {
