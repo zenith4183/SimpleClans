@@ -37,7 +37,6 @@ public final class ClanCommandExecutor implements CommandExecutor
     private TrustCommand trustCommand;
     private UntrustCommand untrustCommand;
     private PromoteCommand promoteCommand;
-    private CapeCommand capeCommand;
     private DemoteCommand demoteCommand;
     private ClanffCommand clanffCommand;
     private FfCommand ffCommand;
@@ -86,7 +85,6 @@ public final class ClanCommandExecutor implements CommandExecutor
         trustCommand = new TrustCommand();
         untrustCommand = new UntrustCommand();
         promoteCommand = new PromoteCommand();
-        capeCommand = new CapeCommand();
         demoteCommand = new DemoteCommand();
         clanffCommand = new ClanffCommand();
         ffCommand = new FfCommand();
@@ -207,10 +205,6 @@ public final class ClanCommandExecutor implements CommandExecutor
                     else if (subcommand.equalsIgnoreCase(plugin.getLang("toggle.command")))
                     {
                         toggleCommand.execute(player, subargs);
-                    }
-                    else if (subcommand.equalsIgnoreCase(plugin.getLang("cape.command")))
-                    {
-                        capeCommand.execute(player, subargs);
                     }
                     else if (subcommand.equalsIgnoreCase(plugin.getLang("invite.command")))
                     {
