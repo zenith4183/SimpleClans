@@ -23,7 +23,6 @@ public final class SettingsManager
     private boolean keepOnHome;
     private boolean debugging;
     private SimpleClans plugin;
-    private boolean pvpOnlywhileInWar;
     private boolean useColorCodeFromPrefix;
     private boolean confirmationForPromote;
     private boolean confirmationForDemote;
@@ -174,7 +173,6 @@ public final class SettingsManager
         keepOnHome = getConfig().getBoolean("settings.keep-items-on-clan-home");
         itemsList = getConfig().getIntegerList("settings.item-list");
         debugging = getConfig().getBoolean("settings.show-debug-info");
-        pvpOnlywhileInWar = getConfig().getBoolean("settings.pvp-only-while-at-war");
         enableAutoGroups = getConfig().getBoolean("settings.enable-auto-groups");
         useColorCodeFromPrefix = getConfig().getBoolean("settings.use-colorcode-from-prefix-for-name");
         bannedPlayers = getConfig().getStringList("settings.banned-players");
@@ -1108,11 +1106,6 @@ public final class SettingsManager
     public boolean isEnableAutoGroups()
     {
         return enableAutoGroups;
-    }
-
-    public boolean isPvpOnlywhileInWar()
-    {
-        return pvpOnlywhileInWar;
     }
 
     public boolean isDebugging()

@@ -48,7 +48,6 @@ public final class ClanCommandExecutor implements CommandExecutor
     private ReloadCommand reloadCommand;
     private GlobalffCommand globalffCommand;
     private MenuCommand menuCommand;
-    private WarCommand warCommand;
     private HomeCommand homeCommand;
     private KillsCommand killsCommand;
     private MostKilledCommand mostKilledCommand;
@@ -94,7 +93,6 @@ public final class ClanCommandExecutor implements CommandExecutor
         unbanCommand = new UnbanCommand();
         reloadCommand = new ReloadCommand();
         globalffCommand = new GlobalffCommand();
-        warCommand = new WarCommand();
         homeCommand = new HomeCommand();
         killsCommand = new KillsCommand();
         mostKilledCommand = new MostKilledCommand();
@@ -259,10 +257,6 @@ public final class ClanCommandExecutor implements CommandExecutor
                     else if (subcommand.equalsIgnoreCase(plugin.getLang("globalff.command")))
                     {
                         globalffCommand.execute(player, subargs);
-                    }
-                    else if (subcommand.equalsIgnoreCase(plugin.getLang("war.command")))
-                    {
-                        warCommand.execute(player, subargs);
                     }
                     else if (subcommand.equalsIgnoreCase(plugin.getLang("kills.command")))
                     {
