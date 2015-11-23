@@ -118,13 +118,7 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     @Override
     public int compareTo(ClanPlayer other)
     {
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            return this.getUniqueId().compareTo(other.getUniqueId());
-        } else
-        {
-            return this.getName().compareToIgnoreCase(other.getName());
-        }
+        return this.getUniqueId().compareTo(other.getUniqueId());
     }
 
     @Override

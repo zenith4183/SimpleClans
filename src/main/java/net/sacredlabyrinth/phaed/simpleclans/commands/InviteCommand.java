@@ -1,7 +1,7 @@
 package net.sacredlabyrinth.phaed.simpleclans.commands;
 
 import net.sacredlabyrinth.phaed.simpleclans.*;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -46,7 +46,7 @@ public class InviteCommand
                             {
                                 if (!invited.getName().equals(player.getName()))
                                 {
-                                    if (!plugin.getSettingsManager().isBanned(player.getName()))
+                                    if (!plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
                                     {
                                         ClanPlayer cpInv = plugin.getClanManager().getClanPlayer(invited);
 

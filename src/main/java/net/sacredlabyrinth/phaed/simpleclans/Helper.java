@@ -1,6 +1,6 @@
 package net.sacredlabyrinth.phaed.simpleclans;
 
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -705,11 +705,6 @@ public class Helper
 
     public static Player getPlayer(String playerName)
     {
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            return SimpleClans.getInstance().getServer().getPlayer(UUIDMigration.getForcedPlayerUUID(playerName));
-        }
-
-        return SimpleClans.getInstance().getServer().getPlayer(playerName);
+        return SimpleClans.getInstance().getServer().getPlayer(UUIDUtil.nameToUUID(playerName));
     }
 }

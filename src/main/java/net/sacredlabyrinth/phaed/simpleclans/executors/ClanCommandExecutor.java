@@ -2,6 +2,8 @@ package net.sacredlabyrinth.phaed.simpleclans.executors;
 
 import net.sacredlabyrinth.phaed.simpleclans.*;
 import net.sacredlabyrinth.phaed.simpleclans.commands.*;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -119,7 +121,7 @@ public final class ClanCommandExecutor implements CommandExecutor
                     return false;
                 }
 
-                if (plugin.getSettingsManager().isBanned(player.getName()))
+                if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
                 {
                     ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
                     return false;

@@ -54,13 +54,7 @@ public class TeleportState
      */
     public Player getPlayer()
     {
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            return SimpleClans.getInstance().getServer().getPlayer(this.playerUniqueId);
-        } else
-        {
-            return SimpleClans.getInstance().getServer().getPlayer(this.playerName);
-        }
+        return SimpleClans.getInstance().getServer().getPlayer(this.playerUniqueId);
     }
 
     /**

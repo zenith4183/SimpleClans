@@ -29,14 +29,9 @@ public class GlobalCommandExecutor implements CommandExecutor
         }
 
         ClanPlayer cp;
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            cp = plugin.getClanManager().getClanPlayer(player.getUniqueId());
-        }
-        else
-        {
-            cp = plugin.getClanManager().getClanPlayer(player.getName());
-        }
+
+        cp = plugin.getClanManager().getClanPlayer(player.getUniqueId());
+
 
         if (cp == null)
         {

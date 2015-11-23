@@ -3,7 +3,8 @@ package net.sacredlabyrinth.phaed.simpleclans.managers;
 import net.sacredlabyrinth.phaed.simpleclans.*;
 import net.sacredlabyrinth.phaed.simpleclans.events.RequestEvent;
 import net.sacredlabyrinth.phaed.simpleclans.events.RequestFinishedEvent;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -384,27 +385,18 @@ public final class RequestManager
             {
                 Clan clan = req.getClan();
                 String demoted = req.getTarget();
-                UUID demotedUniqueId = UUIDMigration.getForcedPlayerUUID(demoted);
+                UUID demotedUniqueId = UUIDUtil.nameToUUID(demoted);
 
-                if (SimpleClans.getInstance().hasUUID())
+
+                if (demotedUniqueId != null)
                 {
-                    if (demotedUniqueId != null)
-                    {
-                        return;
-                    }
+                    return;
                 }
 
                 if (denies.isEmpty())
                 {
                     clan.addBb(plugin.getLang("leaders"), ChatColor.AQUA + MessageFormat.format(plugin.getLang("demoted.back.to.member"), Helper.capitalize(demoted)));
-                    if (SimpleClans.getInstance().hasUUID())
-                    {
-                        clan.demote(demotedUniqueId);
-                    }
-                    else
-                    {
-                        clan.demote(demoted);
-                    }
+                    clan.demote(demotedUniqueId);
                 }
                 else
                 {
@@ -416,26 +408,18 @@ public final class RequestManager
             {
                 Clan clan = req.getClan();
                 String promoted = req.getTarget();
-                UUID promotedUniqueId = UUIDMigration.getForcedPlayerUUID(promoted);
+                UUID promotedUniqueId = UUIDUtil.nameToUUID(promoted);
 
-                if (SimpleClans.getInstance().hasUUID())
+                if (promotedUniqueId == null)
                 {
-                    if (promotedUniqueId == null)
-                    {
-                        return;
-                    }
+                    return;
                 }
+
                 if (denies.isEmpty())
                 {
                     clan.addBb(plugin.getLang("leaders"), ChatColor.AQUA + MessageFormat.format(plugin.getLang("promoted.to.leader"), Helper.capitalize(promoted)));
-                    if (SimpleClans.getInstance().hasUUID())
-                    {
-                        clan.promote(promotedUniqueId);
-                    }
-                    else
-                    {
-                        clan.promote(promoted);
-                    }
+                    clan.promote(promotedUniqueId);
+
                 }
                 else
                 {

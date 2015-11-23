@@ -2,7 +2,6 @@ package net.sacredlabyrinth.phaed.simpleclans.managers;
 
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -411,70 +410,6 @@ public final class SettingsManager
         }
 
         return false;
-    }
-
-    /**
-     * Check whether a player is banned
-     *
-     * @param playerName the player's name
-     * @return whether player is banned
-     */
-    @Deprecated
-    public boolean isBanned(String playerName)
-    {
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            playerName = UUIDMigration.getForcedPlayerUUID(playerName).toString();
-        }
-        for (String pl : getBannedPlayers())
-        {
-            if (pl.equalsIgnoreCase(playerName))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Add a player to the banned list
-     *
-     * @param playerName the player's name
-     */
-    @Deprecated
-    public void addBanned(String playerName)
-    {
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            playerName = UUIDMigration.getForcedPlayerUUID(playerName).toString();
-        }
-        if (!bannedPlayers.contains(playerName))
-        {
-            getBannedPlayers().add(playerName);
-        }
-
-        save();
-    }
-
-    /**
-     * Remove a player from the banned list
-     *
-     * @param playerName the player's name
-     */
-    @Deprecated
-    public void removeBanned(String playerName)
-    {
-        if (SimpleClans.getInstance().hasUUID())
-        {
-            playerName = UUIDMigration.getForcedPlayerUUID(playerName).toString();
-        }
-        if (getBannedPlayers().contains(playerName))
-        {
-            getBannedPlayers().remove(playerName);
-        }
-
-        save();
     }
 
     /**

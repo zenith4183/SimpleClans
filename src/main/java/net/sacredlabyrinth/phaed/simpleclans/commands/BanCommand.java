@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
 import java.util.UUID;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 
 /**
  *
@@ -34,44 +34,24 @@ public class BanCommand
             {
                 String banned = arg[0];
                 
-                if (SimpleClans.getInstance().hasUUID())
+                UUID PlayerUniqueId = UUIDUtil.nameToUUID(banned);
+                if (!plugin.getSettingsManager().isBanned(PlayerUniqueId))
                 {
-                    UUID PlayerUniqueId = UUIDMigration.getForcedPlayerUUID(banned);
-                    if (!plugin.getSettingsManager().isBanned(PlayerUniqueId))
-                    {
-                        Player pl = SimpleClans.getInstance().getServer().getPlayer(PlayerUniqueId);
+                    Player pl = SimpleClans.getInstance().getServer().getPlayer(PlayerUniqueId);
 
-                        if (pl != null)
-                        {
-                            ChatBlock.sendMessage(pl, ChatColor.AQUA + plugin.getLang("you.banned"));
-                        }
-
-                        plugin.getClanManager().ban(banned);
-                        ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("player.added.to.banned.list"));
-                    }
-                    else
+                    if (pl != null)
                     {
-                        ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("this.player.is.already.banned"));
+                        ChatBlock.sendMessage(pl, ChatColor.AQUA + plugin.getLang("you.banned"));
                     }
-                } else 
-                {
-                    if (!plugin.getSettingsManager().isBanned(banned))
-                    {
-                        Player pl = SimpleClans.getInstance().getServer().getPlayerExact(banned);
 
-                        if (pl != null)
-                        {
-                            ChatBlock.sendMessage(pl, ChatColor.AQUA + plugin.getLang("you.banned"));
-                        }
-
-                        plugin.getClanManager().ban(banned);
-                        ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("player.added.to.banned.list"));
-                    }
-                    else
-                    {
-                        ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("this.player.is.already.banned"));
-                    }
+                    plugin.getClanManager().ban(banned);
+                    ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("player.added.to.banned.list"));
                 }
+                else
+                {
+                    ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("this.player.is.already.banned"));
+                }
+
             }
             else
             {

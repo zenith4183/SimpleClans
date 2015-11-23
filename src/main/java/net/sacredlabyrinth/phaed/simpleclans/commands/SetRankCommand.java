@@ -1,10 +1,13 @@
 package net.sacredlabyrinth.phaed.simpleclans.commands;
 
 import net.sacredlabyrinth.phaed.simpleclans.*;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
+import java.util.UUID;
 
 public class SetRankCommand
 {
@@ -38,8 +41,9 @@ public class SetRankCommand
                         {
                             String playerName = arg[0];
                             String rank = Helper.toMessage(Helper.removeFirst(arg));
-
-                            if (clan.isMember(playerName) || clan.isLeader(playerName))
+                            UUID playerUUID = UUIDUtil.nameToUUID(playerName);
+                            
+                            if (clan.isMember(playerUUID) || clan.isLeader(playerUUID))
                             {
                                 ClanPlayer cpm = plugin.getClanManager().getClanPlayer(playerName);
                                 cpm.setRank(rank);

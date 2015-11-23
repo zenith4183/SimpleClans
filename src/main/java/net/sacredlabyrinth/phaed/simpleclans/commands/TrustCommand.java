@@ -5,6 +5,8 @@ import net.sacredlabyrinth.phaed.simpleclans.Clan;
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -47,9 +49,9 @@ public class TrustCommand
                         {
                             if (!trusted.equals(player.getName()))
                             {
-                                if (clan.isMember(trusted))
+                                if (clan.isMember(UUIDUtil.nameToUUID(trusted)))
                                 {
-                                    if (!clan.isLeader(trusted))
+                                    if (!clan.isLeader(UUIDUtil.nameToUUID(trusted)))
                                     {
                                         ClanPlayer tcp = plugin.getClanManager().getClanPlayerName(trusted);
                                         if (tcp == null) 

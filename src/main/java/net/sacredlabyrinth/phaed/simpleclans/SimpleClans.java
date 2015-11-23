@@ -4,7 +4,6 @@ import net.sacredlabyrinth.phaed.simpleclans.executors.*;
 import net.sacredlabyrinth.phaed.simpleclans.listeners.SCEntityListener;
 import net.sacredlabyrinth.phaed.simpleclans.listeners.SCPlayerListener;
 import net.sacredlabyrinth.phaed.simpleclans.managers.*;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDMigration;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
 public class SimpleClans extends JavaPlugin {
 
     private ArrayList<String> messages = new ArrayList<String>();
-    private static SimpleClans instance;
+    public static SimpleClans instance;
     private static final Logger logger = Logger.getLogger("Minecraft");
     private ClanManager clanManager;
     private RequestManager requestManager;
@@ -32,7 +31,6 @@ public class SimpleClans extends JavaPlugin {
     private PermissionsManager permissionsManager;
     private TeleportManager teleportManager;
     private LanguageManager languageManager;
-    private boolean hasUUID;
 
     /**
      * @return the logger
@@ -72,7 +70,6 @@ public class SimpleClans extends JavaPlugin {
     public void onEnable()
     {
         instance = this;
-        this.hasUUID = UUIDMigration.canReturnUUID();
         languageManager = new LanguageManager();
         settingsManager = new SettingsManager();
 
@@ -198,22 +195,6 @@ public class SimpleClans extends JavaPlugin {
     public ArrayList<String> getMessages()
     {
         return messages;
-    }
-
-    /**
-     * @return the hasUUID
-     */
-    public boolean hasUUID()
-    {
-        return this.hasUUID;
-    }
-
-    /**
-     * @param trueOrFalse
-     */
-    public void setUUID(boolean trueOrFalse)
-    {
-        this.hasUUID = trueOrFalse;
     }
 
     public LanguageManager getLanguageManager()

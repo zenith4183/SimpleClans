@@ -75,15 +75,9 @@ public class SCEntityListener implements Listener
             {
                 ClanPlayer acp;
                 ClanPlayer vcp;
-                if (SimpleClans.getInstance().hasUUID())
-                {
-                    acp = plugin.getClanManager().getCreateClanPlayer(attacker.getUniqueId());
-                    vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
-                } else
-                {
-                    acp = plugin.getClanManager().getCreateClanPlayer(attacker.getName());
-                    vcp = plugin.getClanManager().getCreateClanPlayer(victim.getName());
-                }
+
+                acp = plugin.getClanManager().getCreateClanPlayer(attacker.getUniqueId());
+                vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
 
                 double reward = 0;
                 double multipier = plugin.getSettingsManager().getKDRMultipliesPerKill();

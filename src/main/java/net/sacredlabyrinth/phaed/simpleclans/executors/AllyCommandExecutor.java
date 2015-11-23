@@ -100,20 +100,12 @@ public class AllyCommandExecutor implements CommandExecutor
                     continue;
                 }
                 Player member = ally.toPlayer();
-                if (SimpleClans.getInstance().hasUUID())
+
+                if (player.getUniqueId().equals(ally.getUniqueId()))
                 {
-                    if (player.getUniqueId().equals(ally.getUniqueId()))
-                    {
-                        continue;
-                    }
+                    continue;
                 }
-                else
-                {
-                    if (player.getName().equalsIgnoreCase(ally.getName()))
-                    {
-                        continue;
-                    }
-                }
+
                 ChatBlock.sendMessage(member, message);
             }
         }
