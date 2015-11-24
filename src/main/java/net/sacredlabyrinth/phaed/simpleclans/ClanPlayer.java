@@ -41,7 +41,6 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     private boolean clanChat = true;
     private boolean bbEnabled = true;
     private boolean tagEnabled = true;
-    private boolean capeEnabled = true;
 
     private boolean allyChatMute = false;
     private boolean clanChatMute = false;
@@ -730,7 +729,6 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
         json.put("chat-shortcut", useChatShortcut);
         json.put("bb-enabled", bbEnabled);
         json.put("hide-tag", tagEnabled);
-        json.put("cape-enabled", capeEnabled);
 
         return json.toString();
     }
@@ -806,11 +804,6 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
                             tagEnabled = (Boolean) flags.get(flag);
                         }
 
-                        if (flag.equals("cape-enabled"))
-                        {
-                            capeEnabled = (Boolean) flags.get(flag);
-                        }
-
                         if (flag.equals("chat-shortcut"))
                         {
                             useChatShortcut = (Boolean) flags.get(flag);
@@ -878,17 +871,6 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     public void setBbEnabled(boolean bbEnabled)
     {
         this.bbEnabled = bbEnabled;
-        SimpleClans.getInstance().getStorageManager().updateClanPlayer(this);
-    }
-
-    public boolean isCapeEnabled()
-    {
-        return capeEnabled;
-    }
-
-    public void setCapeEnabled(boolean capeEnabled)
-    {
-        this.capeEnabled = capeEnabled;
         SimpleClans.getInstance().getStorageManager().updateClanPlayer(this);
     }
 

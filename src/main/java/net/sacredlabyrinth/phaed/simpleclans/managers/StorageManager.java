@@ -607,7 +607,6 @@ public final class StorageManager
                                 clanReSync.setPackedAllies(clanDB.getPackedAllies());
                                 clanReSync.setPackedRivals(clanDB.getPackedRivals());
                                 clanReSync.setPackedBb(clanDB.getPackedBb());
-                                clanReSync.setCapeUrl(clanDB.getCapeUrl());
                                 clanReSync.setFounded(clanDB.getFounded());
                                 clanReSync.setLastUsed(clanDB.getLastUsed());
                                 cp.setClan(clanReSync);
@@ -650,7 +649,7 @@ public final class StorageManager
     public void insertClan(Clan clan)
     {
         String query = "INSERT INTO `sc_clans` (  `verified`, `tag`, `color_tag`, `name`, `friendly_fire`, `founded`, `last_used`, `packed_allies`, `packed_rivals`, `packed_bb`, `flags`) ";
-        String values = "VALUES ( " + (clan.isVerified() ? 1 : 0) + ",'" + Helper.escapeQuotes(clan.getTag()) + "','" + Helper.escapeQuotes(clan.getColorTag()) + "','" + Helper.escapeQuotes(clan.getName()) + "'," + (clan.isFriendlyFire() ? 1 : 0) + ",'" + clan.getFounded() + "','" + clan.getLastUsed() + "','" + Helper.escapeQuotes(clan.getPackedAllies()) + "','" + Helper.escapeQuotes(clan.getPackedRivals()) + "','" + Helper.escapeQuotes(clan.getPackedBb()) + "','" + Helper.escapeQuotes(clan.getCapeUrl()) + "','" + Helper.escapeQuotes(clan.getFlags()) + "','" + "');";
+        String values = "VALUES ( " + (clan.isVerified() ? 1 : 0) + ",'" + Helper.escapeQuotes(clan.getTag()) + "','" + Helper.escapeQuotes(clan.getColorTag()) + "','" + Helper.escapeQuotes(clan.getName()) + "'," + (clan.isFriendlyFire() ? 1 : 0) + ",'" + clan.getFounded() + "','" + clan.getLastUsed() + "','" + Helper.escapeQuotes(clan.getPackedAllies()) + "','" + Helper.escapeQuotes(clan.getPackedRivals()) + "','" + Helper.escapeQuotes(clan.getPackedBb()) + "','" + "','" + Helper.escapeQuotes(clan.getFlags()) + "','" + "');";
         core.insert(query + values);
     }
 
@@ -906,8 +905,6 @@ public final class StorageManager
                 core.execute(query);
             }
 
-            query = "ALTER TABLE sc_players DROP INDEX uq_sc_players_1;";
-            core.execute(query);
         }
 
         if (core.existsColumn("sc_players", "uuid"))

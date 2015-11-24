@@ -30,32 +30,6 @@ public class ToggleCommand {
 
         String cmd = arg[0];
 
-        if (cmd.equalsIgnoreCase("cape")) {
-            if (plugin.getPermissionsManager().has(player, "simpleclans.member.cape-toggle")) {
-                ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-
-                if (cp != null) {
-                    Clan clan = cp.getClan();
-
-                    if (clan.isVerified()) {
-                        if (cp.isCapeEnabled()) {
-                            ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("capeoff"));
-                            cp.setCapeEnabled(false);
-                        } else {
-                            ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("capeon"));
-                            cp.setCapeEnabled(true);
-                        }
-                    } else {
-                        ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("clan.is.not.verified"));
-                    }
-                } else {
-                    ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("not.a.member.of.any.clan"));
-                }
-            } else {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("insufficient.permissions"));
-            }
-        }
-
         if (cmd.equalsIgnoreCase("bb")) {
             if (plugin.getPermissionsManager().has(player, "simpleclans.member.bb-toggle")) {
                 ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);

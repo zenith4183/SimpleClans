@@ -32,7 +32,6 @@ public class Clan implements Serializable, Comparable<Clan>
     private boolean friendlyFire;
     private long founded;
     private long lastUsed;
-    private String capeUrl;
     private List<String> allies = new ArrayList<String>();
     private List<String> rivals = new ArrayList<String>();
     private List<String> bb = new ArrayList<String>();
@@ -50,7 +49,6 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public Clan()
     {
-        this.capeUrl = "";
         this.tag = "";
     }
 
@@ -67,7 +65,6 @@ public class Clan implements Serializable, Comparable<Clan>
         this.founded = (new Date()).getTime();
         this.lastUsed = (new Date()).getTime();
         this.verified = verified;
-        this.capeUrl = "";
 
         if (SimpleClans.getInstance().getSettingsManager().isClanFFOnByDefault())
         {
@@ -524,25 +521,6 @@ public class Clan implements Serializable, Comparable<Clan>
         this.verified = verified;
     }
 
-    /**
-     * Returns the cape url for this clan
-     *
-     * @return the capeUrl
-     */
-    public String getCapeUrl()
-    {
-        return capeUrl;
-    }
-
-    /**
-     * (used internally)
-     *
-     * @param capeUrl the capeUrl to set
-     */
-    public void setCapeUrl(String capeUrl)
-    {
-        this.capeUrl = capeUrl;
-    }
 
     /**
      * (used internally)
@@ -1072,18 +1050,6 @@ public class Clan implements Serializable, Comparable<Clan>
         }
 
         return total;
-    }
-
-    /**
-     * Set a clan's cape url
-     *
-     * @param url
-     */
-    public void setClanCape(String url)
-    {
-        setCapeUrl(url);
-
-        SimpleClans.getInstance().getStorageManager().updateClan(this);
     }
 
     /**

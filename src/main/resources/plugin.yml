@@ -81,10 +81,6 @@ permissions:
     description: Can start a rivalry with another clan
   simpleclans.leader.modtag:
     description: Can modify his clan's tag
-  simpleclans.leader.cape:
-    description: Can set his clan's cape url
-  simpleclans.member.cape-toggle:
-    description: Can toggle his cape on/off
   simpleclans.member.kills:
     description: Can view his and other's kills
   simpleclans.member.tag-toggle:
@@ -162,7 +158,6 @@ permissions:
       simpleclans.member.bb: true
       simpleclans.member.bb-add: true
       simpleclans.member.bb-toggle: true
-      simpleclans.member.cape-toggle: true
       simpleclans.member.tag-toggle: true
       simpleclans.member.ff: true
       simpleclans.member.resign: true
@@ -178,7 +173,6 @@ permissions:
       simpleclans.leader.ally: true
       simpleclans.leader.rival: true
       simpleclans.leader.modtag: true
-      simpleclans.leader.cape: true
       simpleclans.leader.invite: true
       simpleclans.leader.kick: true
       simpleclans.leader.promote: true
