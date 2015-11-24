@@ -113,44 +113,6 @@ public final class RequestManager
     }
 
     /**
-     * Add an clan war request
-     *
-     * @param requester
-     * @param warClan
-     * @param requestingClan
-     */
-    public void addWarStartRequest(ClanPlayer requester, Clan warClan, Clan requestingClan)
-    {
-        String msg = MessageFormat.format(plugin.getLang("proposing.war"), Helper.capitalize(requestingClan.getName()), Helper.stripColors(warClan.getColorTag()));
-
-        List<ClanPlayer> acceptors = Helper.stripOffLinePlayers(warClan.getLeaders());
-        acceptors.remove(requester);
-
-        Request req = new Request(plugin, ClanRequest.START_WAR, acceptors, requester, warClan.getTag(), requestingClan, msg);
-        requests.put(warClan.getTag(), req);
-        ask(req);
-    }
-
-    /**
-     * Add an war end request
-     *
-     * @param requester
-     * @param warClan
-     * @param requestingClan
-     */
-    public void addWarEndRequest(ClanPlayer requester, Clan warClan, Clan requestingClan)
-    {
-        String msg = MessageFormat.format(plugin.getLang("proposing.to.end.the.war"), Helper.capitalize(requestingClan.getName()), Helper.stripColors(warClan.getColorTag()));
-
-        List<ClanPlayer> acceptors = Helper.stripOffLinePlayers(warClan.getLeaders());
-        acceptors.remove(requester);
-
-        Request req = new Request(plugin, ClanRequest.END_WAR, acceptors, requester, warClan.getTag(), requestingClan, msg);
-        requests.put(warClan.getTag(), req);
-        ask(req);
-    }
-
-    /**
      * Add an clan alliance request
      *
      * @param requester
@@ -276,59 +238,7 @@ public final class RequestManager
      */
     public void processResults(Request req)
     {
-        if (req.getType().equals(ClanRequest.START_WAR))
-        {
-            Clan clan = req.getClan();
-            Clan war = plugin.getClanManager().getClan(req.getTarget());
-            ClanPlayer cp = req.getRequester();
-
-            if (war != null && clan != null)
-            {
-                List<String> accepts = req.getAccepts();
-                List<String> denies = req.getDenies();
-
-                if (!accepts.isEmpty())
-                {
-                    clan.addWarringClan(war);
-                    war.addWarringClan(clan);
-
-                    war.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("you.are.at.war"), Helper.capitalize(war.getName()), clan.getColorTag()));
-                    clan.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("you.are.at.war"), Helper.capitalize(clan.getName()), war.getColorTag()));
-                }
-                else
-                {
-                    war.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("denied.war.req"), Helper.capitalize(denies.get(0)), clan.getName()));
-                    clan.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("end.war.denied"), Helper.capitalize(war.getName())));
-                }
-            }
-        }
-        else if (req.getType().equals(ClanRequest.END_WAR))
-        {
-            Clan clan = req.getClan();
-            Clan war = plugin.getClanManager().getClan(req.getTarget());
-            ClanPlayer cp = req.getRequester();
-
-            if (war != null && clan != null)
-            {
-                List<String> accepts = req.getAccepts();
-                List<String> denies = req.getDenies();
-
-                if (!accepts.isEmpty())
-                {
-                    clan.removeWarringClan(war);
-                    war.removeWarringClan(clan);
-
-                    war.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("you.are.no.longer.at.war"), Helper.capitalize(accepts.get(0)), clan.getColorTag()));
-                    clan.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("you.are.no.longer.at.war"), Helper.capitalize(clan.getName()), Helper.capitalize(war.getColorTag())));
-                }
-                else
-                {
-                    war.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("denied.war.end"), Helper.capitalize(denies.get(0)), clan.getName()));
-                    clan.addBb(cp.getName(), ChatColor.AQUA + MessageFormat.format(plugin.getLang("end.war.denied"), Helper.capitalize(war.getName())));
-                }
-            }
-        }
-        else if (req.getType().equals(ClanRequest.CREATE_ALLY))
+        if (req.getType().equals(ClanRequest.CREATE_ALLY))
         {
             Clan clan = req.getClan();
             Clan ally = plugin.getClanManager().getClan(req.getTarget());

@@ -89,13 +89,7 @@ public class SCEntityListener implements Listener
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, "", "c");
                 } else if (acp.getClan().isRival(vcp.getTag()))
                 {
-                    if (acp.getClan().isWarring(vcp.getClan()))
-                    {
-                        reward = (double) kdr * multipier * 4;
-                    } else
-                    {
-                        reward = (double) kdr * multipier * 2;
-                    }
+                    reward = (double) kdr * multipier * 2;
                     acp.addRivalKill();
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, vcp.getTag(), "r");
                 } else if (acp.getClan().isAlly(vcp.getTag()))

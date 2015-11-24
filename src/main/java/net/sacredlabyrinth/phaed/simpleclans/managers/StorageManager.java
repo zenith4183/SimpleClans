@@ -168,11 +168,6 @@ public final class StorageManager
             plugin.getClanManager().importClan(clan);
         }
 
-        for (Clan clan : clans)
-        {
-            clan.validateWarring();
-        }
-
         if (clans.size() > 0)
         {
             SimpleClans.log(MessageFormat.format("[SimpleClans] " + plugin.getLang("clans"), clans.size()));
@@ -614,7 +609,6 @@ public final class StorageManager
                             else
                             {
                                 plugin.getClanManager().importClan(clanDB);
-                                clanDB.validateWarring();
                                 Clan newclan = SimpleClans.getInstance().getClanManager().getClan(clanDB.getTag());
                                 cp.setClan(newclan);
                             }

@@ -25,8 +25,6 @@ permissions:
     description: Can teleport to all clans homes
   simpleclans.mod.bypass:
     description: Can bypass restrictions
-  simpleclans.mod.nopvpinwar:
-    description: Can bypass pvp in wars
   simpleclans.anyone.list:
     description: Can list simpleclans
   simpleclans.anyone.profile:
@@ -107,8 +105,6 @@ permissions:
     description: Can disband his own clan
   simpleclans.leader.settrust:
     description: Can set trust levels for members
-  simpleclans.leader.war:
-    description: Can start wars
   simpleclans.leader.setrank:
     description: Can set ranks
   simpleclans.admin.*:
@@ -129,7 +125,6 @@ permissions:
       simpleclans.mod.home: true
       simpleclans.mod.mostkilled: true
       simpleclans.mod.keep-items: true
-      simpleclans.mod.nopvpinwar: true
       simpleclans.mod.place: true
   simpleclans.anyone.*:
     description: Permissions for anyone
@@ -178,7 +173,6 @@ permissions:
       simpleclans.leader.ff: true
       simpleclans.leader.disband: true
       simpleclans.leader.settrust: true
-      simpleclans.leader.war: true
       simpleclans.leader.home-set: true
       simpleclans.leader.home-regroup: true
       simpleclans.leader.setrank: true

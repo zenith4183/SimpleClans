@@ -35,7 +35,6 @@ public class Clan implements Serializable, Comparable<Clan>
     private List<String> rivals = new ArrayList<String>();
     private List<String> bb = new ArrayList<String>();
     private List<String> members = new ArrayList<String>();
-    private HashMap<String, Clan> warringClans = new HashMap<String, Clan>();
     private int homeX = 0;
     private int homeY = 0;
     private int homeZ = 0;
@@ -557,15 +556,7 @@ public class Clan implements Serializable, Comparable<Clan>
 
             if (rival != null)
             {
-                if (isWarring(rivalTag))
-                {
-                    out += ChatColor.DARK_RED + "[" + Helper.stripColors(rival.getColorTag()) + "]" + sep;
-                }
-                else
-                {
-                    out += rival.getColorTag() + sep;
-                }
-
+                out += rival.getColorTag() + sep;
             }
         }
 
@@ -1495,11 +1486,6 @@ public class Clan implements Serializable, Comparable<Clan>
         {
             String disbanded = SimpleClans.getInstance().getLang("clan.disbanded");
 
-            if (c.removeWarringClan(this))
-            {
-                c.addBb(disbanded, ChatColor.AQUA + MessageFormat.format(SimpleClans.getInstance().getLang("you.are.no.longer.at.war"), Helper.capitalize(c.getName()), getColorTag()));
-            }
-
             if (c.removeRival(getTag()))
             {
                 c.addBb(disbanded, ChatColor.AQUA + MessageFormat.format(SimpleClans.getInstance().getLang("has.been.disbanded.rivalry.ended"), Helper.capitalize(getName())));
@@ -1536,71 +1522,6 @@ public class Clan implements Serializable, Comparable<Clan>
     }
 
     /**
-     * Returns whether this clan is warring with another clan
-     *
-     * @param tag the tag of the clan we are at war with
-     * @return
-     */
-    public boolean isWarring(String tag)
-    {
-        return warringClans.containsKey(tag);
-    }
-
-    /**
-     * Returns whether this clan is warring with another clan
-     *
-     * @param clan the clan we are testing against
-     * @return
-     */
-    public boolean isWarring(Clan clan)
-    {
-        return warringClans.containsKey(clan.getTag());
-    }
-
-    /**
-     * Add a clan to be at war with
-     *
-     * @param clan
-     */
-    public void addWarringClan(Clan clan)
-    {
-        if (!warringClans.containsKey(clan.getTag()))
-        {
-            warringClans.put(clan.getTag(), clan);
-        }
-        SimpleClans.getInstance().getStorageManager().updateClan(this);
-    }
-
-    /**
-     * Remove a warring clan
-     *
-     * @param clan
-     * @return
-     */
-    public boolean removeWarringClan(Clan clan)
-    {
-        Clan warring = warringClans.remove(clan.getTag());
-
-        if (warring != null)
-        {
-            SimpleClans.getInstance().getStorageManager().updateClan(this);
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Return a collection of all the warring clans
-     *
-     * @return the clan list
-     */
-    public List<Clan> getWarringClans()
-    {
-        return new ArrayList<Clan>(warringClans.values());
-    }
-
-    /**
      * Return the list of flags and their data as a json string
      *
      * @return the flags
@@ -1611,10 +1532,6 @@ public class Clan implements Serializable, Comparable<Clan>
 
         // writing the list of flags to json
 
-        JSONArray warring = new JSONArray();
-        warring.addAll(warringClans.keySet());
-
-        json.put("warring", warring);
         json.put("homeX", homeX);
         json.put("homeY", homeY);
         json.put("homeZ", homeZ);
@@ -1642,20 +1559,7 @@ public class Clan implements Serializable, Comparable<Clan>
 
                     try
                     {
-                        if (flag.equals("warring"))
-                        {
-                            JSONArray clans = (JSONArray) flags.get(flag);
-
-                            if (clans != null)
-                            {
-                                for (Object tag : clans)
-                                {
-                                    SimpleClans.debug("warring added: " + tag.toString());
-                                    warringClans.put(tag.toString(), null);
-                                }
-                            }
-                        }
-
+                        
                         if (flag.equals("homeX"))
                         {
                             homeX = ((Long) flags.get(flag)).intValue();
@@ -1686,26 +1590,6 @@ public class Clan implements Serializable, Comparable<Clan>
                         }
                     }
                 }
-            }
-        }
-    }
-
-    public void validateWarring()
-    {
-        for (Iterator iter = warringClans.keySet().iterator(); iter.hasNext(); )
-        {
-            String clanName = (String) iter.next();
-
-            Clan clan = SimpleClans.getInstance().getClanManager().getClan(clanName);
-
-            if (clan == null)
-            {
-                iter.remove();
-            }
-            else
-            {
-                SimpleClans.debug("validated: " + clanName);
-                warringClans.put(clanName, clan);
             }
         }
     }
