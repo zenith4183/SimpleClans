@@ -4,6 +4,8 @@ import net.sacredlabyrinth.phaed.simpleclans.*;
 import net.sacredlabyrinth.phaed.simpleclans.storage.DBCore;
 import net.sacredlabyrinth.phaed.simpleclans.storage.MySQLCore;
 import net.sacredlabyrinth.phaed.simpleclans.storage.SQLiteCore;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -89,7 +91,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_players");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20) NOT NULL auto_increment, `name` varchar(16) NOT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, PRIMARY KEY  (`id`), UNIQUE KEY `uq_sc_players_1` (`name`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20) NOT NULL auto_increment, `uuid` VARCHAR(255) DEFAULT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, PRIMARY KEY  (`id`), UNIQUE KEY `uq_sc_players_1` (`uuid`));";
                     core.execute(query);
                 }
 
@@ -97,7 +99,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_kills");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_kills` ( `kill_id` bigint(20) NOT NULL auto_increment, `attacker` varchar(16) NOT NULL, `attacker_tag` varchar(16) NOT NULL, `victim` varchar(16) NOT NULL, `victim_tag` varchar(16) NOT NULL, `kill_type` varchar(1) NOT NULL, PRIMARY KEY  (`kill_id`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_kills` ( `kill_id` bigint(20) NOT NULL auto_increment, `attacker_uuid` VARCHAR(255) DEFAULT NULL, `attacker_tag` varchar(16) NOT NULL, `victim_uuid` VARCHAR(255) DEFAULT NULL, `victim_tag` varchar(16) NOT NULL, `kill_type` varchar(1) NOT NULL, PRIMARY KEY  (`kill_id`));";
                     core.execute(query);
                 }
             }
@@ -126,7 +128,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_players");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20), `name` varchar(16) NOT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, PRIMARY KEY  (`id`), UNIQUE (`name`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20), `uuid` VARCHAR(255) DEFAULT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, PRIMARY KEY  (`id`), UNIQUE (`uuid`));";
                     core.execute(query);
                 }
 
@@ -134,7 +136,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_kills");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_kills` ( `kill_id` bigint(20), `attacker` varchar(16) NOT NULL, `attacker_tag` varchar(16) NOT NULL, `victim` varchar(16) NOT NULL, `victim_tag` varchar(16) NOT NULL, `kill_type` varchar(1) NOT NULL, PRIMARY KEY  (`kill_id`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_kills` ( `kill_id` bigint(20), `attacker_uuid` VARCHAR(255) DEFAULT NULL, `attacker_tag` varchar(16) NOT NULL, `victim_uuid` VARCHAR(255) DEFAULT NULL, `victim_tag` varchar(16) NOT NULL, `kill_type` varchar(1) NOT NULL, PRIMARY KEY  (`kill_id`));";
                     core.execute(query);
                 }
             }
@@ -447,7 +449,6 @@ public final class StorageManager
                     try
                     {
                         String uuid = res.getString("uuid");
-                        String name = res.getString("name");
                         String tag = res.getString("tag");
                         boolean leader = res.getBoolean("leader");
                         boolean friendly_fire = res.getBoolean("friendly_fire");
@@ -477,7 +478,7 @@ public final class StorageManager
                             cp.setUniqueId(UUID.fromString(uuid));
                         }
                         cp.setFlags(flags);
-                        cp.setName(name);
+                        cp.setName(UUIDUtil.stringUUIDToName(uuid));
                         cp.setLeader(leader);
                         cp.setFriendlyFire(friendly_fire);
                         cp.setNeutralKills(neutral_kills);
@@ -543,7 +544,6 @@ public final class StorageManager
                     try
                     {
                         String uuid = res.getString("uuid");
-                        String name = res.getString("name");
                         String tag = res.getString("tag");
                         boolean leader = res.getBoolean("leader");
                         boolean friendly_fire = res.getBoolean("friendly_fire");
@@ -573,7 +573,7 @@ public final class StorageManager
                             cp.setUniqueId(UUID.fromString(uuid));
                         }
                         cp.setFlags(flags);
-                        cp.setName(name);
+                        cp.setName(UUIDUtil.stringUUIDToName(uuid));
                         cp.setLeader(leader);
                         cp.setFriendlyFire(friendly_fire);
                         cp.setNeutralKills(neutral_kills);
@@ -672,7 +672,7 @@ public final class StorageManager
     public void updateClan(Clan clan)
     {
         clan.updateLastUsed();
-        String query = "UPDATE `sc_clans` SET verified = " + (clan.isVerified() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(clan.getTag()) + "', color_tag = '" + Helper.escapeQuotes(clan.getColorTag()) + "', name = '" + Helper.escapeQuotes(clan.getName()) + "', friendly_fire = " + (clan.isFriendlyFire() ? 1 : 0) + ", founded = '" + clan.getFounded() + "', last_used = '" + clan.getLastUsed() + "', packed_allies = '" + Helper.escapeQuotes(clan.getPackedAllies()) + "', packed_rivals = '" + Helper.escapeQuotes(clan.getPackedRivals()) + "', packed_bb = '" + Helper.escapeQuotes(clan.getPackedBb()) + "', flags = '" + "', flags = '" + Helper.escapeQuotes(clan.getFlags()) + "' WHERE tag = '" + Helper.escapeQuotes(clan.getTag()) + "';";
+        String query = "UPDATE `sc_clans` SET verified = " + (clan.isVerified() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(clan.getTag()) + "', color_tag = '" + Helper.escapeQuotes(clan.getColorTag()) + "', friendly_fire = " + (clan.isFriendlyFire() ? 1 : 0) + ", founded = '" + clan.getFounded() + "', last_used = '" + clan.getLastUsed() + "', packed_allies = '" + Helper.escapeQuotes(clan.getPackedAllies()) + "', packed_rivals = '" + Helper.escapeQuotes(clan.getPackedRivals()) + "', packed_bb = '" + Helper.escapeQuotes(clan.getPackedBb()) + "', flags = '" + "', flags = '" + Helper.escapeQuotes(clan.getFlags()) + "' WHERE tag = '" + Helper.escapeQuotes(clan.getTag()) + "';";
         core.update(query);
     }
 
@@ -694,8 +694,8 @@ public final class StorageManager
      */
     public void insertClanPlayer(ClanPlayer cp)
     {
-        String query = "INSERT INTO `sc_players` ( `uuid`, `name`, `leader`, `tag`, `friendly_fire`, `neutral_kills`, `rival_kills`, `civilian_kills`, `deaths`, `last_seen`, `join_date`, `packed_past_clans`, `flags`) ";
-        String values = "VALUES ( '" + cp.getUniqueId().toString() + "', '" + cp.getName() + "'," + (cp.isLeader() ? 1 : 0) + ",'" + Helper.escapeQuotes(cp.getTag()) + "'," + (cp.isFriendlyFire() ? 1 : 0) + "," + cp.getNeutralKills() + "," + cp.getRivalKills() + "," + cp.getCivilianKills() + "," + cp.getDeaths() + ",'" + cp.getLastSeen() + "',' " + cp.getJoinDate() + "','" + Helper.escapeQuotes(cp.getPackedPastClans()) + "','" + Helper.escapeQuotes(cp.getFlags()) + "');";
+        String query = "INSERT INTO `sc_players` ( `uuid`, `leader`, `tag`, `friendly_fire`, `neutral_kills`, `rival_kills`, `civilian_kills`, `deaths`, `last_seen`, `join_date`, `packed_past_clans`, `flags`) ";
+        String values = "VALUES ( '" + cp.getUniqueId().toString() + "'," + (cp.isLeader() ? 1 : 0) + ",'" + Helper.escapeQuotes(cp.getTag()) + "'," + (cp.isFriendlyFire() ? 1 : 0) + "," + cp.getNeutralKills() + "," + cp.getRivalKills() + "," + cp.getCivilianKills() + "," + cp.getDeaths() + ",'" + cp.getLastSeen() + "',' " + cp.getJoinDate() + "','" + Helper.escapeQuotes(cp.getPackedPastClans()) + "','" + Helper.escapeQuotes(cp.getFlags()) + "');";
         core.insert(query + values);
     }
 
@@ -725,7 +725,7 @@ public final class StorageManager
     {
         cp.updateLastSeen();
 
-        String query = "UPDATE `sc_players` SET leader = " + (cp.isLeader() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(cp.getTag()) + "' , friendly_fire = " + (cp.isFriendlyFire() ? 1 : 0) + ", neutral_kills = " + cp.getNeutralKills() + ", rival_kills = " + cp.getRivalKills() + ", civilian_kills = " + cp.getCivilianKills() + ", deaths = " + cp.getDeaths() + ", last_seen = '" + cp.getLastSeen() + "', packed_past_clans = '" + Helper.escapeQuotes(cp.getPackedPastClans()) + "', trusted = " + (cp.isTrusted() ? 1 : 0) + ", flags = '" + Helper.escapeQuotes(cp.getFlags()) + "', name = '" + cp.getName() + "' WHERE `uuid` = '" + cp.getUniqueId().toString() + "';";
+        String query = "UPDATE `sc_players` SET leader = " + (cp.isLeader() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(cp.getTag()) + "' , friendly_fire = " + (cp.isFriendlyFire() ? 1 : 0) + ", neutral_kills = " + cp.getNeutralKills() + ", rival_kills = " + cp.getRivalKills() + ", civilian_kills = " + cp.getCivilianKills() + ", deaths = " + cp.getDeaths() + ", last_seen = '" + cp.getLastSeen() + "', packed_past_clans = '" + Helper.escapeQuotes(cp.getPackedPastClans()) + "', trusted = " + (cp.isTrusted() ? 1 : 0) + ", flags = '" + Helper.escapeQuotes(cp.getFlags()) + "' WHERE `uuid` = '" + cp.getUniqueId().toString() + "';";
         core.update(query);
     }
 
@@ -752,8 +752,8 @@ public final class StorageManager
      */
     public void insertKill(Player attacker, String attackerTag, Player victim, String victimTag, String type)
     {
-        String query = "INSERT INTO `sc_kills` (  `attacker_uuid`, `attacker`, `attacker_tag`, `victim_uuid`, `victim`, `victim_tag`, `kill_type`) ";
-        String values = "VALUES ( '" + attacker.getUniqueId() + "','" + attacker.getName() + "','" + attackerTag + "','" + victim.getUniqueId() + "','" + victim.getName() + "','" + victimTag + "','" + type + "');";
+        String query = "INSERT INTO `sc_kills` (  `attacker_uuid`, `attacker_tag`, `victim_uuid`, `victim_tag`, `kill_type`) ";
+        String values = "VALUES ( '" + attacker.getUniqueId() + "','" + attackerTag + "','" + victim.getUniqueId() + "','" + victimTag + "','" + type + "');";
         core.insert(query + values);
     }
 
@@ -777,8 +777,10 @@ public final class StorageManager
     public HashMap<String, Integer> getKillsPerPlayer(String playerName)
     {
         HashMap<String, Integer> out = new HashMap<String, Integer>();
+        
+        String UUID = UUIDUtil.nameToUUID(playerName).toString();
 
-        String query = "SELECT victim, count(victim) AS kills FROM `sc_kills` WHERE attacker = '" + playerName + "' GROUP BY victim ORDER BY count(victim) DESC;";
+        String query = "SELECT victim_uuid, count(victim_uuid) AS kills FROM `sc_kills` WHERE attacker_uuid = '" + UUID + "' GROUP BY victim_uuid ORDER BY count(victim_uuid) DESC;";
         ResultSet res = core.select(query);
 
         if (res != null)
@@ -789,7 +791,7 @@ public final class StorageManager
                 {
                     try
                     {
-                        String victim = res.getString("victim");
+                        String victim = UUIDUtil.stringUUIDToName(res.getString("victim_uuid"));
                         int kills = res.getInt("kills");
                         out.put(victim, kills);
                     }
@@ -820,7 +822,7 @@ public final class StorageManager
     {
         HashMap<String, Integer> out = new HashMap<String, Integer>();
 
-        String query = "SELECT attacker, victim, count(victim) AS kills FROM `sc_kills` GROUP BY attacker, victim ORDER BY 3 DESC;";
+        String query = "SELECT attacker_uuid, victim_uuid, count(victim_uuid) AS kills FROM `sc_kills` GROUP BY attacker_uuid, victim_uuid ORDER BY 3 DESC;";
         ResultSet res = core.select(query);
 
         if (res != null)
@@ -831,8 +833,8 @@ public final class StorageManager
                 {
                     try
                     {
-                        String attacker = res.getString("attacker");
-                        String victim = res.getString("victim");
+                        String attacker = UUIDUtil.stringUUIDToName(res.getString("attacker_uuid"));
+                        String victim = UUIDUtil.stringUUIDToName(res.getString("victim_uuid"));
                         int kills = res.getInt("kills");
                         out.put(attacker + " " + victim, kills);
                     }
@@ -866,28 +868,6 @@ public final class StorageManager
         /**
          * Bukkit 1.7.5+ UUID Migration
          */
-        if (!core.existsColumn("sc_kills", "attacker_uuid"))
-        {
-            query = "ALTER TABLE sc_kills ADD attacker_uuid VARCHAR( 255 ) DEFAULT NULL;";
-            core.execute(query);
-        }
-        if (!core.existsColumn("sc_kills", "victim_uuid"))
-        {
-            query = "ALTER TABLE sc_kills ADD victim_uuid VARCHAR( 255 ) DEFAULT NULL;";
-            core.execute(query);
-        }
-        if (!core.existsColumn("sc_players", "uuid"))
-        {
-            query = "ALTER TABLE sc_players ADD uuid VARCHAR( 255 ) DEFAULT NULL;";
-            core.execute(query);
-
-            if (plugin.getSettingsManager().isUseMysql())
-            {
-                query = "ALTER TABLE `sc_players` ADD UNIQUE `uq_player_uuid` (`uuid`);";
-                core.execute(query);
-            }
-
-        }
 
         if (core.existsColumn("sc_players", "uuid"))
         {
