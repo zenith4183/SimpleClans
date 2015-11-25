@@ -760,18 +760,6 @@ public final class StorageManager
     /**
      * Delete a player's kill record form the database
      *
-     * @param playerName
-     */
-    @Deprecated
-    public void deleteKills(String playerName)
-    {
-        String query = "DELETE FROM `sc_kills` WHERE `attacker` = '" + playerName + "'";
-        core.delete(query);
-    }
-
-    /**
-     * Delete a player's kill record form the database
-     *
      * @param playerUniqueId
      */
     public void deleteKills(UUID playerUniqueId)

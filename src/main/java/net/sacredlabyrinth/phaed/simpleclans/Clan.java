@@ -1018,41 +1018,6 @@ public class Clan implements Serializable, Comparable<Clan>
     /**
      * Remove a player from a clan
      *
-     * @param playerName
-     */
-    @Deprecated
-    public void removePlayerFromClan(String playerName)
-    {
-        ClanPlayer cp = SimpleClans.getInstance().getClanManager().getClanPlayer(playerName);
-
-        // remove clan group-permission
-        SimpleClans.getInstance().getPermissionsManager().removeClanPermissions(cp);
-
-        // remove permissions
-        SimpleClans.getInstance().getPermissionsManager().removeClanPlayerPermissions(cp);
-
-        cp.setClan(null);
-        cp.addPastClan(getColorTag() + (cp.isLeader() ? ChatColor.DARK_RED + "*" : ""));
-        cp.setLeader(false);
-        cp.setTrusted(false);
-        cp.setJoinDate(0);
-        removeMember(UUIDUtil.nameToUUID(playerName));
-
-        SimpleClans.getInstance().getStorageManager().updateClanPlayer(cp);
-        SimpleClans.getInstance().getStorageManager().updateClan(this);
-
-        Player matched = cp.toPlayer();
-
-        if (matched != null)
-        {
-            SimpleClans.getInstance().getClanManager().updateDisplayName(matched);
-        }
-        SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerKickedClanEvent(this, cp));
-    }
-
-    /**
-     * Remove a player from a clan
-     *
      * @param playerUniqueId
      */
     public void removePlayerFromClan(UUID playerUniqueId)
@@ -1084,28 +1049,6 @@ public class Clan implements Serializable, Comparable<Clan>
         SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerKickedClanEvent(this, cp));
     }
 
-
-    /**
-     * Promote a member to a leader of a clan
-     *
-     * @param playerName
-     */
-    @Deprecated
-    public void promote(String playerName)
-    {
-        ClanPlayer cp = SimpleClans.getInstance().getClanManager().getClanPlayer(playerName);
-
-        cp.setLeader(true);
-        cp.setTrusted(true);
-
-        SimpleClans.getInstance().getStorageManager().updateClanPlayer(cp);
-        SimpleClans.getInstance().getStorageManager().updateClan(this);
-
-        // add clan permission
-        SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
-        SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerPromoteEvent(this, cp));
-    }
-
     /**
      * Promote a member to a leader of a clan
      *
@@ -1124,26 +1067,6 @@ public class Clan implements Serializable, Comparable<Clan>
         // add clan permission
         SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
         SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerPromoteEvent(this, cp));
-    }
-
-    /**
-     * Demote a leader back to a member of a clan
-     *
-     * @param playerName
-     */
-    @Deprecated
-    public void demote(String playerName)
-    {
-        ClanPlayer cp = SimpleClans.getInstance().getClanManager().getClanPlayer(playerName);
-
-        cp.setLeader(false);
-
-        SimpleClans.getInstance().getStorageManager().updateClanPlayer(cp);
-        SimpleClans.getInstance().getStorageManager().updateClan(this);
-
-        // add clan permission
-        SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
-        SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerDemoteEvent(this, cp));
     }
 
     /**
@@ -1270,33 +1193,6 @@ public class Clan implements Serializable, Comparable<Clan>
         for (ClanPlayer leader : leaders)
         {
             if (!Helper.isOnline(leader.getUniqueId()))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Check whether all leaders, except for the one passed in, are online
-     *
-     * @param playerName
-     * @return
-     */
-    @Deprecated
-    public boolean allOtherLeadersOnline(String playerName)
-    {
-        List<ClanPlayer> leaders = getLeaders();
-
-        for (ClanPlayer leader : leaders)
-        {
-            if (leader.getName().equalsIgnoreCase(playerName))
-            {
-                continue;
-            }
-
-            if (!Helper.isOnline(leader.getName()))
             {
                 return false;
             }

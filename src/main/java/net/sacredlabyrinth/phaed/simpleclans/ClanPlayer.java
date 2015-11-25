@@ -57,22 +57,6 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     }
 
     /**
-     * @param playerName
-     */
-    @Deprecated
-    public ClanPlayer(String playerName)
-    {
-        this.displayName = playerName;
-        this.lastSeen = (new Date()).getTime();
-        this.joinDate = (new Date()).getTime();
-        this.neutralKills = 0;
-        this.rivalKills = 0;
-        this.civilianKills = 0;
-        this.tag = "";
-        this.channel = Channel.NONE;
-    }
-
-    /**
      * @param playerUniqueId
      */
     public ClanPlayer(UUID playerUniqueId)

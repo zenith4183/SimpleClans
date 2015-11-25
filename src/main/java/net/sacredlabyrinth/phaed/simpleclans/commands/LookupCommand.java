@@ -1,6 +1,8 @@
 package net.sacredlabyrinth.phaed.simpleclans.commands;
 
 import net.sacredlabyrinth.phaed.simpleclans.*;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -61,8 +63,8 @@ public class LookupCommand
 
         if (playerName != null)
         {
-            ClanPlayer targetCp = plugin.getClanManager().getAnyClanPlayer(playerName);
-            ClanPlayer myCp = plugin.getClanManager().getClanPlayer(player.getName());
+            ClanPlayer targetCp = plugin.getClanManager().getAnyClanPlayer(UUIDUtil.nameToUUID(playerName));
+            ClanPlayer myCp = plugin.getClanManager().getClanPlayer(player.getUniqueId());
             Clan myClan = myCp == null ? null : myCp.getClan();
 
             if (targetCp != null)

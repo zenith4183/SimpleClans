@@ -492,29 +492,6 @@ public class Helper
     /**
      * Check whether a player is online
      *
-     * @param playerName
-     * @return
-     */
-    @Deprecated
-    public static boolean isOnline(String playerName)
-    {
-        Collection<Player> online = getOnlinePlayers();
-
-        for (Player o : online)
-        {
-            if (o.getName().equalsIgnoreCase(playerName))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Check whether a player is online
-     *
      * @param playerUniqueId
      * @return
      */

@@ -50,7 +50,7 @@ public final class RequestManager
     {
         String msg = MessageFormat.format(plugin.getLang("asking.for.the.demotion"), Helper.capitalize(requester.getName()), demotedName);
 
-        ClanPlayer demotedTp = plugin.getClanManager().getClanPlayer(demotedName.toLowerCase());
+        ClanPlayer demotedTp = plugin.getClanManager().getClanPlayer(UUIDUtil.nameToUUID(demotedName.toLowerCase()));
 
         List<ClanPlayer> acceptors = Helper.stripOffLinePlayers(clan.getLeaders());
         acceptors.remove(demotedTp);

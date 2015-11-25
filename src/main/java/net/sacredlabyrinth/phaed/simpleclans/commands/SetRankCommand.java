@@ -45,7 +45,7 @@ public class SetRankCommand
                             
                             if (clan.isMember(playerUUID) || clan.isLeader(playerUUID))
                             {
-                                ClanPlayer cpm = plugin.getClanManager().getClanPlayer(playerName);
+                                ClanPlayer cpm = plugin.getClanManager().getClanPlayer(UUIDUtil.nameToUUID(playerName));
                                 cpm.setRank(rank);
                                 plugin.getStorageManager().updateClanPlayer(cpm);
 
