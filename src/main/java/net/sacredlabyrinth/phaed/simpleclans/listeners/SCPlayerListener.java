@@ -111,57 +111,48 @@ public class SCPlayerListener implements Listener
                 plugin.getClanManager().processClanChat(player, cp.getTag(), Helper.toMessage(Helper.removeFirst(split)));
             }
         }
-
-        if (plugin.getSettingsManager().isForceCommandPriority())
+        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAlly()))
         {
-            if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAlly()))
+            if (!plugin.getSettingsManager().isAllyChatEnable())
             {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandAlly()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandAlly())))
-                {
-                    new AllyCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
+                return;
             }
-            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandGlobal()))
+
+            event.setCancelled(true);
+
+            if (split.length > 1)
             {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandGlobal()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandGlobal())))
-                {
-                    new GlobalCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
+                plugin.getClanManager().processAllyChat(player, Helper.toMessage(Helper.removeFirst(split)));
             }
-            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandClan()))
+        }
+        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandGlobal()))
+        {
+            event.setCancelled(true);
+
+            if (split.length > 1)
             {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandClan()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandClan())))
-                {
-                    new ClanCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
+                plugin.getClanManager().processGlobalChat(player, Helper.toMessage(Helper.removeFirst(split)));
             }
-            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAccept()))
-            {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandAccept()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandAccept())))
-                {
-                    new AcceptCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
-            }
-            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandDeny()))
-            {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandDeny()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandDeny())))
-                {
-                    new DenyCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
-            }
-            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandMore()))
-            {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandMore()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandMore())))
-                {
-                    new MoreCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
-            }
+        }
+        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandClan()))
+        {
+            event.setCancelled(true);
+            plugin.getCommandManager().processClan(player, Helper.removeFirst(split));
+        }
+        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAccept()))
+        {
+            event.setCancelled(true);
+            plugin.getCommandManager().processAccept(player);
+        }
+        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandDeny()))
+        {
+            event.setCancelled(true);
+            plugin.getCommandManager().processDeny(player);
+        }
+        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandMore()))
+        {
+            event.setCancelled(true);
+            plugin.getCommandManager().processMore(player);
         }
     }
 
