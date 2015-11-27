@@ -31,7 +31,6 @@ public final class SettingsManager
     private boolean requireVerification;
     private List<Integer> itemsList;
     private List<String> blacklistedWorlds;
-    private List<String> bannedPlayers;
     private List<String> disallowedWords;
     private List<String> disallowedColors;
     private List<String> unRivableClans;
@@ -175,7 +174,6 @@ public final class SettingsManager
         debugging = getConfig().getBoolean("settings.show-debug-info");
         enableAutoGroups = getConfig().getBoolean("settings.enable-auto-groups");
         useColorCodeFromPrefix = getConfig().getBoolean("settings.use-colorcode-from-prefix-for-name");
-        bannedPlayers = getConfig().getStringList("settings.banned-players");
         compatMode = getConfig().getBoolean("settings.chat-compatibility-mode");
         disallowedColors = getConfig().getStringList("settings.disallowed-tag-colors");
         blacklistedWorlds = getConfig().getStringList("settings.blacklisted-worlds");
@@ -399,55 +397,6 @@ public final class SettingsManager
     }
 
     /**
-     * Check whether a player is banned
-     *
-     * @param playerUniqueId the player's name
-     * @return whether player is banned
-     */
-    public boolean isBanned(UUID playerUniqueId)
-    {
-        for (String pl : getBannedPlayers())
-        {
-            if (pl.equals(playerUniqueId.toString()))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Add a player to the banned list
-     *
-     * @param playerUniqueId the player's name
-     */
-    public void addBanned(UUID playerUniqueId)
-    {
-        if (!bannedPlayers.contains(playerUniqueId.toString()))
-        {
-            getBannedPlayers().add(playerUniqueId.toString());
-        }
-
-        save();
-    }
-
-    /**
-     * Remove a player from the banned list
-     *
-     * @param playerUniqueId the player's name
-     */
-    public void removeBanned(UUID playerUniqueId)
-    {
-        if (getBannedPlayers().contains(playerUniqueId.toString()))
-        {
-            getBannedPlayers().remove(playerUniqueId.toString());
-        }
-
-        save();
-    }
-
-    /**
      * @return the plugin
      */
     public SimpleClans getPlugin()
@@ -461,14 +410,6 @@ public final class SettingsManager
     public boolean isRequireVerification()
     {
         return requireVerification;
-    }
-
-    /**
-     * @return the bannedPlayers
-     */
-    public List<String> getBannedPlayers()
-    {
-        return Collections.unmodifiableList(bannedPlayers);
     }
 
     /**

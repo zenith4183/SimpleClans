@@ -1,6 +1,7 @@
 package net.sacredlabyrinth.phaed.simpleclans.commands;
 
 import net.sacredlabyrinth.phaed.simpleclans.ChatBlock;
+import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
@@ -35,7 +36,9 @@ public class UnbanCommand
             {
                 String banned = arg[0];
 
-                if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(banned)))
+                ClanPlayer cp = plugin.getClanManager().getCreateClanPlayerUUID(banned);
+                
+                if (cp != null && cp.isBanned())
                 {
                     Player pl = Helper.getPlayer(banned);
 
@@ -44,7 +47,7 @@ public class UnbanCommand
                         ChatBlock.sendMessage(pl, ChatColor.AQUA + plugin.getLang("you.have.been.unbanned.from.clan.commands"));
                     }
 
-                    plugin.getSettingsManager().removeBanned(UUIDUtil.nameToUUID(banned));
+                    plugin.getClanManager().unban(banned);
                     ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("player.removed.from.the.banned.list"));
                 }
                 else

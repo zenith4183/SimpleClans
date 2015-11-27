@@ -28,6 +28,14 @@ public class CreateCommand
     public void execute(Player player, String[] arg)
     {
         SimpleClans plugin = SimpleClans.getInstance();
+        
+        ClanPlayer cpn = plugin.getClanManager().getCreateClanPlayer(player.getUniqueId());
+        
+        if (cpn != null && cpn.isBanned())
+        {
+            ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
+            return;
+        }
 
         if (plugin.getPermissionsManager().has(player, "simpleclans.leader.create"))
         {

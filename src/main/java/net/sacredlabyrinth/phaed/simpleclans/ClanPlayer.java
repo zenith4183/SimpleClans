@@ -34,6 +34,7 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     private HashSet<String> pastClans = new HashSet<String>();
     private VoteResult vote;
     private Channel channel;
+    private int banned;
 
     private boolean useChatShortcut = false;
     private boolean globalChat = true;
@@ -920,5 +921,28 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
    public boolean isMutedAlly()
    {
        return allyChatMute;
+   }
+   
+   public boolean isBanned() {
+	   if (banned == 0) {
+		   return false;
+	   }
+	   return true;
+   }
+   
+   public void setBanned(int banned) {
+	   this.banned = banned;
+   }
+   
+   public int getBanned() {
+	   return banned;
+   }
+   
+   public void banPlayer() {
+	   this.banned = 1;
+   }
+   
+   public void unbanPlayer() {
+	   this.banned = 0;
    }
 }

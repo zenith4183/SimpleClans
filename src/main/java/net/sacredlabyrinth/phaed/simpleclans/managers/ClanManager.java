@@ -415,7 +415,7 @@ public final class ClanManager
      */
     public void ban(String playerName)
     {
-        ClanPlayer cp = getClanPlayer(UUIDUtil.nameToUUID(playerName));
+        ClanPlayer cp = getCreateClanPlayer(UUIDUtil.nameToUUID(playerName));
         Clan clan = cp.getClan();
 
         if (clan != null)
@@ -430,14 +430,23 @@ public final class ClanManager
                 cp.addPastClan(clan.getColorTag() + (cp.isLeader() ? ChatColor.DARK_RED + "*" : ""));
                 cp.setLeader(false);
                 cp.setJoinDate(0);
+                cp.banPlayer();
                 clan.removeMember(UUIDUtil.nameToUUID(playerName));
 
                 plugin.getStorageManager().updateClanPlayer(cp);
                 plugin.getStorageManager().updateClan(clan);
             }
         }
-
-        plugin.getSettingsManager().addBanned(UUIDUtil.nameToUUID(playerName));
+    }
+    
+    /**
+     * @param playerName
+     */
+    public void unban(String playerName)
+    {
+        ClanPlayer cp = getCreateClanPlayer(UUIDUtil.nameToUUID(playerName));
+        cp.unbanPlayer();
+        plugin.getStorageManager().updateClanPlayer(cp);
     }
 
     /**

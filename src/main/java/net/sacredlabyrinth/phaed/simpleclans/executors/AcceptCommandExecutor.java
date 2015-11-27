@@ -25,16 +25,16 @@ public class AcceptCommandExecutor implements CommandExecutor
     {
         Player player = (Player) commandSender;
 
-        if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
-        {
-            ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-            return false;
-        }
-
         ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-
+        
         if (cp != null)
         {
+            if (cp.isBanned())
+            {
+                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
+                return false;
+            }
+        	
             Clan clan = cp.getClan();
 
             if (clan.isLeader(player))

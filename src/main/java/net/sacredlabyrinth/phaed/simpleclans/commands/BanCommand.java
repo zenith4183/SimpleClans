@@ -1,6 +1,7 @@
 package net.sacredlabyrinth.phaed.simpleclans.commands;
 
 import net.sacredlabyrinth.phaed.simpleclans.ChatBlock;
+import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,9 +35,11 @@ public class BanCommand
             {
                 String banned = arg[0];
                 
-                UUID PlayerUniqueId = UUIDUtil.nameToUUID(banned);
-                if (!plugin.getSettingsManager().isBanned(PlayerUniqueId))
+                ClanPlayer cp = plugin.getClanManager().getCreateClanPlayerUUID(banned);
+                
+                if (!cp.isBanned())
                 {
+                    UUID PlayerUniqueId = UUIDUtil.nameToUUID(banned);
                     Player pl = SimpleClans.getInstance().getServer().getPlayer(PlayerUniqueId);
 
                     if (pl != null)
@@ -44,6 +47,7 @@ public class BanCommand
                         ChatBlock.sendMessage(pl, ChatColor.AQUA + plugin.getLang("you.banned"));
                     }
 
+                    cp.banPlayer();
                     plugin.getClanManager().ban(banned);
                     ChatBlock.sendMessage(player, ChatColor.AQUA + plugin.getLang("player.added.to.banned.list"));
                 }

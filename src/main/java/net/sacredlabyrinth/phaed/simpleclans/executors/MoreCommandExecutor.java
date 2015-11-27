@@ -1,6 +1,7 @@
 package net.sacredlabyrinth.phaed.simpleclans.executors;
 
 import net.sacredlabyrinth.phaed.simpleclans.ChatBlock;
+import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 
@@ -26,7 +27,9 @@ public class MoreCommandExecutor implements CommandExecutor
     {
         Player player = (Player) commandSender;
 
-        if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
+        ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
+        
+        if (cp != null && cp.isBanned())
         {
             ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
             return false;

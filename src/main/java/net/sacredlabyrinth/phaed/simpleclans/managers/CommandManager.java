@@ -112,13 +112,15 @@ public final class CommandManager
             if (sender instanceof Player)
             {
                 Player player = (Player) sender;
-
+                
                 if (plugin.getSettingsManager().isBlacklistedWorld(player.getLocation().getWorld().getName()))
                 {
                     return;
                 }
+                
+                ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
 
-                if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
+                if (cp != null && cp.isBanned())
                 {
                     ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
                     return;
@@ -334,16 +336,16 @@ public final class CommandManager
      */
     public void processAccept(Player player)
     {
-        if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
-        {
-            ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-            return;
-        }
-
         ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-
+        
         if (cp != null)
         {
+            if (cp.isBanned())
+            {
+                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
+                return;
+            }
+        	
             Clan clan = cp.getClan();
 
             if (clan.isLeader(player))
@@ -392,16 +394,16 @@ public final class CommandManager
      */
     public void processDeny(Player player)
     {
-        if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
-        {
-            ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-            return;
-        }
-
         ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-
+        
         if (cp != null)
         {
+            if (cp.isBanned())
+            {
+                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
+                return;
+            }
+        	
             Clan clan = cp.getClan();
 
             if (clan.isLeader(player))
@@ -450,7 +452,10 @@ public final class CommandManager
      */
     public void processMore(Player player)
     {
-        if (plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
+    	
+        ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
+
+        if (cp != null && cp.isBanned())
         {
             ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
             return;

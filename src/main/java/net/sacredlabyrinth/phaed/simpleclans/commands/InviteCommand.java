@@ -46,7 +46,7 @@ public class InviteCommand
                             {
                                 if (!invited.getName().equals(player.getName()))
                                 {
-                                    if (!plugin.getSettingsManager().isBanned(UUIDUtil.nameToUUID(player.getName())))
+                                    if (!cp.isBanned())
                                     {
                                         ClanPlayer cpInv = plugin.getClanManager().getClanPlayer(invited);
 

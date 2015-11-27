@@ -91,7 +91,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_players");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20) NOT NULL auto_increment, `uuid` VARCHAR(255) DEFAULT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, PRIMARY KEY  (`id`), UNIQUE KEY `uq_sc_players_1` (`uuid`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20) NOT NULL auto_increment, `uuid` VARCHAR(255) DEFAULT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, `banned` tinyint(1) default '0', PRIMARY KEY  (`id`), UNIQUE KEY `uq_sc_players_1` (`uuid`));";
                     core.execute(query);
                 }
 
@@ -128,7 +128,7 @@ public final class StorageManager
                 {
                     SimpleClans.log("Creating table: sc_players");
 
-                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20), `uuid` VARCHAR(255) DEFAULT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, PRIMARY KEY  (`id`), UNIQUE (`uuid`));";
+                    String query = "CREATE TABLE IF NOT EXISTS `sc_players` ( `id` bigint(20), `uuid` VARCHAR(255) DEFAULT NULL, `leader` tinyint(1) default '0', `tag` varchar(25) NOT NULL, `friendly_fire` tinyint(1) default '0', `neutral_kills` int(11) default NULL, `rival_kills` int(11) default NULL, `civilian_kills` int(11) default NULL, `deaths` int(11) default NULL, `last_seen` bigint NOT NULL, `join_date` bigint NOT NULL, `trusted` tinyint(1) default '0', `flags` text NOT NULL, `packed_past_clans` text, `banned` tinyint(1) default '0', PRIMARY KEY  (`id`), UNIQUE (`uuid`));";
                     core.execute(query);
                 }
 
@@ -461,6 +461,7 @@ public final class StorageManager
                         long join_date = res.getLong("join_date");
                         String flags = res.getString("flags");
                         String packed_past_clans = Helper.parseColors(res.getString("packed_past_clans"));
+                        int banned = res.getInt("banned");
 
                         if (last_seen == 0)
                         {
@@ -489,6 +490,7 @@ public final class StorageManager
                         cp.setJoinDate(join_date);
                         cp.setPackedPastClans(packed_past_clans);
                         cp.setTrusted(leader || trusted);
+                        cp.setBanned(banned);
 
                         if (!tag.isEmpty())
                         {
@@ -694,8 +696,8 @@ public final class StorageManager
      */
     public void insertClanPlayer(ClanPlayer cp)
     {
-        String query = "INSERT INTO `sc_players` ( `uuid`, `leader`, `tag`, `friendly_fire`, `neutral_kills`, `rival_kills`, `civilian_kills`, `deaths`, `last_seen`, `join_date`, `packed_past_clans`, `flags`) ";
-        String values = "VALUES ( '" + cp.getUniqueId().toString() + "'," + (cp.isLeader() ? 1 : 0) + ",'" + Helper.escapeQuotes(cp.getTag()) + "'," + (cp.isFriendlyFire() ? 1 : 0) + "," + cp.getNeutralKills() + "," + cp.getRivalKills() + "," + cp.getCivilianKills() + "," + cp.getDeaths() + ",'" + cp.getLastSeen() + "',' " + cp.getJoinDate() + "','" + Helper.escapeQuotes(cp.getPackedPastClans()) + "','" + Helper.escapeQuotes(cp.getFlags()) + "');";
+        String query = "INSERT INTO `sc_players` ( `uuid`, `leader`, `tag`, `friendly_fire`, `neutral_kills`, `rival_kills`, `civilian_kills`, `deaths`, `last_seen`, `join_date`, `packed_past_clans`, `flags`, `banned`) ";
+        String values = "VALUES ( '" + cp.getUniqueId().toString() + "'," + (cp.isLeader() ? 1 : 0) + ",'" + Helper.escapeQuotes(cp.getTag()) + "'," + (cp.isFriendlyFire() ? 1 : 0) + "," + cp.getNeutralKills() + "," + cp.getRivalKills() + "," + cp.getCivilianKills() + "," + cp.getDeaths() + ",'" + cp.getLastSeen() + "',' " + cp.getJoinDate() + "','" + Helper.escapeQuotes(cp.getPackedPastClans()) + "','" + Helper.escapeQuotes(cp.getFlags()) + "'," + cp.getBanned() + ");";
         core.insert(query + values);
     }
 
@@ -725,7 +727,7 @@ public final class StorageManager
     {
         cp.updateLastSeen();
 
-        String query = "UPDATE `sc_players` SET leader = " + (cp.isLeader() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(cp.getTag()) + "' , friendly_fire = " + (cp.isFriendlyFire() ? 1 : 0) + ", neutral_kills = " + cp.getNeutralKills() + ", rival_kills = " + cp.getRivalKills() + ", civilian_kills = " + cp.getCivilianKills() + ", deaths = " + cp.getDeaths() + ", last_seen = '" + cp.getLastSeen() + "', packed_past_clans = '" + Helper.escapeQuotes(cp.getPackedPastClans()) + "', trusted = " + (cp.isTrusted() ? 1 : 0) + ", flags = '" + Helper.escapeQuotes(cp.getFlags()) + "' WHERE `uuid` = '" + cp.getUniqueId().toString() + "';";
+        String query = "UPDATE `sc_players` SET leader = " + (cp.isLeader() ? 1 : 0) + ", tag = '" + Helper.escapeQuotes(cp.getTag()) + "' , friendly_fire = " + (cp.isFriendlyFire() ? 1 : 0) + ", neutral_kills = " + cp.getNeutralKills() + ", rival_kills = " + cp.getRivalKills() + ", civilian_kills = " + cp.getCivilianKills() + ", deaths = " + cp.getDeaths() + ", last_seen = '" + cp.getLastSeen() + "', packed_past_clans = '" + Helper.escapeQuotes(cp.getPackedPastClans()) + "', trusted = " + (cp.isTrusted() ? 1 : 0) + ", flags = '" + Helper.escapeQuotes(cp.getFlags())+ "', banned = " + cp.getBanned() + " WHERE `uuid` = '" + cp.getUniqueId().toString() + "';";
         core.update(query);
     }
 
@@ -865,10 +867,12 @@ public final class StorageManager
     {
         String query = null;
 
-        /**
-         * Bukkit 1.7.5+ UUID Migration
-         */
-
+        if (!core.existsColumn("sc_players", "banned"))
+        {
+            query = "ALTER TABLE sc_players ADD `banned` tinyint(1) default '0';";
+            core.execute(query);
+        }
+        
         if (core.existsColumn("sc_players", "uuid"))
         {
             if (!plugin.getSettingsManager().isUseMysql())
