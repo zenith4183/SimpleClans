@@ -6,6 +6,9 @@ import net.milkbowl.vault.permission.Permission;
 import net.sacredlabyrinth.phaed.simpleclans.Clan;
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
+import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -201,9 +204,9 @@ public final class PermissionsManager
      * @param money
      * @return
      */
-    public boolean playerChargeMoney(Player player, double money)
+    public boolean playerChargeMoney(OfflinePlayer player, double money)
     {
-        return economy.withdrawPlayer(player.getName(), money).transactionSuccess();
+        return economy.withdrawPlayer(player, money).transactionSuccess();
     }
 
     /**
@@ -213,9 +216,9 @@ public final class PermissionsManager
      * @param money
      * @return
      */
-    public boolean playerGrantMoney(Player player, double money)
+    public boolean playerGrantMoney(OfflinePlayer player, double money)
     {
-        return economy.depositPlayer(player.getName(), money).transactionSuccess();
+        return economy.depositPlayer(player, money).transactionSuccess();
     }
 
     /**
@@ -227,7 +230,7 @@ public final class PermissionsManager
      */
     public boolean playerGrantMoney(String player, double money)
     {
-        return economy.depositPlayer(player, money).transactionSuccess();
+    	return playerGrantMoney(UUIDUtil.nameToPlayer(player), money);
     }
 
     /**
@@ -237,9 +240,9 @@ public final class PermissionsManager
      * @param money
      * @return whether he has the money
      */
-    public boolean playerHasMoney(Player player, double money)
+    public boolean playerHasMoney(OfflinePlayer player, double money)
     {
-        return economy.has(player.getName(), money);
+        return economy.has(player, money);
     }
 
     /**
@@ -248,9 +251,9 @@ public final class PermissionsManager
      * @param player
      * @return the players money
      */
-    public double playerGetMoney(Player player)
+    public double playerGetMoney(OfflinePlayer player)
     {
-        return economy.getBalance(player.getName());
+        return economy.getBalance(player);
     }
 
     /**
@@ -399,7 +402,7 @@ public final class PermissionsManager
      * @param p
      * @return
      */
-    @SuppressWarnings({"deprecation", "deprecation"})
+    @SuppressWarnings({"deprecation"})
     public String getPrefix(Player p)
     {
         String out = "";

@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author phaed
@@ -145,7 +144,6 @@ public final class SettingsManager
     /**
      * Load the configuration
      */
-    @SuppressWarnings("unchecked")
     public void load()
     {
         boolean exists = (main).exists();
