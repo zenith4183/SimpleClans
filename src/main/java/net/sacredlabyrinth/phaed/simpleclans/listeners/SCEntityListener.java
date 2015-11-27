@@ -101,6 +101,8 @@ public class SCEntityListener implements Listener
                     acp.addNeutralKill();
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, vcp.getTag(), "n");
                 }
+                plugin.getKillCampingManager().addPlayerKill(attacker.getUniqueId().toString(), victim.getUniqueId().toString());
+                plugin.getKillCampingManager().addClanKill(acp.getTag(), victim.getUniqueId().toString());
 
                 if (reward != 0 && plugin.getSettingsManager().isMoneyPerKill())
                 {
@@ -204,6 +206,10 @@ public class SCEntityListener implements Listener
             {
                 attacker = (Player) sub.getDamager();
                 victim = (Player) sub.getEntity();
+            }
+            
+            if (plugin.getKillCampingManager().isPlayerCamping(attacker, victim)) {
+            	event.setCancelled(true);
             }
 
             if (plugin.getSettingsManager().isTamableMobsSharing())

@@ -31,6 +31,7 @@ public class SimpleClans extends JavaPlugin {
     private CommandManager commandManager;
     private TeleportManager teleportManager;
     private LanguageManager languageManager;
+    private KillCampingManager killCampingManager;
 
     /**
      * @return the logger
@@ -79,6 +80,7 @@ public class SimpleClans extends JavaPlugin {
         storageManager = new StorageManager();
         commandManager = new CommandManager();
         teleportManager = new TeleportManager();
+        killCampingManager = new KillCampingManager();
 
         logger.info(MessageFormat.format(getLang("version.loaded"), getDescription().getName(), getDescription().getVersion()));
 
@@ -174,6 +176,14 @@ public class SimpleClans extends JavaPlugin {
     public CommandManager getCommandManager()
     {
         return commandManager;
+    }
+    
+    /**
+     * @return the killCamingManager
+     */
+    public KillCampingManager getKillCampingManager()
+    {
+    	return killCampingManager;
     }
 
     /**

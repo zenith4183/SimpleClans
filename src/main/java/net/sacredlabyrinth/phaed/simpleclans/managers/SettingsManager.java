@@ -129,6 +129,7 @@ public final class SettingsManager
     private boolean useBungeeCord;
     private boolean forceCommandPriority;
     private int maxAsksPerRequest;
+    private int killCooldown;
 
     /**
      *
@@ -184,6 +185,7 @@ public final class SettingsManager
         serverName = getConfig().getString("settings.server-name");
         chatTags = getConfig().getBoolean("settings.display-chat-tags");
         rivalLimitPercent = getConfig().getInt("settings.rival-limit-percent");
+        killCooldown = getConfig().getInt("settings.killcooldown");
         ePurchaseCreation = getConfig().getBoolean("economy.purchase-clan-create");
         ePurchaseVerification = getConfig().getBoolean("economy.purchase-clan-verify");
         ePurchaseInvite = getConfig().getBoolean("economy.purchase-clan-invite");
@@ -434,6 +436,15 @@ public final class SettingsManager
     public int getRivalLimitPercent()
     {
         return rivalLimitPercent;
+    }
+    
+    /**
+     * 
+     * @return the killCooldown
+     */
+    public int getKillCooldown() 
+    {
+    	return killCooldown;
     }
 
     /**
