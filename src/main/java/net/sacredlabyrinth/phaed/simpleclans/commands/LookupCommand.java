@@ -105,7 +105,7 @@ public class LookupCommand
                 ChatBlock.sendMessage(player, "  " + subColor + MessageFormat.format(plugin.getLang("past.clans.0"), pastClans));
                 ChatBlock.sendMessage(player, "  " + subColor + MessageFormat.format(plugin.getLang("inactive.0"), inactive));
 
-                if (arg.length == 1 && targetClan != null)
+                if (arg.length == 1)
                 {
                     if (!targetCp.equals(myCp))
                     {
