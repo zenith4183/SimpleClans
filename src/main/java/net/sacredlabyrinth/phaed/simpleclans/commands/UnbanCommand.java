@@ -4,7 +4,6 @@ import net.sacredlabyrinth.phaed.simpleclans.ChatBlock;
 import net.sacredlabyrinth.phaed.simpleclans.ClanPlayer;
 import net.sacredlabyrinth.phaed.simpleclans.Helper;
 import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

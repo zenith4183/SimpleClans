@@ -23,6 +23,12 @@ public class UUIDUtil {
 				
 	}
 	
+	public static Player nameToPlayer(String name) {
+		Player player = SimpleClans.getInstance().getServer().getPlayerExact(name);
+		
+		return player;
+	}
+	
 	public static UUID stringToUUID(String string) {
 		UUID uuid = UUID.fromString(string);
 		return uuid;		
@@ -35,7 +41,6 @@ public class UUIDUtil {
 			return player.getName();
 		}
 		else {
-			@SuppressWarnings("deprecation")
 			OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
 			return offlinePlayer.getName();
 		}

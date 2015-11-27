@@ -1,14 +1,12 @@
 package net.sacredlabyrinth.phaed.simpleclans;
 
 import net.sacredlabyrinth.phaed.simpleclans.events.*;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 

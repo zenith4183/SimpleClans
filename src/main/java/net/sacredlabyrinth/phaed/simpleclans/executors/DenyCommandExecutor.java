@@ -1,7 +1,6 @@
 package net.sacredlabyrinth.phaed.simpleclans.executors;
 
 import net.sacredlabyrinth.phaed.simpleclans.*;
-import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
