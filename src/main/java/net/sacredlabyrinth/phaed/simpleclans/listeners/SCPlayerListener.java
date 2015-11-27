@@ -6,6 +6,8 @@ import net.sacredlabyrinth.phaed.simpleclans.SimpleClans;
 import net.sacredlabyrinth.phaed.simpleclans.executors.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.command.Command;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -111,48 +113,57 @@ public class SCPlayerListener implements Listener
                 plugin.getClanManager().processClanChat(player, cp.getTag(), Helper.toMessage(Helper.removeFirst(split)));
             }
         }
-        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAlly()))
-        {
-            if (!plugin.getSettingsManager().isAllyChatEnable())
-            {
-                return;
-            }
 
-            event.setCancelled(true);
-
-            if (split.length > 1)
+        if (plugin.getSettingsManager().isForceCommandPriority())
+        {
+            if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAlly()))
             {
-                plugin.getClanManager().processAllyChat(player, Helper.toMessage(Helper.removeFirst(split)));
+                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandAlly()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandAlly())))
+                {
+                    new AllyCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
+                    event.setCancelled(true);
+                }
             }
-        }
-        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandGlobal()))
-        {
-            event.setCancelled(true);
-
-            if (split.length > 1)
+            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandGlobal()))
             {
-                plugin.getClanManager().processGlobalChat(player, Helper.toMessage(Helper.removeFirst(split)));
+                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandGlobal()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandGlobal())))
+                {
+                    new GlobalCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
+                    event.setCancelled(true);
+                }
             }
-        }
-        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandClan()))
-        {
-            event.setCancelled(true);
-            plugin.getCommandManager().processClan(player, Helper.removeFirst(split));
-        }
-        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAccept()))
-        {
-            event.setCancelled(true);
-            plugin.getCommandManager().processAccept(player);
-        }
-        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandDeny()))
-        {
-            event.setCancelled(true);
-            plugin.getCommandManager().processDeny(player);
-        }
-        else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandMore()))
-        {
-            event.setCancelled(true);
-            plugin.getCommandManager().processMore(player);
+            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandClan()))
+            {
+                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandClan()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandClan())))
+                {
+                    new ClanCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
+                    event.setCancelled(true);
+                }
+            }
+            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandAccept()))
+            {
+                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandAccept()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandAccept())))
+                {
+                    new AcceptCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
+                    event.setCancelled(true);
+                }
+            }
+            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandDeny()))
+            {
+                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandDeny()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandDeny())))
+                {
+                    new DenyCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
+                    event.setCancelled(true);
+                }
+            }
+            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandMore()))
+            {
+                //if (!pluginCommand.equals(cmd))
+                //{
+                    new MoreCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
+                    event.setCancelled(true);
+                //}
+            }
         }
     }
 

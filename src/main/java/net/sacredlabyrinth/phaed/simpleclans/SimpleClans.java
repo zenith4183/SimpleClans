@@ -1,5 +1,6 @@
 package net.sacredlabyrinth.phaed.simpleclans;
 
+import net.sacredlabyrinth.phaed.simpleclans.executors.*;
 import net.sacredlabyrinth.phaed.simpleclans.listeners.SCEntityListener;
 import net.sacredlabyrinth.phaed.simpleclans.listeners.SCPlayerListener;
 import net.sacredlabyrinth.phaed.simpleclans.managers.*;
@@ -28,7 +29,6 @@ public class SimpleClans extends JavaPlugin {
     private StorageManager storageManager;
     private SettingsManager settingsManager;
     private PermissionsManager permissionsManager;
-    private CommandManager commandManager;
     private TeleportManager teleportManager;
     private LanguageManager languageManager;
     private KillCampingManager killCampingManager;
@@ -78,7 +78,6 @@ public class SimpleClans extends JavaPlugin {
         requestManager = new RequestManager();
         clanManager = new ClanManager();
         storageManager = new StorageManager();
-        commandManager = new CommandManager();
         teleportManager = new TeleportManager();
         killCampingManager = new KillCampingManager();
 
@@ -88,6 +87,21 @@ public class SimpleClans extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SCPlayerListener(), this);
 
         permissionsManager.loadPermissions();
+
+        CommandHelper.registerCommand(getSettingsManager().getCommandClan());
+        CommandHelper.registerCommand(getSettingsManager().getCommandAccept());
+        CommandHelper.registerCommand(getSettingsManager().getCommandDeny());
+        CommandHelper.registerCommand(getSettingsManager().getCommandMore());
+        CommandHelper.registerCommand(getSettingsManager().getCommandMore());
+        CommandHelper.registerCommand(getSettingsManager().getCommandAlly());
+        CommandHelper.registerCommand(getSettingsManager().getCommandGlobal());
+
+        getCommand(getSettingsManager().getCommandClan()).setExecutor(new ClanCommandExecutor());
+        getCommand(getSettingsManager().getCommandAccept()).setExecutor(new AcceptCommandExecutor());
+        getCommand(getSettingsManager().getCommandDeny()).setExecutor(new DenyCommandExecutor());
+        getCommand(getSettingsManager().getCommandMore()).setExecutor(new MoreCommandExecutor());
+        getCommand(getSettingsManager().getCommandAlly()).setExecutor(new AllyCommandExecutor());
+        getCommand(getSettingsManager().getCommandGlobal()).setExecutor(new GlobalCommandExecutor());
 
         getCommand(getSettingsManager().getCommandClan()).setTabCompleter(new PlayerNameTabCompleter());
 
@@ -170,14 +184,6 @@ public class SimpleClans extends JavaPlugin {
         return permissionsManager;
     }
 
-    /**
-     * @return the commandManager
-     */
-    public CommandManager getCommandManager()
-    {
-        return commandManager;
-    }
-    
     /**
      * @return the killCamingManager
      */

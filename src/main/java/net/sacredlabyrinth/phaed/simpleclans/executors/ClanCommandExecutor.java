@@ -1,11 +1,11 @@
-package net.sacredlabyrinth.phaed.simpleclans.managers;
+package net.sacredlabyrinth.phaed.simpleclans.executors;
 
 import net.sacredlabyrinth.phaed.simpleclans.*;
 import net.sacredlabyrinth.phaed.simpleclans.commands.*;
 import net.sacredlabyrinth.phaed.simpleclans.uuid.UUIDUtil;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.text.MessageFormat;
@@ -13,7 +13,7 @@ import java.text.MessageFormat;
 /**
  * @author phaed
  */
-public final class CommandManager
+public final class ClanCommandExecutor implements CommandExecutor
 {
     private SimpleClans plugin;
     private CreateCommand createCommand;
@@ -58,7 +58,7 @@ public final class CommandManager
     /**
      *
      */
-    public CommandManager()
+    public ClanCommandExecutor()
     {
         plugin = SimpleClans.getInstance();
         menuCommand = new MenuCommand();
@@ -101,11 +101,8 @@ public final class CommandManager
         resetKDRCommand = new ResetKDRCommand();
     }
 
-    /**
-     * @param sender
-     * @param args
-     */
-    public void processClan(CommandSender sender, String[] args)
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args)
     {
         try
         {
@@ -115,7 +112,7 @@ public final class CommandManager
                 
                 if (plugin.getSettingsManager().isBlacklistedWorld(player.getLocation().getWorld().getName()))
                 {
-                    return;
+                    return false;
                 }
                 
                 ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
@@ -123,7 +120,7 @@ public final class CommandManager
                 if (cp != null && cp.isBanned())
                 {
                     ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-                    return;
+                    return false;
                 }
 
                 if (args.length == 0)
@@ -327,156 +324,6 @@ public final class CommandManager
                 System.out.print(el.toString());
             }
         }
-    }
-
-    /**
-     * Process the accept command
-     *
-     * @param player
-     */
-    public void processAccept(Player player)
-    {
-        ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-        
-        if (cp != null)
-        {
-            if (cp.isBanned())
-            {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-                return;
-            }
-        	
-            Clan clan = cp.getClan();
-
-            if (clan.isLeader(player))
-            {
-                if (plugin.getRequestManager().hasRequest(clan.getTag()))
-                {
-                    if (cp.getVote() == null)
-                    {
-                        plugin.getRequestManager().accept(cp);
-                        clan.leaderAnnounce(ChatColor.GREEN + MessageFormat.format(plugin.getLang("voted.to.accept"), Helper.capitalize(player.getName())));
-                    }
-                    else
-                    {
-                        ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("you.have.already.voted"));
-                    }
-                }
-                else
-                {
-                    ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("nothing.to.accept"));
-                }
-            }
-            else
-            {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("no.leader.permissions"));
-            }
-        }
-        else
-        {
-            if (plugin.getRequestManager().hasRequest(player.getName().toLowerCase()))
-            {
-                cp = plugin.getClanManager().getCreateClanPlayer(player.getUniqueId());
-
-                plugin.getRequestManager().accept(cp);
-            }
-            else
-            {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("nothing.to.accept"));
-            }
-        }
-    }
-
-    /**
-     * Process the deny command
-     *
-     * @param player
-     */
-    public void processDeny(Player player)
-    {
-        ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-        
-        if (cp != null)
-        {
-            if (cp.isBanned())
-            {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-                return;
-            }
-        	
-            Clan clan = cp.getClan();
-
-            if (clan.isLeader(player))
-            {
-                if (plugin.getRequestManager().hasRequest(clan.getTag()))
-                {
-                    if (cp.getVote() == null)
-                    {
-                        plugin.getRequestManager().deny(cp);
-                        clan.leaderAnnounce(ChatColor.RED + MessageFormat.format(plugin.getLang("has.voted.to.deny"), Helper.capitalize(player.getName())));
-                    }
-                    else
-                    {
-                        ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("you.have.already.voted"));
-                    }
-                }
-                else
-                {
-                    ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("nothing.to.deny"));
-                }
-            }
-            else
-            {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("no.leader.permissions"));
-            }
-        }
-        else
-        {
-            if (plugin.getRequestManager().hasRequest(player.getName().toLowerCase()))
-            {
-                cp = plugin.getClanManager().getCreateClanPlayer(player.getUniqueId());
-
-                plugin.getRequestManager().deny(cp);
-            }
-            else
-            {
-                ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("nothing.to.deny"));
-            }
-        }
-    }
-
-    /**
-     * Process the more command
-     *
-     * @param player
-     */
-    public void processMore(Player player)
-    {
-    	
-        ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
-
-        if (cp != null && cp.isBanned())
-        {
-            ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
-            return;
-        }
-
-        ChatBlock chatBlock = plugin.getStorageManager().getChatBlock(player);
-
-        if (chatBlock != null && chatBlock.size() > 0)
-        {
-            chatBlock.sendBlock(player, plugin.getSettingsManager().getPageSize());
-
-            if (chatBlock.size() > 0)
-            {
-                ChatBlock.sendBlank(player);
-                ChatBlock.sendMessage(player, plugin.getSettingsManager().getPageHeadingsColor() + MessageFormat.format(plugin.getLang("view.next.page"), plugin.getSettingsManager().getCommandMore()));
-            }
-            ChatBlock.sendBlank(player);
-        }
-        else
-        {
-            ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("nothing.more.to.see"));
-        }
+        return false;
     }
 }
