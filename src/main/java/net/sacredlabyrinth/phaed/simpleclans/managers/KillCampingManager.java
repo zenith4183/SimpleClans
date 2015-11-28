@@ -51,13 +51,13 @@ public final class KillCampingManager {
 			clanKillTime.put(clan, new ArrayList<>(Arrays.asList(time)));
 			return;
 		}
-		if (!playerKills.get(clan).contains(victimUuid)) {
-			playerKills.get(clan).add(victimUuid);
-			playerKillTime.get(clan).add(time);
+		if (!clanKills.get(clan).contains(victimUuid)) {
+			clanKills.get(clan).add(victimUuid);
+			clanKillTime.get(clan).add(time);
 			return;
 		}
-		int index = playerKills.get(clan).indexOf(victimUuid);
-		playerKillTime.get(clan).set(index, time);
+		int index = clanKills.get(clan).indexOf(victimUuid);
+		clanKillTime.get(clan).set(index, time);
 	}
 	
 	public boolean isPlayerCamping(Player attacker, Player victim) {
