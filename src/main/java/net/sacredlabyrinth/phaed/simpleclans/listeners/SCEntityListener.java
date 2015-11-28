@@ -208,10 +208,6 @@ public class SCEntityListener implements Listener
                 victim = (Player) sub.getEntity();
             }
             
-            if (plugin.getKillCampingManager().isPlayerCamping(attacker, victim)) {
-            	event.setCancelled(true);
-            }
-
             if (plugin.getSettingsManager().isTamableMobsSharing())
             {
                 if (sub.getEntity() instanceof Wolf && sub.getDamager() instanceof Player)
@@ -252,6 +248,10 @@ public class SCEntityListener implements Listener
 
         if (attacker != null && victim != null)
         {
+            if (plugin.getKillCampingManager().isPlayerCamping(attacker, victim)) {
+            	event.setCancelled(true);
+            }
+            
             ClanPlayer acp = plugin.getClanManager().getClanPlayer(attacker);
             ClanPlayer vcp = plugin.getClanManager().getClanPlayer(victim);
 
