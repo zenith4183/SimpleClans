@@ -545,39 +545,37 @@ public class ChatBlock
      */
     private static int charLength(char x)
     {
-        String normalized = StringSimplifier.simplifiedString(x + "");
-
-        if ("i.:,;|!".contains(normalized))
+        if ("i.:,;|!".indexOf(x) != -1)
         {
             return 2;
         }
-        else if ("l'".contains(normalized))
+        else if ("l'".indexOf(x) != -1)
         {
             return 3;
         }
-        else if ("tI[]".contains(normalized))
+        else if ("tI[]".indexOf(x) != -1)
         {
             return 4;
         }
-        else if ("fk{}<>\"*()".contains(normalized))
+        else if ("fk{}<>\"*()".indexOf(x) != -1)
         {
             return 5;
         }
-        else if ("abcdeghjmnopqrsuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890\\/#?$%-=_+&^".contains(normalized))
+        else if ("abcdeghjmnopqrsuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890\\/#?$%-=_+&^".indexOf(x) != -1)
         {
             return 6;
         }
-        else if ("@~".contains(normalized))
+        else if ("@~".indexOf(x) != -1)
         {
             return 7;
         }
-        else if (normalized.equals(" "))
+        else if (x == ' ')
         {
             return 4;
         }
         else
         {
-            return 7;
+            return -1;
         }
     }
 
@@ -607,8 +605,8 @@ public class ChatBlock
 
             ArrayList<String> words = new ArrayList<String>();
 
-            // go through the split array containing all the words, and adding them to the words array
-            // until reaching the point where their width no longer fits on a chat line
+            // Loop through the words finding their length and increasing
+            // j, the end point for the sub string
 
             while (!split.isEmpty() && split.get(0) != null && len <= lineLength)
             {
@@ -632,13 +630,10 @@ public class ChatBlock
                     words.add(split.remove(0));
                 }
             }
-
-            // Merge the words into a sentence (that now fits into a single chat line) and add them to the output array.
-
-            String merged = combineSplit(words.toArray(new String[words.size()]));
-            out.add(merged);
+            // Merge them and add them to the output array.
+            String merged = combineSplit(words.toArray(new String[words.size()])) + " ";
+            out.add(merged.replaceAll("\\s+$", ""));
         }
-
         // Convert to an array and return
 
         return out.toArray(new String[out.size()]);
