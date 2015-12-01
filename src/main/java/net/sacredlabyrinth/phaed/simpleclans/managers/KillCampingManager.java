@@ -1,5 +1,6 @@
 package net.sacredlabyrinth.phaed.simpleclans.managers;
 
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,15 +62,20 @@ public final class KillCampingManager {
 	}
 	
 	public boolean isPlayerCamping(Player attacker, Player victim) {
-		String[] attackerAddress = attacker.getAddress().toString().split(":");
-		String[] victimAddress = victim.getAddress().toString().split(":");
+		InetSocketAddress attackerAddressFull = attacker.getAddress();
+		InetSocketAddress victimAddressFull = victim.getAddress();
 		
-		if (attackerAddress[0].equals(victimAddress[0])) {
-			return true;
+		if (attackerAddressFull != null && victimAddressFull != null) {
+			String[] attackerAddress = attacker.getAddress().toString().split(":");
+			String[] victimAddress = victimAddressFull.toString().split(":");
+			
+			if (attackerAddress[0].equals(victimAddress[0])) {
+				return true;
+			}
 		}
-				
-		ClanPlayer cp = plugin.getClanManager().getCreateClanPlayer(attacker.getUniqueId());
-		String clan = cp.getTag();
+		
+		ClanPlayer acp = plugin.getClanManager().getCreateClanPlayer(attacker.getUniqueId());
+		String aclan = acp.getTag();
 		
 		String attackerUuid = attacker.getUniqueId().toString();
 		String victimUuid = victim.getUniqueId().toString();
@@ -86,15 +92,41 @@ public final class KillCampingManager {
 			}
 		}
 		
-		if (clanKills.containsKey(clan) 
-				&& clanKills.get(clan).contains(victimUuid)) {
-			int index = clanKills.get(clan).indexOf(victimUuid);
-			long lastKillTime = clanKillTime.get(clan).get(index);
+		if (clanKills.containsKey(aclan) 
+				&& clanKills.get(aclan).contains(victimUuid)) {
+			int index = clanKills.get(aclan).indexOf(victimUuid);
+			long lastKillTime = clanKillTime.get(aclan).get(index);
 			
 			if (time - lastKillTime < playerCampingExpireTime) {
 				return true;
 			}
 		}
+		
+		if (playerKills.containsKey(victimUuid) 
+				&& playerKills.get(victimUuid).contains(attackerUuid)) {
+			int index = playerKills.get(victimUuid).indexOf(attackerUuid);
+			long lastKillTime = playerKillTime.get(victimUuid).get(index);
+			
+			if (time - lastKillTime < playerCampingExpireTime) {
+				return true;
+			}			
+		}
+		
+		ClanPlayer vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
+		String vclan = vcp.getTag();
+
+		if (vclan != null) {
+			if (clanKills.containsKey(vclan) 
+					&& clanKills.get(vclan).contains(attackerUuid)) {
+				int index = clanKills.get(vclan).indexOf(attackerUuid);
+				long lastKillTime = clanKillTime.get(vclan).get(index);
+				
+				if (time - lastKillTime < playerCampingExpireTime) {
+					return true;
+				}
+			}
+		}
+	
 		return false;
 	}
 	
