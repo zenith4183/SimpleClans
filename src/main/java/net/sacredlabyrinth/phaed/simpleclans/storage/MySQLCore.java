@@ -16,6 +16,7 @@ public class MySQLCore implements DBCore {
     private Logger log;
     private Connection connection;
     private String host;
+    private int port;
     private String username;
     private String password;
     private String database;
@@ -26,10 +27,11 @@ public class MySQLCore implements DBCore {
      * @param username
      * @param password
      */
-    public MySQLCore(String host, String database, String username, String password)
+    public MySQLCore(String host, int port, String database, String username, String password)
     {
         this.database = database;
         this.host = host;
+        this.port=port;
         this.username = username;
         this.password = password;
         this.log = SimpleClans.getLog();
@@ -41,7 +43,7 @@ public class MySQLCore implements DBCore {
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://" + host + "/" + database, username, password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
         }
         catch (ClassNotFoundException e)
         {
