@@ -30,6 +30,7 @@ public class MySQLCore implements DBCore {
     public MySQLCore(String host, int port, String database, String username, String password)
     {
         this.database = database;
+        this.port = port;
         this.host = host;
         this.port=port;
         this.username = username;

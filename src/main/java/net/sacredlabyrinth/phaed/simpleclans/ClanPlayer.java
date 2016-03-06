@@ -31,7 +31,7 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     private int deaths;
     private long lastSeen;
     private long joinDate;
-    private HashSet<String> pastClans = new HashSet<String>();
+    private Set<String> pastClans = new HashSet<>();
     private VoteResult vote;
     private Channel channel;
     private int banned;
@@ -444,7 +444,7 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     public double getWeightedKills()
     {
         SimpleClans plugin = SimpleClans.getInstance();
-        return (((double) rivalKills * plugin.getSettingsManager().getKwRival()) + ((double) neutralKills * plugin.getSettingsManager().getKwNeutral()) + ((double) civilianKills * plugin.getSettingsManager().getKwCivilian()));
+        return ((double) rivalKills * plugin.getSettingsManager().getKwRival()) + ((double) neutralKills * plugin.getSettingsManager().getKwNeutral()) + ((double) civilianKills * plugin.getSettingsManager().getKwCivilian());
     }
 
     /**
@@ -529,7 +529,7 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
     {
         String PackedPastClans = "";
 
-        HashSet<String> pt = getPastClans();
+        Set<String> pt = getPastClans();
 
         for (String pastClan : pt)
         {
@@ -599,9 +599,9 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
      *
      * @return the pastClans
      */
-    public HashSet<String> getPastClans()
+    public Set<String> getPastClans()
     {
-        HashSet<String> pc = new HashSet<String>();
+        HashSet<String> pc = new HashSet<>();
         pc.addAll(pastClans);
         return pc;
     }
@@ -702,7 +702,7 @@ public class ClanPlayer implements Serializable, Comparable<ClanPlayer>
 
         // writing the channel state settings flags
 
-        List<Boolean> settings = new LinkedList<Boolean>();
+        List<Boolean> settings = new LinkedList<>();
         settings.add(globalChat);
         settings.add(allyChat);
         settings.add(clanChat);

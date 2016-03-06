@@ -29,10 +29,10 @@ public class Clan implements Serializable, Comparable<Clan>
     private boolean friendlyFire;
     private long founded;
     private long lastUsed;
-    private List<String> allies = new ArrayList<String>();
-    private List<String> rivals = new ArrayList<String>();
-    private List<String> bb = new ArrayList<String>();
-    private List<String> members = new ArrayList<String>();
+    private List<String> allies = new ArrayList<>();
+    private List<String> rivals = new ArrayList<>();
+    private List<String> bb = new ArrayList<>();
+    private List<String> members = new ArrayList<>();
     private int homeX = 0;
     private int homeY = 0;
     private int homeZ = 0;
@@ -636,7 +636,7 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public List<ClanPlayer> getMembers()
     {
-        List<ClanPlayer> out = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> out = new ArrayList<>();
 
         for (String member : members)
         {
@@ -659,7 +659,7 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public List<ClanPlayer> getOnlineMembers()
     {
-        List<ClanPlayer> out = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> out = new ArrayList<>();
 
         for (String member : members)
         {
@@ -669,12 +669,9 @@ public class Clan implements Serializable, Comparable<Clan>
             {
                 continue;
             }
-            if (cp.toPlayer() != null)
+            if (cp.toPlayer() != null && cp.toPlayer().isOnline())
             {
-                if (cp.toPlayer().isOnline())
-                {
-                    out.add(cp);
-                }
+            	out.add(cp);
             }
         }
 
@@ -688,7 +685,7 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public List<ClanPlayer> getLeaders()
     {
-        List<ClanPlayer> out = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> out = new ArrayList<>();
 
         for (String member : members)
         {
@@ -715,7 +712,7 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public List<ClanPlayer> getNonLeaders()
     {
-        List<ClanPlayer> out = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> out = new ArrayList<>();
 
         for (String member : members)
         {
@@ -744,7 +741,7 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public List<ClanPlayer> getAllMembers()
     {
-        List<ClanPlayer> out = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> out = new ArrayList<>();
 
         for (String member : members)
         {
@@ -770,7 +767,7 @@ public class Clan implements Serializable, Comparable<Clan>
      */
     public Set<ClanPlayer> getAllAllyMembers()
     {
-        Set<ClanPlayer> out = new HashSet<ClanPlayer>();
+        Set<ClanPlayer> out = new HashSet<>();
 
         for (String tag : allies)
         {

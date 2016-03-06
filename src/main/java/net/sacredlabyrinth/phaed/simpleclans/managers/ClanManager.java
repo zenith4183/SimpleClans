@@ -21,8 +21,8 @@ public final class ClanManager
 {
 
     private SimpleClans plugin;
-    private HashMap<String, Clan> clans = new HashMap<String, Clan>();
-    private HashMap<String, ClanPlayer> clanPlayers = new HashMap<String, ClanPlayer>();
+    private HashMap<String, Clan> clans = new HashMap<>();
+    private HashMap<String, ClanPlayer> clanPlayers = new HashMap<>();
 
     /**
      *
@@ -169,7 +169,7 @@ public final class ClanManager
      */
     public List<Clan> getClans()
     {
-        return new ArrayList<Clan>(clans.values());
+        return new ArrayList<>(clans.values());
     }
 
     /**
@@ -179,7 +179,7 @@ public final class ClanManager
      */
     public List<ClanPlayer> getAllClanPlayers()
     {
-        return new ArrayList<ClanPlayer>(clanPlayers.values());
+        return new ArrayList<>(clanPlayers.values());
     }
 
     /**

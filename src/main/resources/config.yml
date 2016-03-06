@@ -13,6 +13,7 @@ tag:
         leader-color: '4'
         char: ' .'
 settings:
+    online-mode: true
     disable-messages: false
     tameable-mobs-sharing: false
     teleport-blocks: false
@@ -75,6 +76,7 @@ clan:
     homebase-can-be-set-only-once: true
     min-size-to-set-rival: 3
     max-length: 25
+    max-members: 25
     confirmation-for-promote: false
     trust-members-by-default: false
     confirmation-for-demote: false

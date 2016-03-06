@@ -14,6 +14,7 @@ import java.util.List;
  */
 public final class SettingsManager
 {
+    private boolean onlineMode;
     private boolean disableMessages;
     private String clanChatRankColor;
     private boolean tagBasedClanChat;
@@ -129,6 +130,7 @@ public final class SettingsManager
     private boolean useBungeeCord;
     private boolean forceCommandPriority;
     private int maxAsksPerRequest;
+    private int maxMembers;
     private int killCooldown;
     private boolean cooldownClanWide;
 
@@ -167,6 +169,7 @@ public final class SettingsManager
             getConfig().options().copyDefaults(true);
         }
 
+        onlineMode = getConfig().getBoolean("settings.online-mode");
         disableMessages = getConfig().getBoolean("settings.disable-messages");
         teleportOnSpawn = getConfig().getBoolean("settings.teleport-home-on-spawn");
         dropOnHome = getConfig().getBoolean("settings.drop-items-on-clan-home");
@@ -271,6 +274,7 @@ public final class SettingsManager
         database = getConfig().getString("mysql.database");
         username = getConfig().getString("mysql.username");
         password = getConfig().getString("mysql.password");
+        port = getConfig().getInt("mysql.port");
         safeCivilians = getConfig().getBoolean("safe-civilians");
         moneyperkill = getConfig().getBoolean("economy.money-per-kill");
         KDRMultipliesPerKill = getConfig().getDouble("economy.money-per-kill-kdr-multipier");
@@ -280,6 +284,14 @@ public final class SettingsManager
         allowReGroupCommand = getConfig().getBoolean("settings.allow-regroup-command");
         useThreads = getConfig().getBoolean("performance.use-threads");
         useBungeeCord = getConfig().getBoolean("performance.use-bungeecord");
+        maxMembers = getConfig().getInt("clan.max-members");
+
+        // migrate from old way of adding ports
+        if (database.contains(":")) {
+            String[] strings = database.split(":");
+            database = strings[0];
+            port = Integer.valueOf(strings[1]);
+        }
 
         save();
     }
@@ -1182,6 +1194,10 @@ public final class SettingsManager
         return tamableMobsSharing;
     }
 
+    public boolean isOnlineMode()
+    {
+        return onlineMode;
+    }
 
     public boolean isDisableMessages()
     {
@@ -1240,5 +1256,10 @@ public final class SettingsManager
     public void setForceCommandPriority(boolean forceCommandPriority)
     {
         this.forceCommandPriority = forceCommandPriority;
+    }
+
+    public int getMaxMembers()
+    {
+        return this.maxMembers;
     }
 }

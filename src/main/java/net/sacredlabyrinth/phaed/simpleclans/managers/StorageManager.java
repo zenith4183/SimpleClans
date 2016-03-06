@@ -23,7 +23,7 @@ public final class StorageManager
 
     private SimpleClans plugin;
     private DBCore core;
-    private HashMap<String, ChatBlock> chatBlocks = new HashMap<String, ChatBlock>();
+    private HashMap<String, ChatBlock> chatBlocks = new HashMap<>();
 
     /**
      *
@@ -32,7 +32,8 @@ public final class StorageManager
     {
         plugin = SimpleClans.getInstance();
         initiateDB();
-        updateDatabase();
+        if(SimpleClans.getInstance().getSettingsManager().isOnlineMode())
+            updateDatabase();
         importFromDatabase();
     }
 
@@ -170,7 +171,7 @@ public final class StorageManager
             plugin.getClanManager().importClan(clan);
         }
 
-        if (clans.size() > 0)
+        if (!clans.isEmpty())
         {
             SimpleClans.log(MessageFormat.format("[SimpleClans] " + plugin.getLang("clans"), clans.size()));
         }
@@ -189,7 +190,7 @@ public final class StorageManager
             plugin.getClanManager().importClanPlayer(cp);
         }
 
-        if (cps.size() > 0)
+        if (!cps.isEmpty())
         {
             SimpleClans.log(MessageFormat.format("[SimpleClans] " + plugin.getLang("clan.players"), cps.size()));
         }
@@ -223,7 +224,7 @@ public final class StorageManager
 
     private void purgeClans(List<Clan> clans)
     {
-        List<Clan> purge = new ArrayList<Clan>();
+        List<Clan> purge = new ArrayList<>();
 
         for (Clan clan : clans)
         {
@@ -253,16 +254,13 @@ public final class StorageManager
 
     private void purgeClanPlayers(List<ClanPlayer> cps)
     {
-        List<ClanPlayer> purge = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> purge = new ArrayList<>();
 
         for (ClanPlayer cp : cps)
         {
-            if (cp.getInactiveDays() > plugin.getSettingsManager().getPurgePlayers())
+            if (cp.getInactiveDays() > plugin.getSettingsManager().getPurgePlayers() && !cp.isLeader())
             {
-                if (!cp.isLeader())
-                {
-                    purge.add(cp);
-                }
+            	purge.add(cp);
             }
         }
 
@@ -281,7 +279,7 @@ public final class StorageManager
      */
     public List<Clan> retrieveClans()
     {
-        List<Clan> out = new ArrayList<Clan>();
+        List<Clan> out = new ArrayList<>();
 
         String query = "SELECT * FROM  `sc_clans`;";
         ResultSet res = core.select(query);
@@ -435,7 +433,7 @@ public final class StorageManager
      */
     public List<ClanPlayer> retrieveClanPlayers()
     {
-        List<ClanPlayer> out = new ArrayList<ClanPlayer>();
+        List<ClanPlayer> out = new ArrayList<>();
 
         String query = "SELECT * FROM  `sc_players`;";
         ResultSet res = core.select(query);
@@ -654,7 +652,8 @@ public final class StorageManager
      *
      * @param clan
      */
-    public void updateClanAsync(final Clan clan)
+    @SuppressWarnings("deprecation")
+	public void updateClanAsync(final Clan clan)
     {
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable()
         {
@@ -706,7 +705,8 @@ public final class StorageManager
      *
      * @param cp
      */
-    public void updateClanPlayerAsync(final ClanPlayer cp)
+    @SuppressWarnings("deprecation")
+	public void updateClanPlayerAsync(final ClanPlayer cp)
     {
         plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable()
         {
@@ -776,10 +776,11 @@ public final class StorageManager
      * @param playerName
      * @return
      */
-    public HashMap<String, Integer> getKillsPerPlayer(String playerName)
+    public Map<String, Integer> getKillsPerPlayer(String playerName)
     {
-        HashMap<String, Integer> out = new HashMap<String, Integer>();
-        
+   
+        HashMap<String, Integer> out = new HashMap<>();
+
         String UUID = UUIDUtil.nameToUUID(playerName).toString();
 
         String query = "SELECT victim_uuid, count(victim_uuid) AS kills FROM `sc_kills` WHERE attacker_uuid = '" + UUID + "' GROUP BY victim_uuid ORDER BY count(victim_uuid) DESC;";
@@ -820,9 +821,9 @@ public final class StorageManager
      *
      * @return
      */
-    public HashMap<String, Integer> getMostKilled()
+    public Map<String, Integer> getMostKilled()
     {
-        HashMap<String, Integer> out = new HashMap<String, Integer>();
+        HashMap<String, Integer> out = new HashMap<>();
 
         String query = "SELECT attacker_uuid, victim_uuid, count(victim_uuid) AS kills FROM `sc_kills` GROUP BY attacker_uuid, victim_uuid ORDER BY 3 DESC;";
         ResultSet res = core.select(query);
@@ -874,12 +875,11 @@ public final class StorageManager
         }
         
         if (core.existsColumn("sc_players", "uuid"))
+
         {
-            if (!plugin.getSettingsManager().isUseMysql())
-            {
-                query = "CREATE UNIQUE INDEX IF NOT EXISTS `uq_player_uuid` ON `sc_players` (`uuid`);";
-                core.execute(query);
-            }
+        	query = "CREATE UNIQUE INDEX IF NOT EXISTS `uq_player_uuid` ON `sc_players` (`uuid`);";
+            core.execute(query);
+
         }
     }
 }

@@ -15,6 +15,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author phaed
@@ -26,12 +27,12 @@ public final class PermissionsManager
      */
     private SimpleClans plugin;
 
-    public static Permission permission = null;
-    public static Economy economy = null;
-    public static Chat chat = null;
+    private static Permission permission = null;
+    private static Economy economy = null;
+    private static Chat chat = null;
 
-    private HashMap<String, List<String>> permissions = new HashMap<String, List<String>>();
-    private HashMap<Player, PermissionAttachment> permAttaches = new HashMap<Player, PermissionAttachment>();
+    private HashMap<String, List<String>> permissions = new HashMap<>();
+    private HashMap<Player, PermissionAttachment> permAttaches = new HashMap<>();
 
 
     /**
@@ -156,25 +157,13 @@ public final class PermissionsManager
      */
     public void removeClanPlayerPermissions(ClanPlayer cp)
     {
-        if (cp != null)
+        if (cp != null && cp.getClan() != null && cp.toPlayer() != null)
         {
-            if (cp.getClan() != null)
+        	Player player = cp.toPlayer();
+            if (player.isOnline() && permissions.containsKey(cp.getClan().getTag()) && permAttaches.containsKey(player))
             {
-                if (cp.toPlayer() != null)
-                {
-                    Player player = cp.toPlayer();
-                    if (player.isOnline())
-                    {
-                        if (permissions.containsKey(cp.getClan().getTag()))
-                        {
-                            if (permAttaches.containsKey(player))
-                            {
-                                permAttaches.get(player).remove();
-                                permAttaches.remove(player);
-                            }
-                        }
-                    }
-                }
+            	permAttaches.get(player).remove();
+                permAttaches.remove(player);
             }
         }
     }
@@ -192,7 +181,7 @@ public final class PermissionsManager
     /**
      * @return the PermissionsAttachments for every player
      */
-    public HashMap<Player, PermissionAttachment> getPermAttaches()
+    public Map<Player, PermissionAttachment> getPermAttaches()
     {
         return permAttaches;
     }
@@ -354,15 +343,12 @@ public final class PermissionsManager
             return;
         }
 
-        if (permission != null)
+        if (permission != null && cp.toPlayer() != null)
         {
-            if (cp.toPlayer() != null)
-            {
-                permission.playerRemoveGroup(cp.toPlayer(), "clan." + cp.getTag());
-                permission.playerRemoveGroup(cp.toPlayer(), "sc.untrusted");
-                permission.playerRemoveGroup(cp.toPlayer(), "sc.trusted");
-                permission.playerRemoveGroup(cp.toPlayer(), "sc.leader");
-            }
+        	permission.playerRemoveGroup(cp.toPlayer(), "clan." + cp.getTag());
+            permission.playerRemoveGroup(cp.toPlayer(), "sc.untrusted");
+            permission.playerRemoveGroup(cp.toPlayer(), "sc.trusted");
+            permission.playerRemoveGroup(cp.toPlayer(), "sc.leader");
         }
     }
 
@@ -373,7 +359,7 @@ public final class PermissionsManager
         {
             permission = permissionProvider.getProvider();
         }
-        return (permission != null);
+        return permission != null;
     }
 
     private Boolean setupChat()
@@ -384,7 +370,7 @@ public final class PermissionsManager
             chat = chatProvider.getProvider();
         }
 
-        return (chat != null);
+        return chat != null;
     }
 
     private Boolean setupEconomy()
@@ -395,7 +381,7 @@ public final class PermissionsManager
             economy = economyProvider.getProvider();
         }
 
-        return (economy != null);
+        return economy != null;
     }
 
     /**
