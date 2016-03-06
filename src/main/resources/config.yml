@@ -42,7 +42,9 @@ settings:
     server-name: '&4SimpleClans'
     new-clan-verification-required: true
     allow-regroup-command: true
-    killcooldown: 15
+    killcamping:
+      cooldown: 15
+      clanwide: true
 commands:
     more: more
     ally: ally

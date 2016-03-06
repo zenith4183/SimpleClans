@@ -102,7 +102,10 @@ public class SCEntityListener implements Listener
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, vcp.getTag(), "n");
                 }
                 plugin.getKillCampingManager().addPlayerKill(attacker.getUniqueId().toString(), victim.getUniqueId().toString());
-                plugin.getKillCampingManager().addClanKill(acp.getTag(), victim.getUniqueId().toString());
+                
+                if (plugin.getSettingsManager().getCooldownClanWide()) {
+                	plugin.getKillCampingManager().addClanKill(acp.getTag(), victim.getUniqueId().toString());
+                }
 
                 if (reward != 0 && plugin.getSettingsManager().isMoneyPerKill())
                 {

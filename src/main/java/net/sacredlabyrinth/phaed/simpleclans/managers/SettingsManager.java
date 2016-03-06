@@ -130,6 +130,7 @@ public final class SettingsManager
     private boolean forceCommandPriority;
     private int maxAsksPerRequest;
     private int killCooldown;
+    private boolean cooldownClanWide;
 
     /**
      *
@@ -184,7 +185,8 @@ public final class SettingsManager
         serverName = getConfig().getString("settings.server-name");
         chatTags = getConfig().getBoolean("settings.display-chat-tags");
         rivalLimitPercent = getConfig().getInt("settings.rival-limit-percent");
-        killCooldown = getConfig().getInt("settings.killcooldown");
+        killCooldown = getConfig().getInt("settings.killcamping.cooldown");
+        cooldownClanWide = getConfig().getBoolean("settings.killcamping.clanwide"); 
         ePurchaseCreation = getConfig().getBoolean("economy.purchase-clan-create");
         ePurchaseVerification = getConfig().getBoolean("economy.purchase-clan-verify");
         ePurchaseInvite = getConfig().getBoolean("economy.purchase-clan-invite");
@@ -439,13 +441,20 @@ public final class SettingsManager
     }
     
     /**
-     * 
      * @return the killCooldown
      */
     public int getKillCooldown() 
     {
     	return killCooldown;
     }
+    
+    /**
+     * @return cooldownClanWide
+     */
+    public boolean getCooldownClanWide() 
+    {
+    	return cooldownClanWide;
+    }  
 
     /**
      * @return the serverName

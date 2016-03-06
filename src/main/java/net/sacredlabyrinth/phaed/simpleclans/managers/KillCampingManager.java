@@ -81,6 +81,7 @@ public final class KillCampingManager {
 		String victimUuid = victim.getUniqueId().toString();
 		long time = System.currentTimeMillis();
 		long playerCampingExpireTime = plugin.getSettingsManager().getKillCooldown() * 1000 * 60;
+		boolean clanWide = plugin.getSettingsManager().getCooldownClanWide();
 		
 		if (playerKills.containsKey(attackerUuid) 
 				&& playerKills.get(attackerUuid).contains(victimUuid)) {
@@ -92,13 +93,15 @@ public final class KillCampingManager {
 			}
 		}
 		
-		if (clanKills.containsKey(aclan) 
-				&& clanKills.get(aclan).contains(victimUuid)) {
-			int index = clanKills.get(aclan).indexOf(victimUuid);
-			long lastKillTime = clanKillTime.get(aclan).get(index);
-			
-			if (time - lastKillTime < playerCampingExpireTime) {
-				return true;
+		if (clanWide) {
+			if (clanKills.containsKey(aclan) 
+					&& clanKills.get(aclan).contains(victimUuid)) {
+				int index = clanKills.get(aclan).indexOf(victimUuid);
+				long lastKillTime = clanKillTime.get(aclan).get(index);
+				
+				if (time - lastKillTime < playerCampingExpireTime) {
+					return true;
+				}
 			}
 		}
 		
@@ -112,17 +115,20 @@ public final class KillCampingManager {
 			}			
 		}
 		
-		ClanPlayer vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
-		String vclan = vcp.getTag();
+		
+		if (clanWide) {
+			ClanPlayer vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
+			String vclan = vcp.getTag();
 
-		if (vclan != null) {
-			if (clanKills.containsKey(vclan) 
-					&& clanKills.get(vclan).contains(attackerUuid)) {
-				int index = clanKills.get(vclan).indexOf(attackerUuid);
-				long lastKillTime = clanKillTime.get(vclan).get(index);
-				
-				if (time - lastKillTime < playerCampingExpireTime) {
-					return true;
+			if (vclan != null) {
+				if (clanKills.containsKey(vclan) 
+						&& clanKills.get(vclan).contains(attackerUuid)) {
+					int index = clanKills.get(vclan).indexOf(attackerUuid);
+					long lastKillTime = clanKillTime.get(vclan).get(index);
+					
+					if (time - lastKillTime < playerCampingExpireTime) {
+						return true;
+					}
 				}
 			}
 		}
