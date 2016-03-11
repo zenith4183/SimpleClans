@@ -30,7 +30,7 @@ public class AllyCommandExecutor implements CommandExecutor
         {
             return false;
         }
-
+        
         if (strings.length == 0)
         {
             return false;
@@ -44,19 +44,19 @@ public class AllyCommandExecutor implements CommandExecutor
 
         String subCommand = strings[0];
 
-        if (subCommand.equals(plugin.getLang("join")))
+        if (subCommand.equals(plugin.getLang("join")) && strings.length == 1)
         {
             cp.setChannel(ClanPlayer.Channel.ALLY);
             plugin.getStorageManager().updateClanPlayer(cp);
             ChatBlock.sendMessage(player, ChatColor.AQUA + "You have joined ally chat");
         }
-        else if (subCommand.equals(plugin.getLang("leave")))
+        else if (subCommand.equals(plugin.getLang("leave")) && strings.length == 1)
         {
             cp.setChannel(ClanPlayer.Channel.NONE);
             plugin.getStorageManager().updateClanPlayer(cp);
             ChatBlock.sendMessage(player, ChatColor.AQUA + "You have left ally chat");
         }
-        else if (subCommand.equals(plugin.getLang("mute")))
+        else if (subCommand.equals(plugin.getLang("mute")) && strings.length == 1)
         {
             if (!cp.isMutedAlly())
             {

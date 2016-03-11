@@ -163,101 +163,12 @@ public class SCPlayerListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent event)
     {
-        if (plugin.getSettingsManager().isBlacklistedWorld(event.getPlayer().getLocation().getWorld().getName()))
-        {
-            return;
-        }
-
         if (event.getPlayer() == null)
         {
             return;
         }
 
-        String message = event.getMessage();
-        ClanPlayer cp = plugin.getClanManager().getClanPlayer(event.getPlayer());
-
-        if (cp != null)
-        {
-            if (cp.getChannel().equals(ClanPlayer.Channel.CLAN))
-            {
-                plugin.getClanManager().processClanChat(event.getPlayer(), message);
-                event.setCancelled(true);
-            }
-            else if (cp.getChannel().equals(ClanPlayer.Channel.ALLY))
-            {
-                plugin.getClanManager().processAllyChat(event.getPlayer(), message);
-                event.setCancelled(true);
-            }
-        }
-
-        if (!plugin.getPermissionsManager().has(event.getPlayer(), "simpleclans.mod.nohide"))
-        {
-            boolean isClanChat = event.getMessage().contains("" + ChatColor.RED + ChatColor.WHITE + ChatColor.RED + ChatColor.BLACK);
-            boolean isAllyChat = event.getMessage().contains("" + ChatColor.AQUA + ChatColor.WHITE + ChatColor.AQUA + ChatColor.BLACK);
-
-            for (Iterator iter = event.getRecipients().iterator(); iter.hasNext(); )
-            {
-                Player player = (Player) iter.next();
-
-                ClanPlayer rcp = plugin.getClanManager().getClanPlayer(player);
-
-                if (rcp != null)
-                {
-                    if (!rcp.isClanChat() && isClanChat)
-                    {
-                    	iter.remove();
-                        continue;
-                    }
-
-                    if (!rcp.isAllyChat() && isAllyChat)
-                    {
-                    	iter.remove();
-                        continue;
-                    }
-
-                    if (!rcp.isGlobalChat() && !isAllyChat && !isClanChat)
-                    {
-                    	iter.remove();
-                    }
-                }
-            }
-        }
-
-        if (plugin.getSettingsManager().isCompatMode())
-        {
-            if (plugin.getSettingsManager().isChatTags())
-            {
-                if (cp != null && cp.isTagEnabled())
-                {
-                    String tagLabel = cp.getClan().getTagLabel(cp.isLeader());
-
-                    Player player = event.getPlayer();
-
-                    if (player.getDisplayName().contains("{clan}"))
-                    {
-                        player.setDisplayName(player.getDisplayName().replace("{clan}", tagLabel));
-                    }
-                    else if (event.getFormat().contains("{clan}"))
-                    {
-                        event.setFormat(event.getFormat().replace("{clan}", tagLabel));
-                    }
-                    else
-                    {
-                        String format = event.getFormat();
-                        event.setFormat(tagLabel + format);
-                    }
-                }
-                else
-                {
-                    event.setFormat(event.getFormat().replace("{clan}", ""));
-                    event.setFormat(event.getFormat().replace("tagLabel", ""));
-                }
-            }
-        }
-        else
-        {
-            plugin.getClanManager().updateDisplayName(event.getPlayer());
-        }
+       plugin.getClanManager().updateDisplayName(event.getPlayer());
     }
 
     /**

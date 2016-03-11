@@ -116,7 +116,6 @@ public final class SettingsManager
     private boolean safeCivilians;
     private File main;
     private FileConfiguration config;
-    private boolean compatMode;
     private boolean homebaseSetOnce;
     private int waitSecs;
     private boolean enableAutoGroups;
@@ -178,7 +177,6 @@ public final class SettingsManager
         debugging = getConfig().getBoolean("settings.show-debug-info");
         enableAutoGroups = getConfig().getBoolean("settings.enable-auto-groups");
         useColorCodeFromPrefix = getConfig().getBoolean("settings.use-colorcode-from-prefix-for-name");
-        compatMode = getConfig().getBoolean("settings.chat-compatibility-mode");
         disallowedColors = getConfig().getStringList("settings.disallowed-tag-colors");
         blacklistedWorlds = getConfig().getStringList("settings.blacklisted-worlds");
         disallowedWords = getConfig().getStringList("settings.disallowed-tags");
@@ -1057,16 +1055,6 @@ public final class SettingsManager
     public boolean isClanFFOnByDefault()
     {
         return clanFFOnByDefault;
-    }
-
-    public boolean isCompatMode()
-    {
-        return compatMode;
-    }
-
-    public void setCompatMode(boolean compatMode)
-    {
-        this.compatMode = compatMode;
     }
 
     public boolean isHomebaseSetOnce()
