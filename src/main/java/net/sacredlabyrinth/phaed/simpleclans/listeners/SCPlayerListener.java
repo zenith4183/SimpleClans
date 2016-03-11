@@ -122,14 +122,6 @@ public class SCPlayerListener implements Listener
                     event.setCancelled(true);
                 }
             }
-            else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandGlobal()))
-            {
-                if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandGlobal()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandGlobal())))
-                {
-                    new GlobalCommandExecutor().onCommand(player, null, null, Helper.removeFirst(split));
-                    event.setCancelled(true);
-                }
-            }
             else if (command.equalsIgnoreCase(plugin.getSettingsManager().getCommandClan()))
             {
                 if (!plugin.getServer().getPluginCommand(plugin.getSettingsManager().getCommandClan()).equals(plugin.getCommand(plugin.getSettingsManager().getCommandClan())))

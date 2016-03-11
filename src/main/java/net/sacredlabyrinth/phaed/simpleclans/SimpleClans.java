@@ -105,7 +105,6 @@ public class SimpleClans extends JavaPlugin {
         getCommand(getSettingsManager().getCommandDeny()).setExecutor(new DenyCommandExecutor());
         getCommand(getSettingsManager().getCommandMore()).setExecutor(new MoreCommandExecutor());
         getCommand(getSettingsManager().getCommandAlly()).setExecutor(new AllyCommandExecutor());
-        getCommand(getSettingsManager().getCommandGlobal()).setExecutor(new GlobalCommandExecutor());
 
         getCommand(getSettingsManager().getCommandClan()).setTabCompleter(new PlayerNameTabCompleter());
 

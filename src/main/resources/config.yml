@@ -52,7 +52,6 @@ commands:
     clan: clan
     accept: accept
     deny: deny
-    global: global
     force-priority: true
 economy:
     creation-price: 100.0
