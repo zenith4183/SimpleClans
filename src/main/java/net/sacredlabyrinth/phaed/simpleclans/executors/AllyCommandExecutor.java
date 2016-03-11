@@ -44,19 +44,7 @@ public class AllyCommandExecutor implements CommandExecutor
 
         String subCommand = strings[0];
 
-        if (subCommand.equals(plugin.getLang("on")))
-        {
-            cp.setAllyChat(true);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have enabled ally chat");
-        }
-        else if (subCommand.equals(plugin.getLang("off")))
-        {
-            cp.setAllyChat(false);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have disabled ally chat");
-        }
-        else if (subCommand.equals(plugin.getLang("join")))
+        if (subCommand.equals(plugin.getLang("join")))
         {
             cp.setChannel(ClanPlayer.Channel.ALLY);
             plugin.getStorageManager().updateClanPlayer(cp);

@@ -1191,19 +1191,7 @@ public final class ClanManager
 
         String command = split[0];
 
-        if (command.equals(plugin.getLang("on")) && split.length == 1)
-        {
-            cp.setClanChat(true);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have enabled clan chat");
-        }
-        else if (command.equals(plugin.getLang("off")) && split.length == 1)
-        {
-            cp.setClanChat(false);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have disabled clan chat");
-        }
-        else if (command.equals(plugin.getLang("join")) && split.length == 1)
+        if (command.equals(plugin.getLang("join")) && split.length == 1)
         {
             cp.setChannel(ClanPlayer.Channel.CLAN);
             plugin.getStorageManager().updateClanPlayer(cp);
@@ -1320,19 +1308,7 @@ public final class ClanManager
 
         String command = split[0];
 
-        if (command.equals(plugin.getLang("on")) && split.length == 1)
-        {
-            cp.setAllyChat(true);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have enabled ally chat");
-        }
-        else if (command.equals(plugin.getLang("off")) && split.length == 1)
-        {
-            cp.setAllyChat(false);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have disabled ally chat");
-        }
-        else if (command.equals(plugin.getLang("join")) && split.length == 1)
+        if (command.equals(plugin.getLang("join")) && split.length == 1)
         {
             cp.setChannel(ClanPlayer.Channel.ALLY);
             plugin.getStorageManager().updateClanPlayer(cp);
@@ -1385,52 +1361,5 @@ public final class ClanManager
                 ChatBlock.sendMessage(member, message);
             }
         }
-    }
-
-    /**
-     * Processes a global chat command
-     *
-     * @param player
-     * @param msg
-     * @return boolean
-     */
-    public boolean processGlobalChat(Player player, String msg)
-    {
-        ClanPlayer cp;
-
-        cp = plugin.getClanManager().getClanPlayer(player.getUniqueId());
-
-        if (cp == null)
-        {
-            return false;
-        }
-
-        String[] split = msg.split(" ");
-
-        if (split.length == 0)
-        {
-            return false;
-        }
-
-        String command = split[0];
-
-        if (command.equals(plugin.getLang("on")))
-        {
-            cp.setGlobalChat(true);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have enabled global chat");
-        }
-        else if (command.equals(plugin.getLang("off")))
-        {
-            cp.setGlobalChat(false);
-            plugin.getStorageManager().updateClanPlayer(cp);
-            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have disabled global chat");
-        }
-        else
-        {
-            return true;
-        }
-
-        return false;
     }
 }
