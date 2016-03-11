@@ -1191,13 +1191,13 @@ public final class ClanManager
 
         String command = split[0];
 
-        if (command.equals("on") && split.length == 1)
+        if (command.equals(plugin.getLang("on")) && split.length == 1)
         {
             cp.setClanChat(true);
             plugin.getStorageManager().updateClanPlayer(cp);
             ChatBlock.sendMessage(player, ChatColor.AQUA + "You have enabled clan chat");
         }
-        else if (command.equals("off") && split.length == 1)
+        else if (command.equals(plugin.getLang("off")) && split.length == 1)
         {
             cp.setClanChat(false);
             plugin.getStorageManager().updateClanPlayer(cp);
@@ -1217,7 +1217,7 @@ public final class ClanManager
         }
         else if (command.equals(plugin.getLang("mute")) && split.length == 1)
         {
-            if (cp.isMuted())
+            if (!cp.isMuted())
             {
                 cp.setMuted(true);
                 ChatBlock.sendMessage(player, ChatColor.AQUA + "You have muted clan chat");
