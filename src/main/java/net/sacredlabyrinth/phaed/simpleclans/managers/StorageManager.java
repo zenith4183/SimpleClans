@@ -28,7 +28,6 @@ public final class StorageManager
     /**
      *
      */
-    public StorageManager()
     {
         plugin = SimpleClans.getInstance();
         initiateDB();
@@ -868,18 +867,15 @@ public final class StorageManager
     {
         String query = null;
 
-        if (!core.existsColumn("sc_players", "banned"))
-        {
+        if (!core.existsColumn("sc_players", "banned")) {
             query = "ALTER TABLE sc_players ADD `banned` tinyint(1) default '0';";
             core.execute(query);
         }
         
-        if (core.existsColumn("sc_players", "uuid"))
-
-        {
-        	query = "CREATE UNIQUE INDEX IF NOT EXISTS `uq_player_uuid` ON `sc_players` (`uuid`);";
-            core.execute(query);
-
+        if (core.existsColumn("sc_players", "uuid")
+                && !plugin.getSettingsManager().isUseMysql()) {
+           query = "CREATE UNIQUE INDEX IF NOT EXISTS `uq_player_uuid` ON `sc_players` (`uuid`);";
+           core.execute(query);
         }
     }
 }
