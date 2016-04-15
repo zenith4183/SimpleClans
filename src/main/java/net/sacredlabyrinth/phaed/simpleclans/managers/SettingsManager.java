@@ -35,6 +35,7 @@ public final class SettingsManager
     private List<String> disallowedColors;
     private List<String> unRivableClans;
     private int rivalLimitPercent;
+    private String serverAccount;
     private boolean ePurchaseCreation;
     private boolean ePurchaseVerification;
     private boolean ePurchaseInvite;
@@ -187,7 +188,8 @@ public final class SettingsManager
         chatTags = getConfig().getBoolean("settings.display-chat-tags");
         rivalLimitPercent = getConfig().getInt("settings.rival-limit-percent");
         killCooldown = getConfig().getInt("settings.killcamping.cooldown");
-        cooldownClanWide = getConfig().getBoolean("settings.killcamping.clanwide"); 
+        cooldownClanWide = getConfig().getBoolean("settings.killcamping.clanwide");
+        serverAccount = getConfig().getString("economy.server-account");
         ePurchaseCreation = getConfig().getBoolean("economy.purchase-clan-create");
         ePurchaseVerification = getConfig().getBoolean("economy.purchase-clan-verify");
         ePurchaseInvite = getConfig().getBoolean("economy.purchase-clan-invite");
@@ -922,6 +924,17 @@ public final class SettingsManager
     public String getTagBracketColor()
     {
         return Helper.toColor(tagBracketColor);
+    }
+
+    public boolean isServerAccount() {
+        if (serverAccount == null || serverAccount == "") {
+            return false;
+        }
+        return true;
+    }
+
+    public String getServerAccount() {
+        return serverAccount;
     }
 
     /**

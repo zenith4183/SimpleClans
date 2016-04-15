@@ -1001,6 +1001,10 @@ public final class ClanManager
         {
             if (plugin.getPermissionsManager().playerHasMoney(player, price))
             {
+                if (plugin.getSettingsManager().isServerAccount()) {
+                    String account = plugin.getSettingsManager().getServerAccount();
+                    plugin.getPermissionsManager().playerGrantMoney(account, price);
+                }
                 plugin.getPermissionsManager().playerChargeMoney(player, price);
                 player.sendMessage(ChatColor.RED + MessageFormat.format(plugin.getLang("account.has.been.debited"), price));
             }
@@ -1033,6 +1037,10 @@ public final class ClanManager
         {
             if (plugin.getPermissionsManager().playerHasMoney(player, price))
             {
+                if (plugin.getSettingsManager().isServerAccount()) {
+                    String account = plugin.getSettingsManager().getServerAccount();
+                    plugin.getPermissionsManager().playerGrantMoney(account, price);
+                }
                 plugin.getPermissionsManager().playerChargeMoney(player, price);
                 player.sendMessage(ChatColor.RED + MessageFormat.format(plugin.getLang("account.has.been.debited"), price));
             }
@@ -1065,6 +1073,10 @@ public final class ClanManager
         {
             if (plugin.getPermissionsManager().playerHasMoney(player, price))
             {
+                if (plugin.getSettingsManager().isServerAccount()) {
+                    String account = plugin.getSettingsManager().getServerAccount();
+                    plugin.getPermissionsManager().playerGrantMoney(account, price);
+                }
                 plugin.getPermissionsManager().playerChargeMoney(player, price);
                 player.sendMessage(ChatColor.RED + MessageFormat.format(plugin.getLang("account.has.been.debited"), price));
             }
@@ -1097,6 +1109,10 @@ public final class ClanManager
         {
             if (plugin.getPermissionsManager().playerHasMoney(player, price))
             {
+                if (plugin.getSettingsManager().isServerAccount()) {
+                    String account = plugin.getSettingsManager().getServerAccount();
+                    plugin.getPermissionsManager().playerGrantMoney(account, price);
+                }
                 plugin.getPermissionsManager().playerChargeMoney(player, price);
                 player.sendMessage(ChatColor.RED + MessageFormat.format(plugin.getLang("account.has.been.debited"), price));
             }
@@ -1129,6 +1145,10 @@ public final class ClanManager
         {
             if (plugin.getPermissionsManager().playerHasMoney(player, price))
             {
+                if (plugin.getSettingsManager().isServerAccount()) {
+                    String account = plugin.getSettingsManager().getServerAccount();
+                    plugin.getPermissionsManager().playerGrantMoney(account, price);
+                }
                 plugin.getPermissionsManager().playerChargeMoney(player, price);
                 player.sendMessage(ChatColor.RED + MessageFormat.format(plugin.getLang("account.has.been.debited"), price));
             }

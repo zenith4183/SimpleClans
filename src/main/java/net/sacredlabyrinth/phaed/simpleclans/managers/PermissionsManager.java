@@ -219,7 +219,7 @@ public final class PermissionsManager
      */
     public boolean playerGrantMoney(String player, double money)
     {
-    	return playerGrantMoney(UUIDUtil.nameToPlayer(player), money);
+        return economy.depositPlayer(player, money).transactionSuccess();
     }
 
     /**
