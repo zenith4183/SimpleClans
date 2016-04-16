@@ -79,41 +79,65 @@ public class SCEntityListener implements Listener
                 acp = plugin.getClanManager().getCreateClanPlayer(attacker.getUniqueId());
                 vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
 
-                double reward = 0;
-                double multipier = plugin.getSettingsManager().getKDRMultipliesPerKill();
-                float kdr = acp.getKDR();
+                double rewardPercent = 0;
+                double multiplier;
+                double percent = plugin.getSettingsManager().getMoneyPerKillPercent() / 100;
+                float kdr = vcp.getKDR();
 
                 if (vcp.getClan() == null || acp.getClan() == null || !vcp.getClan().isVerified() || !acp.getClan().isVerified())
                 {
+                    multiplier = plugin.getSettingsManager().getKDRMultipliesPerKillCivilian();
                     acp.addCivilianKill();
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, "", "c");
                 } else if (acp.getClan().isRival(vcp.getTag()))
                 {
-                    reward = (double) kdr * multipier * 2;
+                    multiplier = plugin.getSettingsManager().getKDRMultipliesPerKillRival();
                     acp.addRivalKill();
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, vcp.getTag(), "r");
                 } else if (acp.getClan().isAlly(vcp.getTag()))
                 {
-                    reward = (double) kdr * multipier * -1;
+                    multiplier = plugin.getSettingsManager().getKDRMultipliesPerKillRival();
                 } else
                 {
-                    reward = (double) kdr * multipier;
+                    multiplier = plugin.getSettingsManager().getKDRMultipliesPerKillNeutral();
                     acp.addNeutralKill();
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, vcp.getTag(), "n");
                 }
+
+                if (acp.getClan().isAlly(vcp.getTag())) {
+                    rewardPercent = (double) kdr * multiplier * percent * -1;
+                } else {
+                    attacker.sendMessage("kdr: " + kdr + " multiplier: " +  multiplier + " percent: " + percent );
+                    rewardPercent = (double) kdr * multiplier * percent;
+                }
+
                 plugin.getKillCampingManager().addPlayerKill(attacker.getUniqueId().toString(), victim.getUniqueId().toString());
                 
                 if (plugin.getSettingsManager().getCooldownClanWide()) {
                 	plugin.getKillCampingManager().addClanKill(acp.getTag(), victim.getUniqueId().toString());
                 }
 
-                if (reward != 0 && plugin.getSettingsManager().isMoneyPerKill())
+                if (rewardPercent != 0 && plugin.getSettingsManager().isMoneyPerKill())
                 {
+                    attacker.sendMessage("9");
+                    double victimMoney = plugin.getPermissionsManager().playerGetMoney(vcp.toPlayer());
+                    double rewardMoney = Math.round(victimMoney * rewardPercent * 100D) / 100D;
+                    plugin.getPermissionsManager().playerChargeMoney(vcp.toPlayer(), rewardMoney);
+
+                    double splitReward = Math.round((rewardMoney / acp.getClan().getOnlineMembers().size()) * 100D) / 100D ;
+
                     for (ClanPlayer cp : acp.getClan().getOnlineMembers())
                     {
-                        double money = Math.round((reward / acp.getClan().getOnlineMembers().size()) * 100D) / 100D;
-                        cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("player.got.money"), money, victim.getName(), kdr));
-                        plugin.getPermissionsManager().playerGrantMoney(cp.getName(), money);
+                        attacker.sendMessage("10");
+                        if (cp.getName() == acp.getName()) {
+                            attacker.sendMessage("11");
+                            cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("player.got.money"), splitReward, victim.getName(), kdr));
+                        } else {
+                            attacker.sendMessage("12");
+                            cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("clanmate.got.money"), splitReward, attacker.getName(), victim.getName()));
+                        }
+                        attacker.sendMessage("13");
+                        plugin.getPermissionsManager().playerGrantMoney(cp.toPlayer(), splitReward);
                     }
                 }
 
@@ -240,7 +264,7 @@ public class SCEntityListener implements Listener
             if (plugin.getKillCampingManager().isPlayerCamping(attacker, victim)) {
             	event.setCancelled(true);
             }
-            
+
             ClanPlayer acp = plugin.getClanManager().getClanPlayer(attacker);
             ClanPlayer vcp = plugin.getClanManager().getClanPlayer(victim);
 

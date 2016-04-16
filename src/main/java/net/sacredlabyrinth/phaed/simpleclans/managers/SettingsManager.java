@@ -121,7 +121,10 @@ public final class SettingsManager
     private int waitSecs;
     private boolean enableAutoGroups;
     private boolean moneyperkill;
-    private double KDRMultipliesPerKill;
+    private double KDRMultipliesPerKillRival;
+    private double KDRMultipliesPerKillCivilian;
+    private double KDRMultipliesPerKillNeutral;
+    private double moneyPerKillPercent;
     private boolean teleportBlocks;
     private boolean AutoGroupGroupName;
     private boolean tamableMobsSharing;
@@ -133,6 +136,7 @@ public final class SettingsManager
     private int maxMembers;
     private int killCooldown;
     private boolean cooldownClanWide;
+    private boolean blockIPCamping;
 
     /**
      *
@@ -189,6 +193,7 @@ public final class SettingsManager
         rivalLimitPercent = getConfig().getInt("settings.rival-limit-percent");
         killCooldown = getConfig().getInt("settings.killcamping.cooldown");
         cooldownClanWide = getConfig().getBoolean("settings.killcamping.clanwide");
+        blockIPCamping = getConfig().getBoolean("settings.killcamping.blockSameIP");
         serverAccount = getConfig().getString("economy.server-account");
         ePurchaseCreation = getConfig().getBoolean("economy.purchase-clan-create");
         ePurchaseVerification = getConfig().getBoolean("economy.purchase-clan-verify");
@@ -277,7 +282,10 @@ public final class SettingsManager
         port = getConfig().getInt("mysql.port");
         safeCivilians = getConfig().getBoolean("safe-civilians");
         moneyperkill = getConfig().getBoolean("economy.money-per-kill");
-        KDRMultipliesPerKill = getConfig().getDouble("economy.money-per-kill-kdr-multipier");
+        KDRMultipliesPerKillRival = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.rival");
+        KDRMultipliesPerKillCivilian = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.civilian");
+        KDRMultipliesPerKillNeutral = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.neutral");
+        moneyPerKillPercent = getConfig().getDouble("economy.money-per-kill-percent");
         teleportBlocks = getConfig().getBoolean("settings.teleport-blocks");
         AutoGroupGroupName = getConfig().getBoolean("permissions.auto-group-groupname");
         tamableMobsSharing = getConfig().getBoolean("settings.tameable-mobs-sharing");
@@ -466,7 +474,15 @@ public final class SettingsManager
     public boolean getCooldownClanWide() 
     {
     	return cooldownClanWide;
-    }  
+    }
+
+    /**
+     * @return blockIPCamping
+     */
+    public boolean isBlockIPCamping()
+    {
+        return blockIPCamping;
+    }
 
     /**
      * @return the serverName
@@ -1168,10 +1184,31 @@ public final class SettingsManager
     }
 
     /**
-     * @return the KDRMultipliesPerKill
+     * @return the KDRMultipliesPerKillRival
      */
-    public double getKDRMultipliesPerKill() {
-        return KDRMultipliesPerKill;
+    public double getKDRMultipliesPerKillRival() {
+        return KDRMultipliesPerKillRival;
+    }
+
+    /**
+     * @return the KDRMultipliesPerKillCivlian
+     */
+    public double getKDRMultipliesPerKillCivilian() {
+        return KDRMultipliesPerKillCivilian;
+    }
+
+    /**
+     * @return the KDRMultipliesPerKillNeutral
+     */
+    public double getKDRMultipliesPerKillNeutral() {
+        return KDRMultipliesPerKillNeutral;
+    }
+
+    /**
+     * @return the moneyPerKillPercent
+     */
+    public double getMoneyPerKillPercent() {
+        return moneyPerKillPercent;
     }
 
     /**

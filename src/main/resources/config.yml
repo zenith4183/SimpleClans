@@ -66,7 +66,11 @@ economy:
     home-teleport-set-price: 5.0
     purchase-home-teleport-set: false
     money-per-kill: false
-    money-per-kill-kdr-multipier: 10
+    money-per-kill-victim-kdr-multiplier:
+      rival: 0.2
+      civilian: 0.0
+      neutral: 0.1
+    money-per-kill-percent: 1.5
 kill-weights:
     rival: 2.0
     civilian: 0.0
