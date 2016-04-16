@@ -43,6 +43,7 @@ settings:
     new-clan-verification-required: true
     allow-regroup-command: true
     killcamping:
+      blockSameIP: true
       cooldown: 15
       clanwide: true
 commands:
@@ -53,6 +54,7 @@ commands:
     deny: deny
     force-priority: true
 economy:
+    server-account: Server
     creation-price: 100.0
     purchase-clan-create: false
     verification-price: 1000.0

@@ -62,15 +62,17 @@ public final class KillCampingManager {
 	}
 	
 	public boolean isPlayerCamping(Player attacker, Player victim) {
-		InetSocketAddress attackerAddressFull = attacker.getAddress();
-		InetSocketAddress victimAddressFull = victim.getAddress();
-		
-		if (attackerAddressFull != null && victimAddressFull != null) {
-			String[] attackerAddress = attacker.getAddress().toString().split(":");
-			String[] victimAddress = victimAddressFull.toString().split(":");
-			
-			if (attackerAddress[0].equals(victimAddress[0])) {
-				return true;
+		if (plugin.getSettingsManager().isBlockIPCamping()) {
+			InetSocketAddress attackerAddressFull = attacker.getAddress();
+			InetSocketAddress victimAddressFull = victim.getAddress();
+
+			if (attackerAddressFull != null && victimAddressFull != null) {
+				String[] attackerAddress = attacker.getAddress().toString().split(":");
+				String[] victimAddress = victimAddressFull.toString().split(":");
+
+				if (attackerAddress[0].equals(victimAddress[0])) {
+					return true;
+				}
 			}
 		}
 		
