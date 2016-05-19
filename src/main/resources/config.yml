@@ -14,15 +14,12 @@ tag:
         char: ' .'
 settings:
     online-mode: true
-    disable-messages: false
     tameable-mobs-sharing: false
-    teleport-blocks: false
     teleport-home-on-spawn: false
     drop-items-on-clan-home: false
     keep-items-on-clan-home: false
     item-list: []
     show-debug-info: false
-    enable-auto-groups: false
     rival-limit-percent: 50
     use-colorcode-from-prefix-for-name: true
     display-chat-tags: true
@@ -32,7 +29,6 @@ settings:
     - mod
     show-unverified-on-list: false
     blacklisted-worlds: []
-    banned-players: []
     disallowed-tags:
     - vip
     - clan

@@ -15,7 +15,6 @@ import java.util.List;
 public final class SettingsManager
 {
     private boolean onlineMode;
-    private boolean disableMessages;
     private String clanChatRankColor;
     private boolean tagBasedClanChat;
     private boolean teleportOnSpawn;
@@ -119,13 +118,11 @@ public final class SettingsManager
     private FileConfiguration config;
     private boolean homebaseSetOnce;
     private int waitSecs;
-    private boolean enableAutoGroups;
     private boolean moneyperkill;
     private double KDRMultipliesPerKillRival;
     private double KDRMultipliesPerKillCivilian;
     private double KDRMultipliesPerKillNeutral;
     private double moneyPerKillPercent;
-    private boolean teleportBlocks;
     private boolean AutoGroupGroupName;
     private boolean tamableMobsSharing;
     private boolean allowReGroupCommand;
@@ -174,13 +171,11 @@ public final class SettingsManager
         }
 
         onlineMode = getConfig().getBoolean("settings.online-mode");
-        disableMessages = getConfig().getBoolean("settings.disable-messages");
         teleportOnSpawn = getConfig().getBoolean("settings.teleport-home-on-spawn");
         dropOnHome = getConfig().getBoolean("settings.drop-items-on-clan-home");
         keepOnHome = getConfig().getBoolean("settings.keep-items-on-clan-home");
         itemsList = getConfig().getIntegerList("settings.item-list");
         debugging = getConfig().getBoolean("settings.show-debug-info");
-        enableAutoGroups = getConfig().getBoolean("settings.enable-auto-groups");
         useColorCodeFromPrefix = getConfig().getBoolean("settings.use-colorcode-from-prefix-for-name");
         disallowedColors = getConfig().getStringList("settings.disallowed-tag-colors");
         blacklistedWorlds = getConfig().getStringList("settings.blacklisted-worlds");
@@ -286,7 +281,6 @@ public final class SettingsManager
         KDRMultipliesPerKillCivilian = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.civilian");
         KDRMultipliesPerKillNeutral = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.neutral");
         moneyPerKillPercent = getConfig().getDouble("economy.money-per-kill-percent");
-        teleportBlocks = getConfig().getBoolean("settings.teleport-blocks");
         AutoGroupGroupName = getConfig().getBoolean("permissions.auto-group-groupname");
         tamableMobsSharing = getConfig().getBoolean("settings.tameable-mobs-sharing");
         allowReGroupCommand = getConfig().getBoolean("settings.allow-regroup-command");
@@ -1096,16 +1090,6 @@ public final class SettingsManager
         return waitSecs;
     }
 
-    public void setWaitSecs(int waitSecs)
-    {
-        this.waitSecs = waitSecs;
-    }
-
-    public boolean isEnableAutoGroups()
-    {
-        return enableAutoGroups;
-    }
-
     public boolean isDebugging()
     {
         return debugging;
@@ -1212,13 +1196,6 @@ public final class SettingsManager
     }
 
     /**
-     * @return the teleportBlocks
-     */
-    public boolean isTeleportBlocks() {
-        return teleportBlocks;
-    }
-
-    /**
      * @return the AutoGroupGroupName
      */
     public boolean isAutoGroupGroupName() {
@@ -1235,11 +1212,6 @@ public final class SettingsManager
     public boolean isOnlineMode()
     {
         return onlineMode;
-    }
-
-    public boolean isDisableMessages()
-    {
-        return disableMessages;
     }
 
     /**
@@ -1289,11 +1261,6 @@ public final class SettingsManager
     public boolean isForceCommandPriority()
     {
         return forceCommandPriority;
-    }
-
-    public void setForceCommandPriority(boolean forceCommandPriority)
-    {
-        this.forceCommandPriority = forceCommandPriority;
     }
 
     public int getMaxMembers()
