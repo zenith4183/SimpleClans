@@ -998,9 +998,6 @@ public class Clan implements Serializable, Comparable<Clan>
         SimpleClans.getInstance().getStorageManager().updateClanPlayer(cp);
         SimpleClans.getInstance().getStorageManager().updateClan(this);
 
-        // add clan permission
-        SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
-
         Player player = SimpleClans.getInstance().getServer().getPlayer(cp.getUniqueId());
 
         if (player != null)
@@ -1018,9 +1015,6 @@ public class Clan implements Serializable, Comparable<Clan>
     public void removePlayerFromClan(UUID playerUniqueId)
     {
         ClanPlayer cp = SimpleClans.getInstance().getClanManager().getClanPlayer(playerUniqueId);
-
-        // remove clan group-permission
-        SimpleClans.getInstance().getPermissionsManager().removeClanPermissions(cp);
 
         // remove permissions
         SimpleClans.getInstance().getPermissionsManager().removeClanPlayerPermissions(cp);
@@ -1060,7 +1054,6 @@ public class Clan implements Serializable, Comparable<Clan>
         SimpleClans.getInstance().getStorageManager().updateClan(this);
 
         // add clan permission
-        SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
         SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerPromoteEvent(this, cp));
     }
 
@@ -1079,7 +1072,6 @@ public class Clan implements Serializable, Comparable<Clan>
         SimpleClans.getInstance().getStorageManager().updateClan(this);
 
         // add clan permission
-        SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
         SimpleClans.getInstance().getServer().getPluginManager().callEvent(new PlayerDemoteEvent(this, cp));
     }
 

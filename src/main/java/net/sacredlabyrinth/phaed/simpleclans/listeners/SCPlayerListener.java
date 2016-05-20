@@ -209,8 +209,6 @@ public class SCPlayerListener implements Listener
         	cp.getClan().displayBb(player);
         }
 
-        SimpleClans.getInstance().getPermissionsManager().addClanPermissions(cp);
-
         if (event.getPlayer().isOp())
         {
             for (String message : SimpleClans.getInstance().getMessages())
