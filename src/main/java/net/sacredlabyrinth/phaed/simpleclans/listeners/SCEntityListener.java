@@ -107,7 +107,6 @@ public class SCEntityListener implements Listener
                 if (acp.getClan().isAlly(vcp.getTag())) {
                     rewardPercent = (double) kdr * multiplier * percent * -1;
                 } else {
-                    attacker.sendMessage("kdr: " + kdr + " multiplier: " +  multiplier + " percent: " + percent );
                     rewardPercent = (double) kdr * multiplier * percent;
                 }
 
@@ -119,7 +118,6 @@ public class SCEntityListener implements Listener
 
                 if (rewardPercent != 0 && plugin.getSettingsManager().isMoneyPerKill())
                 {
-                    attacker.sendMessage("9");
                     double victimMoney = plugin.getPermissionsManager().playerGetMoney(vcp.toPlayer());
                     double rewardMoney = Math.round(victimMoney * rewardPercent * 100D) / 100D;
                     plugin.getPermissionsManager().playerChargeMoney(vcp.toPlayer(), rewardMoney);
@@ -128,15 +126,11 @@ public class SCEntityListener implements Listener
 
                     for (ClanPlayer cp : acp.getClan().getOnlineMembers())
                     {
-                        attacker.sendMessage("10");
                         if (cp.getName() == acp.getName()) {
-                            attacker.sendMessage("11");
                             cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("player.got.money"), splitReward, victim.getName(), kdr));
                         } else {
-                            attacker.sendMessage("12");
                             cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("clanmate.got.money"), splitReward, attacker.getName(), victim.getName()));
                         }
-                        attacker.sendMessage("13");
                         plugin.getPermissionsManager().playerGrantMoney(cp.toPlayer(), splitReward);
                     }
                 }
