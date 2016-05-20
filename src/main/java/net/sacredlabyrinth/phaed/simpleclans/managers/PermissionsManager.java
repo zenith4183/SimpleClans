@@ -52,12 +52,12 @@ public final class PermissionsManager
         }
         catch (ClassNotFoundException e)
         {
-            SimpleClans.log("[PreciousStones] Vault not found. No economy or extended Permissions support.");
+            SimpleClans.log("[SimpleClans] Vault not found. No economy or extended Permissions support.");
         }
     }
 
     /**
-     * Whether exonomy plugin exists and is enabled
+     * Whether economy plugin exists and is enabled
      *
      * @return
      */
@@ -80,7 +80,7 @@ public final class PermissionsManager
     }
 
     /**
-     * Saves the permissions for earch clan from the config
+     * Saves the permissions for each clan from the config
      */
     public void savePermissions()
     {
@@ -95,7 +95,7 @@ public final class PermissionsManager
     }
 
     /**
-     * Adds all pemrissions for a clan
+     * Adds all permissions for a clan
      *
      * @param clan
      */
@@ -123,7 +123,7 @@ public final class PermissionsManager
                 {
                     permAttaches.put(cp.toPlayer(), cp.toPlayer().addAttachment(SimpleClans.getInstance()));
                 }
-                //Adds all permisisons from his clan
+                //Adds all permissions from his clan
                 for (String perm : getPermissions(cp.getClan()))
                 {
                     permAttaches.get(cp.toPlayer()).setPermission(perm, true);
