@@ -106,6 +106,7 @@ clanchat:
         left: '['
         right: ']'
     enable: true
+    filter: false
 request:
     message-color: b
     ask-frequency-secs: 60
@@ -127,6 +128,7 @@ allychat:
         left: '['
         right: ']'
     enable: true
+    filter: false
 purge:
     inactive-player-data-days: 30
     inactive-clan-days: 7

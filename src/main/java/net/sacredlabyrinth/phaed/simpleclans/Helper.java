@@ -17,8 +17,8 @@ import java.util.*;
  */
 public class Helper
 {
-	
-	private Helper() {}
+
+    private Helper() {}
 
     /**
      * Dumps stacktrace to log
@@ -675,5 +675,17 @@ public class Helper
     public static Player getPlayer(String playerName)
     {
         return SimpleClans.getInstance().getServer().getPlayer(UUIDUtil.nameToUUID(playerName));
+    }
+
+    public static String filterMsg(String msg) {
+        List<String> filters = SimpleClans.getFiltersManager().getFilters();
+
+        for (String filterLine : filters) {
+            String filterArr[] = filterLine.split(",");
+
+            msg = msg.replaceAll("(?i)" + filterArr[0], filterArr[1]);
+        }
+
+        return msg;
     }
 }

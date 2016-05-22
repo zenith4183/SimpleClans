@@ -35,6 +35,7 @@ public class SimpleClans extends JavaPlugin {
     private TeleportManager teleportManager;
     private LanguageManager languageManager;
     private KillCampingManager killCampingManager;
+    private static FiltersManager filtersManager;
 
     /**
      * @return the logger
@@ -77,6 +78,7 @@ public class SimpleClans extends JavaPlugin {
 
         settingsManager = new SettingsManager();
         languageManager = new LanguageManager();
+        filtersManager = new FiltersManager();
 
         permissionsManager = new PermissionsManager();
         requestManager = new RequestManager();
@@ -187,5 +189,9 @@ public class SimpleClans extends JavaPlugin {
     public LanguageManager getLanguageManager()
     {
         return languageManager;
+    }
+
+    public static FiltersManager getFiltersManager() {
+        return filtersManager;
     }
 }

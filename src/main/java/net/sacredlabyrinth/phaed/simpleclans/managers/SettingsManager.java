@@ -86,6 +86,7 @@ public final class SettingsManager
     private String tagBracketLeaderColor;
     private boolean clanTrustByDefault;
     private boolean allyChatEnable;
+    private boolean allyChatFilter;
     private String allyChatMessageColor;
     private String allyChatNameColor;
     private String allyChatTagColor;
@@ -95,6 +96,7 @@ public final class SettingsManager
     private String allyChatPlayerBracketLeft;
     private String allyChatPlayerBracketRight;
     private boolean clanChatEnable;
+    private boolean clanChatFilter;
     private String clanChatAnnouncementColor;
     private String clanChatMessageColor;
     private String clanChatNameColor;
@@ -246,6 +248,7 @@ public final class SettingsManager
         tagBracketLeft = getConfig().getString("tag.bracket.left");
         tagBracketRight = getConfig().getString("tag.bracket.right");
         allyChatEnable = getConfig().getBoolean("allychat.enable");
+        allyChatFilter = getConfig().getBoolean("allychat.filter");
         allyChatMessageColor = getConfig().getString("allychat.message-color");
         allyChatTagColor = getConfig().getString("allychat.tag-color");
         allyChatNameColor = getConfig().getString("allychat.name-color");
@@ -255,6 +258,7 @@ public final class SettingsManager
         allyChatPlayerBracketLeft = getConfig().getString("allychat.player-bracket.left");
         allyChatPlayerBracketRight = getConfig().getString("allychat.player-bracket.right");
         clanChatEnable = getConfig().getBoolean("clanchat.enable");
+        clanChatFilter = getConfig().getBoolean("clanchat.filter");
         tagBasedClanChat = getConfig().getBoolean("clanchat.tag-based-clan-chat");
         clanChatAnnouncementColor = getConfig().getString("clanchat.announcement-color");
         clanChatMessageColor = getConfig().getString("clanchat.message-color");
@@ -913,6 +917,14 @@ public final class SettingsManager
     }
 
     /**
+     * @return the clanChatFilter
+     */
+    public boolean getClanChatFilter()
+    {
+        return clanChatFilter;
+    }
+
+    /**
      * @return the tagBracketLeft
      */
     public String getTagBracketLeft()
@@ -1028,6 +1040,11 @@ public final class SettingsManager
     public boolean isAllyChatEnable()
     {
         return allyChatEnable;
+    }
+
+    public boolean isAllyChatFilter()
+    {
+        return allyChatFilter;
     }
 
     public String getAllyChatMessageColor()
