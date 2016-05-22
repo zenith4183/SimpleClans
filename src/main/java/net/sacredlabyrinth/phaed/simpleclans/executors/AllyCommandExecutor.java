@@ -10,6 +10,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public class AllyCommandExecutor implements CommandExecutor
@@ -76,7 +78,9 @@ public class AllyCommandExecutor implements CommandExecutor
             if (plugin.getSettingsManager().isAllyChatFilter()) {
                 message = Helper.filterMsg(message);
             }
-            SimpleClans.log(message);
+            String eyeMessage = code + plugin.getSettingsManager().getAllyChatBracketColor() + plugin.getSettingsManager().getAllyChatTagBracketLeft() + plugin.getSettingsManager().getAllyChatTagColor() + plugin.getSettingsManager().getCommandAlly() + plugin.getSettingsManager().getAllyChatBracketColor() + plugin.getSettingsManager().getAllyChatTagBracketRight() + " " + plugin.getSettingsManager().getAllyChatNameColor() + plugin.getSettingsManager().getAllyChatPlayerBracketLeft() + player.getName() + plugin.getSettingsManager().getAllyChatPlayerBracketRight() + " " + plugin.getSettingsManager().getAllyChatMessageColor() + Helper.toMessage(strings);
+
+            plugin.getServer().getConsoleSender().sendMessage(eyeMessage);
 
             Player self = cp.toPlayer();
             ChatBlock.sendMessage(self, message);
@@ -99,7 +103,42 @@ public class AllyCommandExecutor implements CommandExecutor
 
                 ChatBlock.sendMessage(member, message);
             }
+
+            sendToAllSeeing(eyeMessage, allies);
         }
         return false;
+    }
+
+    public void sendToAllSeeing(String msg, Set<ClanPlayer> allies)
+    {
+        Collection<Player> players = Helper.getOnlinePlayers();
+
+        for (Player player : players)
+        {
+            if (plugin.getPermissionsManager().has(player, "simpleclans.admin.all-seeing-eye"))
+            {
+                boolean alreadySent = false;
+
+                ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
+
+                if (cp != null && cp.isMutedAlly())
+                {
+                    continue;
+                }
+
+                for (ClanPlayer cpp : allies)
+                {
+                    if (cpp.getName().equalsIgnoreCase(player.getName()))
+                    {
+                        alreadySent = true;
+                    }
+                }
+
+                if (!alreadySent)
+                {
+                    ChatBlock.sendMessage(player, ChatColor.DARK_GRAY + Helper.stripColors(msg));
+                }
+            }
+        }
     }
 }
