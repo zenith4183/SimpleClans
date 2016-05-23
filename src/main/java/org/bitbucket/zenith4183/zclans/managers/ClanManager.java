@@ -1300,4 +1300,83 @@ public final class ClanManager
             }
         }
     }
+
+    /**
+     * Processes a ally chat command
+     *
+     * @param player
+     * @param msg
+     */
+    public void processAllyChat(Player player, String msg)
+    {
+        ClanPlayer cp = plugin.getClanManager().getClanPlayer(player);
+
+        if (cp == null)
+        {
+            return;
+        }
+
+            String[] split = msg.split(" ");
+
+        if (split.length == 0)
+        {
+            return;
+        }
+
+        String command = split[0];
+
+        if (command.equals(plugin.getLang("join")) && split.length == 1)
+        {
+            cp.setChannel(ClanPlayer.Channel.ALLY);
+            plugin.getStorageManager().updateClanPlayer(cp);
+            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have joined ally chat");
+        }
+        else if (command.equals(plugin.getLang("leave")) && split.length == 1)
+        {
+            cp.setChannel(ClanPlayer.Channel.NONE);
+            plugin.getStorageManager().updateClanPlayer(cp);
+            ChatBlock.sendMessage(player, ChatColor.AQUA + "You have left ally chat");
+        }
+        else if (command.equals(plugin.getLang("mute")) && split.length == 1)
+        {
+            if (!cp.isMutedAlly())
+            {
+                cp.setMutedAlly(true);
+                ChatBlock.sendMessage(player, ChatColor.AQUA + "You have muted ally chat");
+            }
+            else
+            {
+                cp.setMutedAlly(false);
+                ChatBlock.sendMessage(player, ChatColor.AQUA + "You have unmuted ally chat");
+            }
+        }
+        else
+        {
+            String code = "" + ChatColor.AQUA + ChatColor.WHITE + ChatColor.AQUA + ChatColor.BLACK;
+            String message = code + plugin.getSettingsManager().getAllyChatBracketColor() + plugin.getSettingsManager().getAllyChatTagBracketLeft() + plugin.getSettingsManager().getAllyChatTagColor() + plugin.getSettingsManager().getCommandAlly() + plugin.getSettingsManager().getAllyChatBracketColor() + plugin.getSettingsManager().getAllyChatTagBracketRight() + " " + plugin.getSettingsManager().getAllyChatNameColor() + plugin.getSettingsManager().getAllyChatPlayerBracketLeft() + player.getName() + plugin.getSettingsManager().getAllyChatPlayerBracketRight() + " " + plugin.getSettingsManager().getAllyChatMessageColor() + msg;
+            zClans.log(message);
+
+            Player self = cp.toPlayer();
+            ChatBlock.sendMessage(self, message);
+
+            Set<ClanPlayer> allies = cp.getClan().getAllAllyMembers();
+            allies.addAll(cp.getClan().getMembers());
+
+            for (ClanPlayer ally : allies)
+            {
+                if (ally.isMutedAlly())
+                {
+                    continue;
+                }
+                Player member = ally.toPlayer();
+
+                if (player.getUniqueId().equals(ally.getUniqueId()))
+                {
+                    continue;
+                }
+
+                ChatBlock.sendMessage(member, message);
+            }
+        }
+    }
 }

@@ -12,6 +12,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.*;
 
+import java.util.Iterator;
+
 /**
  * @author phaed
  */
@@ -161,12 +163,68 @@ public class SCPlayerListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent event)
     {
+        if (plugin.getSettingsManager().isBlacklistedWorld(event.getPlayer().getLocation().getWorld().getName()))
+        {
+            return;
+        }
+
         if (event.getPlayer() == null)
         {
             return;
         }
 
-       plugin.getClanManager().updateDisplayName(event.getPlayer());
+        String message = event.getMessage();
+        ClanPlayer cp = plugin.getClanManager().getClanPlayer(event.getPlayer());
+
+        if (cp != null)
+        {
+            if (cp.getChannel().equals(ClanPlayer.Channel.CLAN))
+            {
+                plugin.getClanManager().processClanChat(event.getPlayer(), message);
+                event.setCancelled(true);
+            }
+            else if (cp.getChannel().equals(ClanPlayer.Channel.ALLY))
+            {
+                plugin.getClanManager().processAllyChat(event.getPlayer(), message);
+                event.setCancelled(true);
+            }
+        }
+
+        if (!plugin.getPermissionsManager().has(event.getPlayer(), "simpleclans.mod.nohide"))
+        {
+            boolean isClanChat = event.getMessage().contains("" + ChatColor.RED + ChatColor.WHITE + ChatColor.RED + ChatColor.BLACK);
+            boolean isAllyChat = event.getMessage().contains("" + ChatColor.AQUA + ChatColor.WHITE + ChatColor.AQUA + ChatColor.BLACK);
+
+            for (Iterator iter = event.getRecipients().iterator(); iter.hasNext(); )
+            {
+                Player player = (Player) iter.next();
+
+                ClanPlayer rcp = plugin.getClanManager().getClanPlayer(player);
+
+                if (rcp != null)
+                {
+                    if (!rcp.isClanChat() && isClanChat)
+                    {
+                        iter.remove();
+                        continue;
+                    }
+
+                    if (!rcp.isAllyChat() && isAllyChat)
+                    {
+                        iter.remove();
+                        continue;
+                    }
+
+                    if (!rcp.isGlobalChat() && !isAllyChat && !isClanChat)
+                    {
+                        iter.remove();
+                    }
+                }
+            }
+        }
+
+
+        plugin.getClanManager().updateDisplayName(event.getPlayer());
     }
 
     /**
