@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.bitbucket.zenith4183.zclans</groupId>
-    <artifactId>zClans</artifactId>
-    <version>1.0.0</version>
-    <name>zClans</name>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.bitbucket.zenith4183.zclans</groupId>
+  <artifactId>zClans</artifactId>
+  <version>1.0.0</version>
+  <name>zClans</name>
 
   <properties>
     <spigot.version>1.9-R0.1-SNAPSHOT</spigot.version>
     <vault.version>1.4</vault.version>
+    <metrics.version>R8-SNAPSHOT</metrics.version>
   </properties>
-  
 
   <build>
     <finalName>${project.name}</finalName>
@@ -42,6 +42,33 @@
             <artifactId>maven-release-plugin</artifactId>
             <version>2.3.2</version>
         </plugin>
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+            <artifactSet>
+                <includes>
+                    <include>org.mcstats.*:*</include>
+                </includes>
+            </artifactSet>
+            <relocations>
+                <relocation>
+                    <pattern>org.mcstats</pattern>
+                    <shadedPattern>org.bitbucket.zenith4183.zclans</shadedPattern>
+                </relocation>
+            </relocations>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
     </plugins>
     
             <!-- Resources -->
@@ -74,6 +101,12 @@
         <version>${vault.version}</version>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>org.mcstats.bukkit</groupId>
+        <artifactId>metrics-lite</artifactId>
+        <version>${metrics.version}</version>
+        <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <!-- Repositories -->
@@ -89,6 +122,10 @@
     <repository>
         <id>vault-repo</id>
         <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+    </repository>
+    <repository>
+        <id>Plugin Metrics</id>
+        <url>http://repo.mcstats.org/content/repositories/public</url>
     </repository>
   </repositories>
 </project>
