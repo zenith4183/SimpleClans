@@ -5,7 +5,7 @@ in replacement for SimpleClans due to changes to the database.  If you know what
 you are doing, the SimpleClans database can be altered to be zClans supported,
 however there is no automatic conversion.
 
-[![Build Status](https://travis-ci.org/zenith4183/SimpleClans.svg)](https://travis-ci.org/zenith4183/SimpleClans)  [![Build Status](https://drone.io/github.com/zenith4183/SimpleClans/status.png)](https://drone.io/github.com/zenith4183/SimpleClans/files)
+[![Build Status](https://travis-ci.org/zenith4183/SimpleClans.svg)](https://travis-ci.org/zenith4183/SimpleClans)  [![Download](https://img.shields.io/badge/snapshot-download-blue.svg)](https://drone.io/github.com/zenith4183/SimpleClans/files)
 
 ## Difference from SimpleClans
 ## Features Removed
