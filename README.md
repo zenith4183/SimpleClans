@@ -7,15 +7,21 @@ however there is no automatic conversion.
 
 [![Build Status](https://travis-ci.org/zenith4183/SimpleClans.svg)](https://travis-ci.org/zenith4183/SimpleClans)  [![Download](https://img.shields.io/badge/snapshot-download-blue.svg)](https://drone.io/github.com/zenith4183/SimpleClans/files)
 
+## Disclaimer
+The cleanup of the original SimpleClans code base effectively puts zClans in an 
+alpha development state.  As such, you use this plugin at your own risk until 
+it is considered stable.  I still may choose to remove more features from the 
+original code base at anytime should I deem them unneccesary for my server.
+
 ## Difference from SimpleClans
-## Features Removed
+### Features Removed
 * Spout support removed
 * mChat support removed
 * UUID converter removed
 * Banks removed
 * Wars removed
 
-## Added/Fixed Features
+### Added/Fixed Features
 * Banning players from clans now works correctly
 * Support for killing cooldowns
 * Support to prevent players of the same IP from killing each other
