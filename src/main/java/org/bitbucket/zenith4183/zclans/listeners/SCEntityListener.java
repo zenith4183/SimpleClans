@@ -104,7 +104,7 @@ public class SCEntityListener implements Listener
                     plugin.getStorageManager().insertKill(attacker, acp.getTag(), victim, vcp.getTag(), "n");
                 }
 
-                if (acp.getClan().isAlly(vcp.getTag())) {
+                if (vcp.getClan() != null && acp.getClan() != null && acp.getClan().isAlly(vcp.getTag())) {
                     rewardPercent = (double) kdr * multiplier * percent * -1;
                 } else {
                     rewardPercent = (double) kdr * multiplier * percent;
