@@ -30,7 +30,7 @@ public class SCPlayerListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event     player command event object
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event)
@@ -158,7 +158,7 @@ public class SCPlayerListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event         player chat event object
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChat(AsyncPlayerChatEvent event)
@@ -228,7 +228,7 @@ public class SCPlayerListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event         player join event object
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)
@@ -275,7 +275,7 @@ public class SCPlayerListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event         player respawn event object
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerRespawn(PlayerRespawnEvent event)
@@ -304,7 +304,7 @@ public class SCPlayerListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event         player quit event object
      */
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event)
@@ -322,7 +322,7 @@ public class SCPlayerListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event         player kick event object
      */
     @EventHandler
     public void onPlayerKick(PlayerKickEvent event)
@@ -334,23 +334,4 @@ public class SCPlayerListener implements Listener
 
         plugin.getClanManager().updateLastSeen(event.getPlayer());
     }
-
-    /**
-     * @param event
-     */
-    @EventHandler
-    public void onPlayerTeleport(PlayerTeleportEvent event)
-    {
-        if (event.isCancelled())
-        {
-            return;
-        }
-
-        if (plugin.getSettingsManager().isBlacklistedWorld(event.getPlayer().getLocation().getWorld().getName()))
-        {
-            return;
-        }
-
-    }
-
 }

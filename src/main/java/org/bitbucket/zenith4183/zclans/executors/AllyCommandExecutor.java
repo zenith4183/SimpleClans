@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class AllyCommandExecutor implements CommandExecutor
 {
-    zClans plugin;
+    private zClans plugin;
 
     public AllyCommandExecutor()
     {
@@ -108,7 +108,7 @@ public class AllyCommandExecutor implements CommandExecutor
         return false;
     }
 
-    public void sendToAllSeeing(String msg, Set<ClanPlayer> allies)
+    private void sendToAllSeeing(String msg, Set<ClanPlayer> allies)
     {
         Collection<Player> players = Helper.getOnlinePlayers();
 

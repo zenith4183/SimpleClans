@@ -12,7 +12,7 @@ import java.text.MessageFormat;
 
 public class AcceptCommandExecutor implements CommandExecutor
 {
-    zClans plugin;
+    private zClans plugin;
 
     public AcceptCommandExecutor()
     {

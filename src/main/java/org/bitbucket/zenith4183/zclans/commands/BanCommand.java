@@ -22,8 +22,8 @@ public class BanCommand
 
     /**
      * Execute the command
-     * @param player
-     * @param arg
+     * @param player    player executing command
+     * @param arg       command arguments
      */
     public void execute(Player player, String[] arg)
     {
@@ -36,6 +36,11 @@ public class BanCommand
                 String banned = arg[0];
                 
                 ClanPlayer cp = plugin.getClanManager().getCreateClanPlayerUUID(banned);
+
+                if (cp == null) {
+                    ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("no.player.matched"));
+                    return;
+                }
                 
                 if (!cp.isBanned())
                 {

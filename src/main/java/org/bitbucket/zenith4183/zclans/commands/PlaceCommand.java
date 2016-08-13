@@ -16,8 +16,8 @@ public class PlaceCommand
     /**
      * Execute the command
      *
-     * @param sender
-     * @param arg
+     * @param sender    player executing command
+     * @param arg       command arguments
      */
     public void execute(CommandSender sender, String[] arg)
     {

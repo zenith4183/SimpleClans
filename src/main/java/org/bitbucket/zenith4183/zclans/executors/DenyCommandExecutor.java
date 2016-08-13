@@ -12,7 +12,7 @@ import java.text.MessageFormat;
 
 public class DenyCommandExecutor implements CommandExecutor
 {
-    zClans plugin;
+    private zClans plugin;
 
     public DenyCommandExecutor()
     {

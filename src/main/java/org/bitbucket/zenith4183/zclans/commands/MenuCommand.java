@@ -23,7 +23,7 @@ public class MenuCommand
     /**
      * Execute the command
      *
-     * @param player
+     * @param player    player executing command
      */
     public void execute(Player player)
     {

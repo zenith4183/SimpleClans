@@ -14,7 +14,7 @@ import java.text.MessageFormat;
 
 public class MoreCommandExecutor implements CommandExecutor
 {
-    zClans plugin;
+    private zClans plugin;
 
     public MoreCommandExecutor()
     {

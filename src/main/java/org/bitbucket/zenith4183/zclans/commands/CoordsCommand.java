@@ -23,8 +23,8 @@ public class CoordsCommand
     /**
      * Execute the command
      *
-     * @param player
-     * @param arg
+     * @param player    player executing command
+     * @param arg       command arguments
      */
     public void execute(Player player, String[] arg)
     {

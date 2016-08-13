@@ -1,7 +1,6 @@
 package org.bitbucket.zenith4183.zclans.commands;
 
 import org.bitbucket.zenith4183.zclans.*;
-import org.bitbucket.zenith4183.zclans.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -18,9 +17,8 @@ public class RivalCommand
 
     /**
      * Execute the command
-     *
-     * @param player
-     * @param arg
+     * @param player    player executing command
+     * @param arg       command arguments
      */
     public void execute(Player player, String[] arg)
     {

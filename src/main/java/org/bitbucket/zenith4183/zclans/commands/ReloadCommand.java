@@ -19,8 +19,8 @@ public class ReloadCommand
     /**
      * Execute the command
      *
-     * @param sender
-     * @param arg
+     * @param player    player executing command
+     * @param arg       command arguments
      */
     public void execute(CommandSender sender, String[] arg)
     {

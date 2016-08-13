@@ -33,7 +33,7 @@ public class SCEntityListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event     death event object
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDeath(EntityDeathEvent event)
@@ -71,7 +71,7 @@ public class SCEntityListener implements Listener
                 }
             }
 
-            if (attacker != null && victim != null)
+            if (attacker != null)
             {
                 ClanPlayer acp;
                 ClanPlayer vcp;
@@ -79,7 +79,7 @@ public class SCEntityListener implements Listener
                 acp = plugin.getClanManager().getCreateClanPlayer(attacker.getUniqueId());
                 vcp = plugin.getClanManager().getCreateClanPlayer(victim.getUniqueId());
 
-                double rewardPercent = 0;
+                double rewardPercent;
                 double multiplier;
                 double percent = plugin.getSettingsManager().getMoneyPerKillPercent() / 100;
                 float kdr = vcp.getKDR();
@@ -126,7 +126,7 @@ public class SCEntityListener implements Listener
 
                     for (ClanPlayer cp : acp.getClan().getOnlineMembers())
                     {
-                        if (cp.getName() == acp.getName()) {
+                        if (cp.getName().equals(acp.getName())) {
                             cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("player.got.money"), splitReward, victim.getName(), kdr));
                         } else {
                             cp.toPlayer().sendMessage(ChatColor.AQUA + MessageFormat.format(plugin.getLang("clanmate.got.money"), splitReward, attacker.getName(), victim.getName()));
@@ -143,7 +143,7 @@ public class SCEntityListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event     player interact event object
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEntityEvent event)
@@ -175,7 +175,7 @@ public class SCEntityListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event     entity target event object
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityTarget(EntityTargetLivingEntityEvent event)
@@ -197,7 +197,7 @@ public class SCEntityListener implements Listener
     }
 
     /**
-     * @param event
+     * @param event     entity damage event object
      */
     @EventHandler(priority = EventPriority.LOW)
     public void onEntityDamage(EntityDamageEvent event)

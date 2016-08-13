@@ -1,10 +1,7 @@
 package org.bitbucket.zenith4183.zclans.managers;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.bitbucket.zenith4183.zclans.ClanPlayer;
 import org.bitbucket.zenith4183.zclans.zClans;
@@ -22,17 +19,17 @@ public final class KillCampingManager {
 		plugin = zClans.getInstance();
 	}
 
-	public Map<String, ArrayList<String>> playerKills = new HashMap<String, ArrayList<String>>();
-	public Map<String, ArrayList<String>> clanKills = new HashMap<String, ArrayList<String>>();
-	public Map<String, ArrayList<Long>> playerKillTime = new HashMap<String, ArrayList<Long>>();
-	public Map<String, ArrayList<Long>> clanKillTime = new HashMap<String, ArrayList<Long>>();
+	private Map<String, ArrayList<String>> playerKills = new HashMap<>();
+	private Map<String, ArrayList<String>> clanKills = new HashMap<>();
+	private Map<String, ArrayList<Long>> playerKillTime = new HashMap<>();
+	private Map<String, ArrayList<Long>> clanKillTime = new HashMap<>();
 
 	public void addPlayerKill(String attackerUuid, String victimUuid) {
 		long time = System.currentTimeMillis();
 		
 		if (!playerKills.containsKey(attackerUuid)) {
-			playerKills.put(attackerUuid, new ArrayList<>(Arrays.asList(victimUuid)));
-			playerKillTime.put(attackerUuid, new ArrayList<>(Arrays.asList(time)));
+			playerKills.put(attackerUuid, new ArrayList<>(Collections.singletonList(victimUuid)));
+			playerKillTime.put(attackerUuid, new ArrayList<>(Collections.singletonList(time)));
 			return;
 		}
 		if (!playerKills.get(attackerUuid).contains(victimUuid)) {
@@ -48,8 +45,8 @@ public final class KillCampingManager {
 		long time = System.currentTimeMillis();
 		
 		if (!clanKills.containsKey(clan)) {
-			clanKills.put(clan, new ArrayList<>(Arrays.asList(victimUuid)));
-			clanKillTime.put(clan, new ArrayList<>(Arrays.asList(time)));
+			clanKills.put(clan, new ArrayList<>(Collections.singletonList(victimUuid)));
+			clanKillTime.put(clan, new ArrayList<>(Collections.singletonList(time)));
 			return;
 		}
 		if (!clanKills.get(clan).contains(victimUuid)) {

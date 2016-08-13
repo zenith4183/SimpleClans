@@ -27,13 +27,10 @@ public final class FiltersManager {
 
     public List<String> getFilters() {
         YamlConfiguration filtersConfig = (YamlConfiguration) getFiltersConfig();
-        List<String> filters = filtersConfig.getStringList("filters");
-
-        return filters;
-
+        return filtersConfig.getStringList("filters");
     }
 
-    public void saveDefaultFiltersConfig() {
+    private void saveDefaultFiltersConfig() {
         if (filtersConfigFile == null) {
             filtersConfigFile = new File(plugin.getDataFolder(), "filters.yml");
         }
@@ -42,7 +39,7 @@ public final class FiltersManager {
         }
     }
 
-    public void reloadFiltersConfig() {
+    private void reloadFiltersConfig() {
         if (filtersConfigFile == null) {
             filtersConfigFile = new File(plugin.getDataFolder(), "filters.yml");
         }
@@ -50,16 +47,14 @@ public final class FiltersManager {
 
         try {
             Reader defFiltersConfigStream = new InputStreamReader(plugin.getResource("filters.yml"), "UTF8");
-            if (defFiltersConfigStream != null) {
-                YamlConfiguration defFiltersConfig =  YamlConfiguration.loadConfiguration(defFiltersConfigStream);
-                filtersConfig.setDefaults(defFiltersConfig);
-            }
+            YamlConfiguration defFiltersConfig =  YamlConfiguration.loadConfiguration(defFiltersConfigStream);
+            filtersConfig.setDefaults(defFiltersConfig);
         } catch (UnsupportedEncodingException e) {
             plugin.getLogger().info("Failed to set filters config");
         }
     }
 
-    public FileConfiguration getFiltersConfig() {
+    private FileConfiguration getFiltersConfig() {
         if (filtersConfig == null) {
             reloadFiltersConfig();
         }
