@@ -1,7 +1,6 @@
 package org.bitbucket.zenith4183.zclans.commands;
 
 import org.bitbucket.zenith4183.zclans.*;
-import org.bitbucket.zenith4183.zclans.*;
 import org.bitbucket.zenith4183.zclans.uuid.UUIDUtil;
 
 import org.bukkit.ChatColor;

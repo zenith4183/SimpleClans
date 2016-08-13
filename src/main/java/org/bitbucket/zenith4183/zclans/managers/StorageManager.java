@@ -1,7 +1,6 @@
 package org.bitbucket.zenith4183.zclans.managers;
 
 import org.bitbucket.zenith4183.zclans.*;
-import org.bitbucket.zenith4183.zclans.*;
 import org.bitbucket.zenith4183.zclans.storage.DBCore;
 import org.bitbucket.zenith4183.zclans.storage.MySQLCore;
 import org.bitbucket.zenith4183.zclans.storage.SQLiteCore;

@@ -2,7 +2,6 @@ package org.bitbucket.zenith4183.zclans.executors;
 
 import org.bitbucket.zenith4183.zclans.*;
 
-import org.bitbucket.zenith4183.zclans.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

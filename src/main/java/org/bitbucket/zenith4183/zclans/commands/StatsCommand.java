@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import org.bitbucket.zenith4183.zclans.*;
-import org.bitbucket.zenith4183.zclans.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

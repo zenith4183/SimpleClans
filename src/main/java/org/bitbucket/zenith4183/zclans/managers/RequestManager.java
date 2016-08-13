@@ -5,7 +5,6 @@ import org.bitbucket.zenith4183.zclans.events.RequestEvent;
 import org.bitbucket.zenith4183.zclans.events.RequestFinishedEvent;
 import org.bitbucket.zenith4183.zclans.uuid.UUIDUtil;
 
-import org.bitbucket.zenith4183.zclans.*;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
