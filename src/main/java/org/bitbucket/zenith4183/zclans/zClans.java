@@ -5,6 +5,7 @@ import org.bitbucket.zenith4183.zclans.listeners.SCPlayerListener;
 
 import org.bitbucket.zenith4183.zclans.executors.*;
 import org.bitbucket.zenith4183.zclans.managers.*;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.MessageFormat;
@@ -80,6 +81,11 @@ public class zClans extends JavaPlugin {
         storageManager = new StorageManager();
         teleportManager = new TeleportManager();
         killCampingManager = new KillCampingManager();
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlaceHolders(this).hook();
+            logger.info("[zClans] Placeholder support has been enabled.");
+        }
 
         logger.info(MessageFormat.format(getLang("version.loaded"), getDescription().getName(), getDescription().getVersion()));
 
