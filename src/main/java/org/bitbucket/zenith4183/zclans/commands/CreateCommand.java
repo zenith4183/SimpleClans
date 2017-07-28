@@ -14,10 +14,8 @@ import java.text.MessageFormat;
  *
  * @author phaed
  */
-public class CreateCommand
-{
-    public CreateCommand()
-    {
+public class CreateCommand {
+    public CreateCommand() {
     }
 
     /**
@@ -25,14 +23,12 @@ public class CreateCommand
      * @param player    player executing command
      * @param arg       command arguments
      */
-    public void execute(Player player, String[] arg)
-    {
+    public void execute(Player player, String[] arg) {
         zClans plugin = zClans.getInstance();
         
         ClanPlayer cpn = plugin.getClanManager().getCreateClanPlayer(player.getUniqueId());
         
-        if (cpn != null && cpn.isBanned())
-        {
+        if (cpn != null && cpn.isBanned()) {
             ChatBlock.sendMessage(player, ChatColor.RED + plugin.getLang("banned"));
             return;
         }
