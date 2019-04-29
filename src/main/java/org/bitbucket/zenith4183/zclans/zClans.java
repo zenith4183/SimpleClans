@@ -92,8 +92,6 @@ public class zClans extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SCEntityListener(), this);
         getServer().getPluginManager().registerEvents(new SCPlayerListener(), this);
 
-        permissionsManager.loadPermissions();
-
         CommandHelper.registerCommand(getSettingsManager().getCommandClan());
         CommandHelper.registerCommand(getSettingsManager().getCommandAccept());
         CommandHelper.registerCommand(getSettingsManager().getCommandDeny());
@@ -119,7 +117,6 @@ public class zClans extends JavaPlugin {
     {
         getServer().getScheduler().cancelTasks(this);
         getStorageManager().closeConnection();
-        getPermissionsManager().savePermissions();
     }
 
     /**

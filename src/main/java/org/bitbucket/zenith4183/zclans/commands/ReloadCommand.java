@@ -35,12 +35,7 @@ public class ReloadCommand
         plugin.getSettingsManager().load();
         plugin.getLanguageManager().load();
         plugin.getStorageManager().importFromDatabase();
-        zClans.getInstance().getPermissionsManager().loadPermissions();
 
-        for (Clan clan : plugin.getClanManager().getClans())
-        {
-            zClans.getInstance().getPermissionsManager().updateClanPermissions(clan);
-        }
         ChatBlock.sendMessage(sender, ChatColor.AQUA + plugin.getLang("configuration.reloaded"));
 
     }

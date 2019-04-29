@@ -125,7 +125,6 @@ public final class SettingsManager
     private double KDRMultipliesPerKillCivilian;
     private double KDRMultipliesPerKillNeutral;
     private double moneyPerKillPercent;
-    private boolean AutoGroupGroupName;
     private boolean tamableMobsSharing;
     private boolean allowReGroupCommand;
     private boolean useThreads;
@@ -285,7 +284,6 @@ public final class SettingsManager
         KDRMultipliesPerKillCivilian = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.civilian");
         KDRMultipliesPerKillNeutral = getConfig().getDouble("economy.money-per-kill-victim-kdr-multiplier.neutral");
         moneyPerKillPercent = getConfig().getDouble("economy.money-per-kill-percent");
-        AutoGroupGroupName = getConfig().getBoolean("permissions.auto-group-groupname");
         tamableMobsSharing = getConfig().getBoolean("settings.tameable-mobs-sharing");
         allowReGroupCommand = getConfig().getBoolean("settings.allow-regroup-command");
         useThreads = getConfig().getBoolean("performance.use-threads");
@@ -1212,12 +1210,6 @@ public final class SettingsManager
         return moneyPerKillPercent;
     }
 
-    /**
-     * @return the AutoGroupGroupName
-     */
-    public boolean isAutoGroupGroupName() {
-        return AutoGroupGroupName;
-    }
 
     /**
      * @return the tamableMobsSharing

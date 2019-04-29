@@ -142,8 +142,6 @@ mysql:
     database: ''
 permissions:
   auto-group-groupname: true
-  YourClanNameHere:
-  - test.permission
 performance:
   use-threads: false
   use-bungeecord: false

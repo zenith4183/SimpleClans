@@ -258,8 +258,6 @@ public class SCPlayerListener implements Listener
         zClans.getInstance().getClanManager().updateLastSeen(player);
         zClans.getInstance().getClanManager().updateDisplayName(player);
 
-        zClans.getInstance().getPermissionsManager().addPlayerPermissions(cp);
-
         if (plugin.getSettingsManager().isBbShowOnLogin() && cp.isBbEnabled())
         {
         	cp.getClan().displayBb(player);
@@ -316,7 +314,6 @@ public class SCPlayerListener implements Listener
 
         ClanPlayer cp = plugin.getClanManager().getClanPlayer(event.getPlayer());
 
-        zClans.getInstance().getPermissionsManager().removeClanPlayerPermissions(cp);
         plugin.getClanManager().updateLastSeen(event.getPlayer());
         plugin.getRequestManager().endPendingRequest(event.getPlayer().getName());
     }

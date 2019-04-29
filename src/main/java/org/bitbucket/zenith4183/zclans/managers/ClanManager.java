@@ -87,8 +87,6 @@ public final class ClanManager
         importClan(clan);
         plugin.getStorageManager().updateClanPlayer(cp);
 
-        zClans.getInstance().getPermissionsManager().updateClanPermissions(clan);
-
         zClans.getInstance().getServer().getPluginManager().callEvent(new CreateClanEvent(clan));
     }
 

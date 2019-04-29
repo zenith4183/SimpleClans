@@ -1015,9 +1015,6 @@ public class Clan implements Serializable, Comparable<Clan>
     {
         ClanPlayer cp = zClans.getInstance().getClanManager().getClanPlayer(playerUniqueId);
 
-        // remove permissions
-        zClans.getInstance().getPermissionsManager().removeClanPlayerPermissions(cp);
-
         cp.setClan(null);
         cp.addPastClan(getColorTag() + (cp.isLeader() ? ChatColor.DARK_RED + "*" : ""));
         cp.setLeader(false);
@@ -1347,7 +1344,6 @@ public class Clan implements Serializable, Comparable<Clan>
         {
             if (cp.getTag().equals(getTag()))
             {
-                zClans.getInstance().getPermissionsManager().removeClanPermissions(this);
                 cp.setClan(null);
 
                 if (isVerified())

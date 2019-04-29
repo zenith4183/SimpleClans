@@ -6,10 +6,9 @@
   <name>zClans</name>
 
   <properties>
-    <spigot.version>1.9-R0.1-SNAPSHOT</spigot.version>
-    <vault.version>1.4</vault.version>
-    <papi.version>2.5.1</papi.version>
-    <metrics.version>R8-SNAPSHOT</metrics.version>
+    <spigot.version>1.12.2-R0.1-SNAPSHOT</spigot.version>
+    <vault.version>1.5</vault.version>
+    <papi.version>2.8.2</papi.version>
   </properties>
 
   <build>
@@ -48,19 +47,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.3</version>
-        <configuration>
-            <artifactSet>
-                <includes>
-                    <include>org.mcstats.*:*</include>
-                </includes>
-            </artifactSet>
-            <relocations>
-                <relocation>
-                    <pattern>org.mcstats</pattern>
-                    <shadedPattern>org.bitbucket.zenith4183.zclans</shadedPattern>
-                </relocation>
-            </relocations>
-        </configuration>
         <executions>
             <execution>
                 <phase>package</phase>
@@ -108,12 +94,6 @@
         <version>${papi.version}</version>
         <scope>provided</scope>
     </dependency>
-    <dependency>
-        <groupId>org.mcstats.bukkit</groupId>
-        <artifactId>metrics-lite</artifactId>
-        <version>${metrics.version}</version>
-        <scope>compile</scope>
-    </dependency>
   </dependencies>
 
   <!-- Repositories -->
@@ -133,10 +113,6 @@
     <repository>
         <id>placeholderapi</id>
         <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-    </repository>
-    <repository>
-        <id>Plugin Metrics</id>
-        <url>http://repo.mcstats.org/content/repositories/public</url>
     </repository>
   </repositories>
 </project>

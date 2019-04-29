@@ -1,17 +1,11 @@
 # zClans
 zClans is a fork of the SimpleClans Bukkit plugin being modified for the use of
-the Minecraft Left2Die server at play.minecraftleft2die.tk.  zClans is NOT a drop
+the Minecraft Left2Die server at play.minecraftleft2die.com.  zClans is NOT a drop
 in replacement for SimpleClans due to changes to the database.  If you know what
 you are doing, the SimpleClans database can be altered to be zClans supported,
 however there is no automatic conversion.
 
 [![Build Status](https://travis-ci.org/zenith4183/zClans.svg)](https://travis-ci.org/zenith4183/zClans)  [![Download](https://img.shields.io/badge/snapshot-download-blue.svg)](https://drone.io/github.com/zenith4183/zClans/files)
-
-## Disclaimer
-The cleanup of the original SimpleClans code base effectively puts zClans in an 
-alpha development state.  As such, you use this plugin at your own risk until 
-it is considered stable.  I still may choose to remove more features from the 
-original code base at anytime should I deem them unneccesary for my server.
 
 ## Difference from SimpleClans
 ### Features Removed
