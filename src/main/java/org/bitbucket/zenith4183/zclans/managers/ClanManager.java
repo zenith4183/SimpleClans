@@ -482,7 +482,7 @@ public final class ClanManager
             {
                 out += ChatColor.AQUA + plugin.getLang("armor.h");
             }
-            else if (h.getType().equals(Material.GOLD_HELMET))
+            else if (h.getType().equals(Material.GOLDEN_HELMET))
             {
                 out += ChatColor.YELLOW + plugin.getLang("armor.h");
             }
@@ -515,7 +515,7 @@ public final class ClanManager
             {
                 out += ChatColor.AQUA + plugin.getLang("armor.c");
             }
-            else if (c.getType().equals(Material.GOLD_CHESTPLATE))
+            else if (c.getType().equals(Material.GOLDEN_CHESTPLATE))
             {
                 out += ChatColor.YELLOW + plugin.getLang("armor.c");
             }
@@ -548,7 +548,7 @@ public final class ClanManager
             {
                 out += plugin.getLang("armor.l");
             }
-            else if (l.getType().equals(Material.GOLD_LEGGINGS))
+            else if (l.getType().equals(Material.GOLDEN_LEGGINGS))
             {
                 out += plugin.getLang("armor.l");
             }
@@ -581,7 +581,7 @@ public final class ClanManager
             {
                 out += ChatColor.AQUA + plugin.getLang("armor.B");
             }
-            else if (b.getType().equals(Material.GOLD_BOOTS))
+            else if (b.getType().equals(Material.GOLDEN_BOOTS))
             {
                 out += ChatColor.YELLOW + plugin.getLang("armor.B");
             }
@@ -631,7 +631,7 @@ public final class ClanManager
             out += ChatColor.AQUA + plugin.getLang("weapon.S") + headColor + countString;
         }
 
-        count = getItemCount(inv.all(Material.GOLD_SWORD));
+        count = getItemCount(inv.all(Material.GOLDEN_SWORD));
 
         if (count > 0)
         {
@@ -655,7 +655,7 @@ public final class ClanManager
             out += ChatColor.GRAY + plugin.getLang("weapon.S") + headColor + countString;
         }
 
-        count = getItemCount(inv.all(Material.WOOD_SWORD));
+        count = getItemCount(inv.all(Material.WOODEN_SWORD));
 
         if (count > 0)
         {
@@ -708,14 +708,14 @@ public final class ClanManager
     {
         double out = 0;
 
-        int count = getItemCount(inv.all(320)); // cooked porkchop
+        int count = getItemCount(inv.all(Material.COOKED_PORKCHOP)); // cooked porkchop
 
         if (count > 0)
         {
             out += count * 4;
         }
 
-        count = getItemCount(inv.all(Material.COOKED_FISH));
+        count = getItemCount(inv.all(Material.COOKED_COD));
 
         if (count > 0)
         {
@@ -736,14 +736,7 @@ public final class ClanManager
             out += count * 6;
         }
 
-        count = getItemCount(inv.all(Material.CAKE_BLOCK));
-
-        if (count > 0)
-        {
-            out += count * 9;
-        }
-
-        count = getItemCount(inv.all(Material.MUSHROOM_SOUP));
+        count = getItemCount(inv.all(Material.MUSHROOM_STEW));
 
         if (count > 0)
         {
@@ -771,28 +764,28 @@ public final class ClanManager
             out += count * 5;
         }
 
-        count = getItemCount(inv.all(Material.RAW_BEEF));
+        count = getItemCount(inv.all(Material.BEEF));
 
         if (count > 0)
         {
             out += count * 2;
         }
 
-        count = getItemCount(inv.all(364));  // steak
+        count = getItemCount(inv.all(Material.COOKED_BEEF));  // steak
 
         if (count > 0)
         {
             out += count * 4;
         }
 
-        count = getItemCount(inv.all(319)); // raw porkchop
+        count = getItemCount(inv.all(Material.PORKCHOP)); // raw porkchop
 
         if (count > 0)
         {
             out += count * 2;
         }
 
-        count = getItemCount(inv.all(Material.RAW_CHICKEN));
+        count = getItemCount(inv.all(Material.CHICKEN));
 
         if (count > 0)
         {
@@ -813,7 +806,7 @@ public final class ClanManager
             out += count * 2;
         }
 
-        count = getItemCount(inv.all(360));  // melon slice
+        count = getItemCount(inv.all(Material.MELON_SLICE));  // melon slice
 
         if (count > 0)
         {

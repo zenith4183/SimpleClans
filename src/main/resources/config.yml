@@ -140,8 +140,6 @@ mysql:
     enable: false
     password: ''
     database: ''
-permissions:
-  auto-group-groupname: true
 performance:
   use-threads: false
   use-bungeecord: false

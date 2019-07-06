@@ -49,59 +49,6 @@ public final class TeleportManager
         }
     }
 
-    private void dropItems(Player player)
-    {
-        if (plugin.getSettingsManager().isDropOnHome())
-        {
-            PlayerInventory inv = player.getInventory();
-            ItemStack[] contents = inv.getContents();
-
-            for (ItemStack item : contents)
-            {
-                if (item == null)
-                {
-                    continue;
-                }
-
-                List<Integer> itemsList = plugin.getSettingsManager().getItemsList();
-
-                if (itemsList.contains(item.getTypeId()))
-                {
-                    player.getWorld().dropItemNaturally(player.getLocation(), item);
-                    inv.remove(item);
-                }
-            }
-        }
-        else if (plugin.getSettingsManager().isKeepOnHome())
-        {
-            try
-            {
-                PlayerInventory inv = player.getInventory();
-                ItemStack[] contents = inv.getContents().clone();
-
-                for (ItemStack item : contents)
-                {
-                    if (item == null)
-                    {
-                        continue;
-                    }
-
-                    List<Integer> itemsList = plugin.getSettingsManager().getItemsList();
-
-                    if (!itemsList.contains(item.getTypeId()))
-                    {
-                        player.getWorld().dropItemNaturally(player.getLocation(), item);
-                        inv.remove(item);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Helper.dumpStackTrace();
-            }
-        }
-    }
-
     private void startCounter()
     {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable()
@@ -128,14 +75,6 @@ public final class TeleportManager
                             if (Helper.isSameBlock(player.getLocation(), state.getLocation()))
                             {
                                 Location loc = state.getDestination();
-
-                                int x = loc.getBlockX();
-                                int z = loc.getBlockZ();
-
-                                if (!plugin.getPermissionsManager().has(player, "zclans.mod.keep-items"))
-                                {
-                                    dropItems(player);
-                                }
 
                                 zClans.debug("teleporting");
 

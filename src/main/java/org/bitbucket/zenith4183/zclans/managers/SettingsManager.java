@@ -28,7 +28,7 @@ public final class SettingsManager
     private boolean globalff;
     private boolean showUnverifiedOnList;
     private boolean requireVerification;
-    private List<Integer> itemsList;
+    private List<String> itemsList;
     private List<String> blacklistedWorlds;
     private List<String> disallowedWords;
     private List<String> disallowedColors;
@@ -175,7 +175,7 @@ public final class SettingsManager
         teleportOnSpawn = getConfig().getBoolean("settings.teleport-home-on-spawn");
         dropOnHome = getConfig().getBoolean("settings.drop-items-on-clan-home");
         keepOnHome = getConfig().getBoolean("settings.keep-items-on-clan-home");
-        itemsList = getConfig().getIntegerList("settings.item-list");
+        itemsList = getConfig().getStringList("settings.item-list");
         debugging = getConfig().getBoolean("settings.show-debug-info");
         useColorCodeFromPrefix = getConfig().getBoolean("settings.use-colorcode-from-prefix-for-name");
         disallowedColors = getConfig().getStringList("settings.disallowed-tag-colors");
@@ -1120,7 +1120,7 @@ public final class SettingsManager
         return dropOnHome;
     }
 
-    public List<Integer> getItemsList()
+    public List<String> getItemsList()
     {
         return Collections.unmodifiableList(itemsList);
     }

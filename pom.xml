@@ -6,7 +6,7 @@
   <name>zClans</name>
 
   <properties>
-    <spigot.version>1.12.2-R0.1-SNAPSHOT</spigot.version>
+    <spigot.version>1.13.2-R0.1-SNAPSHOT</spigot.version>
     <vault.version>1.5</vault.version>
     <papi.version>2.8.2</papi.version>
   </properties>
