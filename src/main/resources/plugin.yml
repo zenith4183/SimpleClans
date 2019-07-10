@@ -1,6 +1,7 @@
 name: zClans
 main: org.bitbucket.zenith4183.zclans.zClans
 version: ${project.version}
+api-version: 1.13
 softdepend: [VanishNoPacket, Permissions, PermissionsBukkit, Vault, PermissionsEx, PlaceholderAPI]
 permissions:
   zclans.admin.permissions:
