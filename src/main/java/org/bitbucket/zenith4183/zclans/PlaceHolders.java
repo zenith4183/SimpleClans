@@ -1,16 +1,15 @@
 package org.bitbucket.zenith4183.zclans;
 
-import me.clip.placeholderapi.external.EZPlaceholderHook;
+import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
 /**
  * Created by zenith4183 on 8/13/16.
  */
-public class PlaceHolders extends EZPlaceholderHook {
+public class PlaceHolders extends PlaceholderExpansion {
     private zClans plugin;
 
     public PlaceHolders(zClans plugin) {
-        super(plugin, "zclans");
         this.plugin = plugin;
     }
 
@@ -31,10 +30,6 @@ public class PlaceHolders extends EZPlaceholderHook {
 
         if (identifier.equals("rank")) {
             return cp.getRank();
-        }
-
-        if (identifier.equals("tag_label")) {
-            return cp.getTagLabel();
         }
 
         if (identifier.equals("civilian_kills")) {
@@ -119,5 +114,30 @@ public class PlaceHolders extends EZPlaceholderHook {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean persist(){
+        return true;
+    }
+
+    @Override
+    public boolean canRegister(){
+        return true;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return plugin.getDescription().getName();
+    }
+
+    @Override
+    public String getAuthor() {
+        return plugin.getDescription().getAuthors().toString();
+    }
+
+    @Override
+    public String getVersion() {
+        return plugin.getDescription().getVersion();
     }
 }

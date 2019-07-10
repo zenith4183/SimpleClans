@@ -8,7 +8,7 @@
   <properties>
     <spigot.version>1.13.2-R0.1-SNAPSHOT</spigot.version>
     <vault.version>1.5</vault.version>
-    <papi.version>2.8.2</papi.version>
+    <papi.version>2.10.3</papi.version>
   </properties>
 
   <build>

@@ -83,7 +83,7 @@ public class zClans extends JavaPlugin {
         killCampingManager = new KillCampingManager();
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            new PlaceHolders(this).hook();
+            new PlaceHolders(this).register();
             logger.info("[zClans] Placeholder support has been enabled.");
         }
 
